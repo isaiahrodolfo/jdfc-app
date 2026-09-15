@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-import sermonData from "../constants/exampleSermonDataSimple.json";
+import sermonData from "../../constants/exampleSermonDataSimple.json";
 
 type Sermon = {
   title: string;

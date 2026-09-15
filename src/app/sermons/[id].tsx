@@ -1,5 +1,12 @@
-import { Text } from "react-native";
-
+import { useLocalSearchParams } from "expo-router";
+import { Text, View } from "react-native";
 export default function SermonPage() {
-  return <Text>SermonPage</Text>;
+  const { id, title } = useLocalSearchParams();
+
+  return (
+    <View>
+      <Text>Sermon Page</Text>
+      <Text>Sermon ID: {id}</Text>
+    </View>
+  );
 }

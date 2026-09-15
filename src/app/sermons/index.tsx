@@ -30,7 +30,10 @@ export default function Sermons() {
 
   const handleSermonPress = (sermon: Sermon) => {
     // Navigate to a detailed view
-    router.push(`/sermons/${sermon.id}`);
+    router.push({
+      pathname: "/sermons/[id]",
+      params: { id: sermon.id, title: sermon.title },
+    });
   };
 
   return (

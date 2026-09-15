@@ -1,7 +1,8 @@
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-import sermonData from "../../constants/exampleSermonDataSimple.json";
+import sermonData from "../../../constants/exampleSermonDataSimple.json";
 
 type Sermon = {
   title: string;
@@ -26,6 +27,12 @@ export default function Sermons() {
     setSearchQuery(text);
   };
 
+  const handleSermonPress = (sermon: Sermon) => {
+    // Handle sermon press, e.g., navigate to a detailed view
+    router.push(`/sermons/${sermon.title}`);
+    console.log("Sermon pressed:", sermon);
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -35,12 +42,12 @@ export default function Sermons() {
         onChangeText={handleSearchQueryChange}
       />
       {sermons.map((sermon, index) => (
-        <View key={index}>
+        <Pressable key={index} onPress={() => handleSermonPress(sermon)}>
           <Text>{sermon.title}</Text>
           <Text>{sermon.speaker}</Text>
           <Text>{sermon.date}</Text>
           <Text>{sermon.starred ? "⭐" : ""}</Text>
-        </View>
+        </Pressable>
       ))}
     </View>
   );

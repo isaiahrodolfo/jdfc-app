@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Sermon 1",
+    "speaker": "Speaker 1",
+    "date": "2024-01-01",
+    "starred": true
+  },
+  {
+    "title": "Sermon 2",
+    "speaker": "Speaker 2",
+    "date": "2024-01-02",
+    "starred": false
+  },
+  {
+    "title": "Sermon 3",
+    "speaker": "Speaker 3",
+    "date": "2024-01-03",
+    "starred": false
+  }
+]

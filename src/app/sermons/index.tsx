@@ -2,9 +2,10 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-import sermonData from "../../../constants/exampleSermonDataSimple.json";
+import sermonData from "../../constants/exampleSermonDataSimple.json";
 
 type Sermon = {
+  id: number;
   title: string;
   speaker: string;
   date: string;
@@ -28,9 +29,8 @@ export default function Sermons() {
   };
 
   const handleSermonPress = (sermon: Sermon) => {
-    // Handle sermon press, e.g., navigate to a detailed view
-    router.push(`/sermons/${sermon.title}`);
-    console.log("Sermon pressed:", sermon);
+    // Navigate to a detailed view
+    router.push(`/sermons/${sermon.id}`);
   };
 
   return (

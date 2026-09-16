@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { Text, View } from "react-native";
-import NoteEditor from "./NoteEditor";
+import NoteEditor from "../NoteEditor";
 import Slides from "./Slides";
 
 export default function NotesPage({
@@ -12,7 +12,12 @@ export default function NotesPage({
 }) {
   return (
     <View>
-      <Stack.Screen options={{ title: title.toString() || "Default Title" }} />
+      <Stack.Screen
+        options={{
+          title: title.toString() || "Default Title",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
       <Text>Notes Page</Text>
       <Text>Sermon ID: {id}</Text>
 

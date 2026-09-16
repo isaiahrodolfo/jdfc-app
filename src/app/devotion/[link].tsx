@@ -1,4 +1,4 @@
-import NoteEditor from "@/components/sermons/NoteEditor";
+import NoteEditor from "@/components/NoteEditor";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
@@ -7,7 +7,12 @@ export default function DevotionPage() {
 
   return (
     <View>
-      <Stack.Screen options={{ title: title.toString() || "Devotion" }} />
+      <Stack.Screen
+        options={{
+          title: title?.toString() || "Devotion",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
       <Text>Devotion Page for link: {link}</Text>
       <NoteEditor />
     </View>

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Devotion 1",
+    "link": "devotion-1",
+    "date": "2024-01-01",
+    "starred": true
+  },
+  {
+    "id": 2,
+    "title": "Devotion 2",
+    "link": "devotion-2",
+    "date": "2024-01-02",
+    "starred": false
+  },
+  {
+    "id": 3,
+    "title": "Devotion 3",
+    "link": "devotion-3",
+    "date": "2024-01-03",
+    "starred": false
+  }
+]

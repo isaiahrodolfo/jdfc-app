@@ -1,55 +1,54 @@
+import { Devotional, fetchDevotionals } from "@/api/odb_api";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-
-import devotionData from "../../constants/exampleDevotionDataSimple.json";
-
-type Devotion = {
-  link: string;
-  title: string;
-  date: string;
-  starred: boolean;
-};
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Devotion() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [devotions, setDevotions] = useState<Devotion[]>([]);
+  const [devotionals, setDevotionals] = useState<Map<string, Devotional>>();
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setDevotions(devotionData);
+    let isActive = true;
+
+    const loadDevotionals = async () => {
+      try {
+        setLoading(true);
+        const result = await fetchDevotionals();
+        setDevotionals(result);
+      } catch (error) {
+        console.error("Failed to fetch devotionals:", error);
+        setError(error instanceof Error ? error.message : String(error));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDevotionals();
+
+    return () => {
+      isActive = false;
+    };
   }, []);
 
-  const handleSearchQueryChange = (text: string) => {
-    const filteredDevotions = devotionData.filter((devotion) =>
-      devotion.title?.toLowerCase().includes(text.toLowerCase()),
-    );
-    setDevotions(filteredDevotions);
-    setSearchQuery(text);
-  };
-
-  const handleDevotionPress = (devotion: Devotion) => {
+  const handleDevotionPress = (devotional: Devotional) => {
     // Navigate to a detailed view
     router.push({
       pathname: "/devotion/[link]",
-      params: { link: devotion.link, title: devotion.title },
+      params: { link: devotional.odbUrl, title: devotional.title },
     });
   };
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search devotions"
-        value={searchQuery}
-        onChangeText={handleSearchQueryChange}
-      />
-      {devotions.map((devotion, index) => (
-        <Pressable key={index} onPress={() => handleDevotionPress(devotion)}>
-          <Text>{devotion.title}</Text>
-          <Text>{devotion.date}</Text>
-          <Text>{devotion.starred ? "⭐" : ""}</Text>
-        </Pressable>
-      ))}
+      {devotionals &&
+        Array.from(devotionals.values()).map((devotion, index) => (
+          <Pressable key={index} onPress={() => handleDevotionPress(devotion)}>
+            <Text>{devotion.title}</Text>
+          </Pressable>
+        ))}
     </View>
   );
 }

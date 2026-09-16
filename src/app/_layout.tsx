@@ -1,25 +1,10 @@
-// import { Stack } from "expo-router";
-
-// export default function RootLayout() {
-//   return (
-//     <Stack>
-//       {/* The main tab group */}
-//       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-//       {/* Individual screens outside the tab structure */}
-//       <Stack.Screen name="sermons" options={{ headerShown: true }} />
-//       <Stack.Screen name="devotion" options={{ headerShown: true }} />
-//       <Stack.Screen name="auth" options={{ headerShown: true }} />
-//     </Stack>
-//   );
-// }
-
+import AuthProvider from "@/providers/auth-provider";
+import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
-import Account from "../components/Account";
 import Auth from "../components/Auth";
 import { supabase } from "../lib/supabase";
 
-export default function App() {
+export default function RootLayout() {
   const [userId, setUserId] = useState<string | null>(null);
   const [email, setEmail] = useState<string | undefined>(undefined);
 
@@ -61,12 +46,21 @@ export default function App() {
   }, []);
 
   return (
-    <View>
-      {userId ? (
-        <Account key={userId} userId={userId} email={email} />
+    <AuthProvider>
+      {true ? (
+        <Stack>
+          {/* The main tab group */}
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          {/* Individual screens outside the tab structure */}
+          <Stack.Screen name="sermons/[id]" options={{ headerShown: true }} />
+          <Stack.Screen
+            name="devotion/[link]"
+            options={{ headerShown: true }}
+          />
+        </Stack>
       ) : (
         <Auth />
       )}
-    </View>
+    </AuthProvider>
   );
 }

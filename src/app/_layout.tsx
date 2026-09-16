@@ -47,7 +47,7 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      {true ? (
+      {userId ? (
         <Stack>
           {/* The main tab group */}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

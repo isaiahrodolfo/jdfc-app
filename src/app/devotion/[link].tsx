@@ -7,7 +7,13 @@ export default function DevotionPage() {
   const { link, title, date } = useLocalSearchParams();
 
   const handleSaveNotes = async (html: string) => {
-    saveNotes(html, link.toString(), "devotion" as NoteType, title, date);
+    saveNotes(
+      html,
+      link.toString(),
+      "devotion" as NoteType,
+      title.toString(),
+      date.toString(),
+    );
   };
 
   return (

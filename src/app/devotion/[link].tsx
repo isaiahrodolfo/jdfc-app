@@ -1,13 +1,16 @@
 import { NoteType, saveNotes } from "@/api/supabase_api";
 import NoteEditor from "@/components/NoteEditor";
+import { useAuthContext } from "@/hooks/use-auth-context";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function DevotionPage() {
+  const { user } = useAuthContext();
   const { link, title, date } = useLocalSearchParams();
 
   const handleSaveNotes = async (html: string) => {
     saveNotes(
+      user,
       html,
       link.toString(),
       "devotion" as NoteType,

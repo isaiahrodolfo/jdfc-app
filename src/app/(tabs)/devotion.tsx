@@ -37,7 +37,11 @@ export default function Devotion() {
     // Navigate to a detailed view
     router.push({
       pathname: "/devotion/[link]",
-      params: { link: devotional.odbUrl, title: devotional.title },
+      params: {
+        link: devotional.odbUrl,
+        title: devotional.title,
+        date: devotional.dateKey,
+      },
     });
   };
 

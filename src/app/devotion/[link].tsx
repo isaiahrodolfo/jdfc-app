@@ -4,10 +4,10 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function DevotionPage() {
-  const { link, title } = useLocalSearchParams();
+  const { link, title, date } = useLocalSearchParams();
 
   const handleSaveNotes = async (html: string) => {
-    saveNotes(html, link.toString(), "devotion" as NoteType);
+    saveNotes(html, link.toString(), "devotion" as NoteType, title, date);
   };
 
   return (
@@ -19,6 +19,7 @@ export default function DevotionPage() {
         }}
       />
       <Text>Devotion Page for link: {link}</Text>
+      <Text>Devotion Date: {date}</Text>
       <NoteEditor onSaveNotes={handleSaveNotes} />
     </View>
   );

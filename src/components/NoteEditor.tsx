@@ -9,9 +9,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 type NoteEditorProps = {
   onSaveNotes: (html: string) => void;
+  initialContent: string;
 };
 
-export default function NoteEditor({ onSaveNotes }: NoteEditorProps) {
+export default function NoteEditor({
+  onSaveNotes,
+  initialContent,
+}: NoteEditorProps) {
   const editor = useEditorBridge({
     autofocus: true,
     avoidIosKeyboard: true,
@@ -51,5 +55,3 @@ const exampleStyles = StyleSheet.create({
     bottom: 0,
   },
 });
-
-const initialContent = `<p>This is a basic example!</p>`;

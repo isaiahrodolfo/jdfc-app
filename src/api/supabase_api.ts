@@ -25,13 +25,13 @@ export async function saveNotes(
   try {
     const devotional = await findDevotional(uniqueIdentifier, title, date);
 
-    if (!devotional) {
-      console.error("Could not find or create devotional");
+    if (!devotional.lesson_id) {
+      console.error("Devotional has no lesson ID");
       return;
     }
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("users_lessons")
         .upsert(
           {
@@ -52,3 +52,32 @@ export async function saveNotes(
     console.error("Error finding devotional:", error);
   }
 }
+
+export const getNotes = async (userId: string, uniqueIdentifier: string) => {
+  const { data: devotional, error: devotionalError } = await supabase
+    .from("devotionals")
+    .select("lesson_id")
+    .eq("link", uniqueIdentifier)
+    .maybeSingle();
+
+  if (devotionalError) {
+    throw devotionalError;
+  }
+
+  if (!devotional?.lesson_id) {
+    return "";
+  }
+
+  const { data, error } = await supabase
+    .from("users_lessons")
+    .select("notes")
+    .eq("user_id", userId)
+    .eq("lesson_id", devotional.lesson_id)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data?.notes ?? "";
+};

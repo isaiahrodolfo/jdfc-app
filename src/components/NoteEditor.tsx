@@ -1,4 +1,3 @@
-import { NoteType, saveNotes } from "@/api/supabase_api";
 import { RichText, Toolbar, useEditorBridge } from "@10play/tentap-editor";
 import {
   KeyboardAvoidingView,
@@ -9,14 +8,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type NoteEditorProps = {
-  uniqueIdentifier: string;
-  noteType: NoteType;
+  onSaveNotes: (html: string) => void;
 };
 
-export default function NoteEditor({
-  uniqueIdentifier,
-  noteType,
-}: NoteEditorProps) {
+export default function NoteEditor({ onSaveNotes }: NoteEditorProps) {
   const editor = useEditorBridge({
     autofocus: true,
     avoidIosKeyboard: true,
@@ -24,18 +19,21 @@ export default function NoteEditor({
   });
 
   const handleSaveNotes = async () => {
-    saveNotes(await editor.getHTML(), uniqueIdentifier, noteType);
+    const html = await editor.getHTML();
+    onSaveNotes(html);
   };
 
   return (
     <SafeAreaView style={exampleStyles.fullScreen}>
       <RichText editor={editor} />
+
       <KeyboardAvoidingView
-        behavior={"padding"}
+        behavior="padding"
         style={exampleStyles.keyboardAvoidingView}
       >
         <Toolbar editor={editor} />
       </KeyboardAvoidingView>
+
       <Pressable onPress={handleSaveNotes}>
         <Text>Save Notes</Text>
       </Pressable>

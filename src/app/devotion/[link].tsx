@@ -9,8 +9,12 @@ export default function DevotionPage() {
   const { user } = useAuthContext();
   const { link, title, date } = useLocalSearchParams();
   const [initialContent, setInitialContent] = useState("");
+  const [isLoadingInitialData, setIsLoadingInitialData] = useState(true);
+  const [isLoadingSaveData, setIsLoadingSaveData] = useState(false);
 
   useEffect(() => {
+    setIsLoadingInitialData(true);
+
     if (!user || !link) {
       return;
     }
@@ -21,6 +25,8 @@ export default function DevotionPage() {
         setInitialContent(notes);
       } catch (error) {
         console.error("Error loading notes:", error);
+      } finally {
+        setIsLoadingInitialData(false);
       }
     };
 
@@ -28,14 +34,22 @@ export default function DevotionPage() {
   }, [user, link]);
 
   const handleSaveNotes = async (html: string) => {
-    saveNotes(
-      user,
-      html,
-      link.toString(),
-      "devotion" as NoteType,
-      title.toString(),
-      date.toString(),
-    );
+    setIsLoadingSaveData(true);
+
+    try {
+      await saveNotes(
+        user,
+        html,
+        link.toString(),
+        "devotion" as NoteType,
+        title.toString(),
+        date.toString(),
+      );
+    } catch (error) {
+      console.error("Error saving notes:", error);
+    } finally {
+      setIsLoadingSaveData(false);
+    }
   };
 
   return (
@@ -52,6 +66,9 @@ export default function DevotionPage() {
         onSaveNotes={handleSaveNotes}
         initialContent={initialContent}
       />
+      {/* toasts */}
+      <Text>initial data loading: {isLoadingInitialData.toString()}</Text>
+      <Text>save data loading: {isLoadingSaveData.toString()}</Text>
     </View>
   );
 }

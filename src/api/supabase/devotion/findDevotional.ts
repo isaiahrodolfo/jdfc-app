@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import type { Database } from "../../../../database.types";
-import { createLesson } from "../helpers/createLesson";
+import { createLesson } from "../lessons/createLesson";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
 export type Devotional = Database["public"]["Tables"]["devotionals"]["Row"];

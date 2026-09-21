@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { Database } from "../../database.types";
-// 1. Define explicit TypeScript types extracted from your Supabase Schema
+
+// Define explicit TypeScript types extracted from the Supabase Schema
 export type Devotional = Database["public"]["Tables"]["devotionals"]["Row"];
 export type Lesson = Database["public"]["Tables"]["lessons"]["Row"];
 
@@ -8,10 +9,12 @@ export type Lesson = Database["public"]["Tables"]["lessons"]["Row"];
  * Gets a devotional entry by its unique identifier.
  * If it does not exist, automatically creates the associated lesson and devotional entries.
  *
- * @param uniqueIdentifier - The unique link or identifier for the devotional.
- * @param title - The title of the lesson to create if missing.
- * @param date - The publication date of the lesson if missing.
- * @returns A promise that resolves to the retrieved or newly created devotional object.
+ * @export
+ * @async
+ * @param {string} uniqueIdentifier - The unique link or identifier for the devotional.
+ * @param {string} title - The title of the lesson to create if missing.
+ * @param {string} date - The publication date of the lesson if missing.
+ * @returns {Promise<Devotional>} A promise that resolves to the retrieved or newly created devotional object.
  * @throws Will throw an error if any database query or mutation fails.
  */
 export async function findDevotional(
@@ -66,10 +69,11 @@ export async function findDevotional(
 /**
  * Creates a new lesson record in the database.
  *
- * @param title - The title of the lesson.
- * @param date - The date the lesson was published or first released.
- * @param seriesId - Optional series ID corresponding to its row in the series table.
- * @returns A promise that resolves to the newly created lesson object.
+ * @async
+ * @param {string} title - The title of the lesson.
+ * @param {string} date - The date the lesson was published or first released.
+ * @param {number} seriesId - Optional series ID corresponding to its row in the series table.
+ * @returns {Promise<Lesson>} A promise that resolves to the newly created lesson object.
  * @throws Will throw an error if the insert operation fails.
  */
 async function createLesson(

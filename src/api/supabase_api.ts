@@ -4,6 +4,21 @@ import { findDevotional } from "./supabase_api_helpers";
 
 export type NoteType = "devotionals" | "slideshows";
 
+/**
+ * Save user-written notes in the users_lessons table.
+ *
+ * The `title` and `date` parameters are only used with devotionals, never slideshows
+ *
+ * @export
+ * @async
+ * @param {User} user - The user object.
+ * @param {string} text - The notes in HTML format.
+ * @param {string} uniqueIdentifier - The link to the devotional (if a devotional), else the ID of the lesson (a slideshow)
+ * @param {NoteType} noteType - The type of note (devotional or slideshow)
+ * @param {?string} [title] - The title of the devotion.
+ * @param {?string} [date] - The date of the devotion.
+ * @returns {*}
+ */
 export async function saveNotes(
   user: User,
   text: string,
@@ -20,6 +35,7 @@ export async function saveNotes(
 
   if (noteType === "slideshows") return;
   if (!title || !date) return; // Make sure devotionals have a title and a date
+  // TODO: Write the code for saving slideshows
 
   // Find the devotional's link
   try {

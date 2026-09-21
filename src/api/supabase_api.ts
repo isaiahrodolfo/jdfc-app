@@ -1,8 +1,13 @@
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
+import type { Database } from "../../database.types";
 import { findDevotional } from "./supabase_api_helpers";
 
 export type NoteType = "devotionals" | "slideshows";
+
+// Define explicit TypeScript types extracted from the Supabase Schema
+export type Note =
+  Database["public"]["Tables"]["users_lessons"]["Row"]["notes"];
 
 /**
  * Save user-written notes in the users_lessons table.
@@ -17,7 +22,7 @@ export type NoteType = "devotionals" | "slideshows";
  * @param {NoteType} noteType - The type of note (devotional or slideshow)
  * @param {?string} [title] - The title of the devotion.
  * @param {?string} [date] - The date of the devotion.
- * @returns {*}
+ * @throws Will throw an error if any database query or mutation fails.
  */
 export async function saveNotes(
   user: User,
@@ -69,7 +74,17 @@ export async function saveNotes(
   }
 }
 
-export const getNotes = async (userId: string, uniqueIdentifier: string) => {
+/**
+ * Gets the note associated with the user and the selected lesson.
+ * Returns note, but if the note does not exist or is empty, returns an empty string.
+ *
+ * @export
+ * @async
+ * @param {string} userId
+ * @param {string} uniqueIdentifier
+ * @returns
+ */
+export async function getNotes(userId: string, uniqueIdentifier: string) {
   const { data: devotional, error: devotionalError } = await supabase
     .from("devotionals")
     .select("lesson_id")
@@ -96,4 +111,4 @@ export const getNotes = async (userId: string, uniqueIdentifier: string) => {
   }
 
   return data?.notes ?? "";
-};
+}

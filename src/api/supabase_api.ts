@@ -80,8 +80,8 @@ export async function saveNotes(
  *
  * @export
  * @async
- * @param {string} userId
- * @param {string} uniqueIdentifier
+ * @param {string} userId - the user ID.
+ * @param {string} uniqueIdentifier - The link to the devotional (if a devotional), else the ID of the lesson (a slideshow)
  * @returns
  */
 export async function getNotes(userId: string, uniqueIdentifier: string) {

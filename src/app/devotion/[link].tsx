@@ -1,4 +1,5 @@
-import { getNotes, NoteType, saveNotes } from "@/api/supabase_api";
+import { getNotes } from "@/api/supabase/notes/getNotes";
+import { NoteType, saveNotes } from "@/api/supabase/notes/saveNotes";
 import NoteEditor from "@/components/NoteEditor";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { Stack, useLocalSearchParams } from "expo-router";

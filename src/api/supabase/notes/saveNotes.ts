@@ -1,19 +1,13 @@
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
-import type { Database } from "../../database.types";
-import { findDevotional } from "./supabase_api_helpers";
-
+import { findDevotional } from "../devotion/findDevotional";
 export type NoteType = "devotionals" | "slideshows";
-
-// Define explicit TypeScript types extracted from the Supabase Schema
-export type Note =
-  Database["public"]["Tables"]["users_lessons"]["Row"]["notes"];
 
 /**
  * Save user-written notes in the users_lessons table.
  *
  * The `title` and `date` parameters are only used with devotionals, never slideshows
- *
+ *f
  * @export
  * @async
  * @param {User} user - The user object.
@@ -72,43 +66,4 @@ export async function saveNotes(
   } catch (error) {
     console.error("Error finding devotional:", error);
   }
-}
-
-/**
- * Gets the note associated with the user and the selected lesson.
- * Returns note, but if the note does not exist or is empty, returns an empty string.
- *
- * @export
- * @async
- * @param {string} userId - the user ID.
- * @param {string} uniqueIdentifier - The link to the devotional (if a devotional), else the ID of the lesson (a slideshow)
- * @returns
- */
-export async function getNotes(userId: string, uniqueIdentifier: string) {
-  const { data: devotional, error: devotionalError } = await supabase
-    .from("devotionals")
-    .select("lesson_id")
-    .eq("link", uniqueIdentifier)
-    .maybeSingle();
-
-  if (devotionalError) {
-    throw devotionalError;
-  }
-
-  if (!devotional?.lesson_id) {
-    return "";
-  }
-
-  const { data, error } = await supabase
-    .from("users_lessons")
-    .select("notes")
-    .eq("user_id", userId)
-    .eq("lesson_id", devotional.lesson_id)
-    .maybeSingle();
-
-  if (error) {
-    throw error;
-  }
-
-  return data?.notes ?? "";
 }

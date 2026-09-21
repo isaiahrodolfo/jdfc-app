@@ -1,16 +1,26 @@
 import { supabase } from "@/lib/supabase";
+import type { Database } from "../../database.types";
+// 1. Define explicit TypeScript types extracted from your Supabase Schema
+export type Devotional = Database["public"]["Tables"]["devotionals"]["Row"];
+export type Lesson = Database["public"]["Tables"]["lessons"]["Row"];
 
-/*
- * Get the entry for the devotional in the devotionals table.
- * If it does not exist, create the lesson and devotional entries.
+/**
+ * Gets a devotional entry by its unique identifier.
+ * If it does not exist, automatically creates the associated lesson and devotional entries.
+ *
+ * @param uniqueIdentifier - The unique link or identifier for the devotional.
+ * @param title - The title of the lesson to create if missing.
+ * @param date - The publication date of the lesson if missing.
+ * @returns A promise that resolves to the retrieved or newly created devotional object.
+ * @throws Will throw an error if any database query or mutation fails.
  */
-export const findDevotional = async (
+export async function findDevotional(
   uniqueIdentifier: string,
   title: string,
   date: string,
-) => {
-  // Check whether the devotional already exists
+): Promise<Devotional> {
   console.log("checking whether the devotional exists");
+
   const { data: devotional, error: devotionalError } = await supabase
     .from("devotionals")
     .select("*")
@@ -27,9 +37,9 @@ export const findDevotional = async (
   }
 
   try {
-    // Create the lesson
     console.log("trying to create the lesson");
 
+    // Create the lesson
     const lesson = await createLesson(title, date);
 
     // Create the devotional using the new lesson
@@ -51,10 +61,24 @@ export const findDevotional = async (
     console.error("Error creating devotional:", error);
     throw error;
   }
-};
+}
 
-const createLesson = async (title: string, date: string, seriesId?: number) => {
+/**
+ * Creates a new lesson record in the database.
+ *
+ * @param title - The title of the lesson.
+ * @param date - The date the lesson was published or first released.
+ * @param seriesId - Optional series ID corresponding to its row in the series table.
+ * @returns A promise that resolves to the newly created lesson object.
+ * @throws Will throw an error if the insert operation fails.
+ */
+async function createLesson(
+  title: string,
+  date: string,
+  seriesId?: number,
+): Promise<Lesson> {
   console.log("creating lesson");
+
   const { data: lesson, error: lessonError } = await supabase
     .from("lessons")
     .insert({
@@ -71,4 +95,4 @@ const createLesson = async (title: string, date: string, seriesId?: number) => {
   }
 
   return lesson;
-};
+}

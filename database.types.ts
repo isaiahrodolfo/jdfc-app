@@ -19,19 +19,19 @@ export type Database = {
           created_at: string
           id: number
           lesson_id: number
-          link: string | null
+          link: string
         }
         Insert: {
           created_at?: string
           id?: number
           lesson_id: number
-          link?: string | null
+          link: string
         }
         Update: {
           created_at?: string
           id?: number
           lesson_id?: number
-          link?: string | null
+          link?: string
         }
         Relationships: [
           {
@@ -74,22 +74,25 @@ export type Database = {
           created_at: string
           date: string | null
           id: number
+          is_favorited: boolean
           series_id: number | null
-          title: string | null
+          title: string
         }
         Insert: {
           created_at?: string
           date?: string | null
           id?: number
+          is_favorited?: boolean
           series_id?: number | null
-          title?: string | null
+          title: string
         }
         Update: {
           created_at?: string
           date?: string | null
           id?: number
+          is_favorited?: boolean
           series_id?: number | null
-          title?: string | null
+          title?: string
         }
         Relationships: [
           {
@@ -215,19 +218,19 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          slideshow_id: number | null
+          slideshow_id: number
           youtube_link: string | null
         }
         Insert: {
           created_at?: string
           id?: number
-          slideshow_id?: number | null
+          slideshow_id: number
           youtube_link?: string | null
         }
         Update: {
           created_at?: string
           id?: number
-          slideshow_id?: number | null
+          slideshow_id?: number
           youtube_link?: string | null
         }
         Relationships: [
@@ -244,7 +247,7 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          is_live: boolean | null
+          is_live: boolean
           lesson_id: number
           slideshow_link: string | null
           speaker_name: string | null
@@ -252,7 +255,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: number
-          is_live?: boolean | null
+          is_live?: boolean
           lesson_id: number
           slideshow_link?: string | null
           speaker_name?: string | null
@@ -260,7 +263,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: number
-          is_live?: boolean | null
+          is_live?: boolean
           lesson_id?: number
           slideshow_link?: string | null
           speaker_name?: string | null

@@ -11,8 +11,6 @@ export default function Devotion() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    let isActive = true;
-
     const loadDevotionals = async () => {
       try {
         setLoading(true);
@@ -27,10 +25,6 @@ export default function Devotion() {
     };
 
     loadDevotionals();
-
-    return () => {
-      isActive = false;
-    };
   }, []);
 
   const handleDevotionPress = (devotional: Devotional) => {

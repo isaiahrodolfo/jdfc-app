@@ -7,8 +7,18 @@ type PageMode = "description" | "notes";
 
 export default function SermonPage() {
   const [pageMode, setPageMode] = useState<PageMode>("description");
-  const { id, title } = useLocalSearchParams();
-
+  const {
+    id,
+    lessonId,
+    title,
+    date,
+    seriesId,
+    isFavorited,
+    slideshowLink,
+    speakerName,
+    isLive,
+    youtubeLink,
+  } = useLocalSearchParams();
   const handleTakeNotesPress = () => {
     setPageMode("notes");
   };

@@ -1,27 +1,40 @@
+import { getSermons, Sermon } from "@/api/supabase/sermons/getSermons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-import sermonData from "../../constants/exampleSermonDataSimple.json";
-
-type Sermon = {
-  id: number;
-  title: string;
-  speaker: string;
-  date: string;
-  starred: boolean;
-};
+// import sermonData from "../../constants/exampleSermonDataSimple.json";
 
 export default function Sermons() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [sermons, setSermons] = useState<Sermon[]>([]);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
-    setSermons(sermonData);
+    const loadSermons = async () => {
+      try {
+        setLoading(true);
+        const result = await getSermons(pageNumber, 50);
+        console.log(result);
+        setSermons(result.data);
+      } catch (error) {
+        console.error("Failed to fetch sermons:", error);
+        setError(error instanceof Error ? error.message : String(error));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSermons();
   }, []);
 
+  // TODO: Change this to filter sermons on the backend, and show the first 50 items, for example
   const handleSearchQueryChange = (text: string) => {
-    const filteredSermons = sermonData.filter((sermon) =>
+    const filteredSermons = sermons.filter((sermon) =>
       sermon.title?.toLowerCase().includes(text.toLowerCase()),
     );
     setSermons(filteredSermons);
@@ -31,8 +44,12 @@ export default function Sermons() {
   const handleSermonPress = (sermon: Sermon) => {
     // Navigate to a detailed view
     router.push({
-      pathname: "/sermons/[id]",
-      params: { id: sermon.id, title: sermon.title },
+      pathname: "/sermons/[lessonId]",
+      params: {
+        ...sermon,
+        isFavorited: sermon.isFavorited.toString(),
+        isLive: sermon.isLive.toString(),
+      },
     });
   };
 
@@ -47,9 +64,9 @@ export default function Sermons() {
       {sermons.map((sermon, index) => (
         <Pressable key={index} onPress={() => handleSermonPress(sermon)}>
           <Text>{sermon.title}</Text>
-          <Text>{sermon.speaker}</Text>
+          <Text>{sermon.speakerName}</Text>
           <Text>{sermon.date}</Text>
-          <Text>{sermon.starred ? "⭐" : ""}</Text>
+          <Text>{sermon.isFavorited ? "⭐" : ""}</Text>
         </Pressable>
       ))}
     </View>

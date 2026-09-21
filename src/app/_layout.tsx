@@ -52,7 +52,10 @@ export default function RootLayout() {
           {/* The main tab group */}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           {/* Individual screens outside the tab structure */}
-          <Stack.Screen name="sermons/[id]" options={{ headerShown: true }} />
+          <Stack.Screen
+            name="sermons/[lessonId]"
+            options={{ headerShown: true }}
+          />
           <Stack.Screen
             name="devotion/[link]"
             options={{ headerShown: true }}

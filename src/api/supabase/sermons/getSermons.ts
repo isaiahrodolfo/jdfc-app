@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-type Sermon = {
+export type Sermon = {
   lessonId: number;
   title: string;
   date: string | null;
@@ -18,7 +18,7 @@ type Sermon = {
  *
  * @export
  * @async
- * @param {number} page - The page number (0-indexed).
+ * @param {number} page - The page number (1-indexed).
  * @param {number} pageSize - The amount of items (sermons) per page.
  * @returns {Promise<{
  *   data: Sermon[];

@@ -14,6 +14,7 @@ export default function Sermons() {
   const [pageNumber, setPageNumber] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // TODO: Load is_favorited from users_lessons table, not lessons table
   useEffect(() => {
     const loadSermons = async () => {
       try {
@@ -47,7 +48,6 @@ export default function Sermons() {
       pathname: "/sermons/[lessonId]",
       params: {
         ...sermon,
-        isFavorited: sermon.isFavorited.toString(),
         isLive: sermon.isLive.toString(),
       },
     });
@@ -66,7 +66,7 @@ export default function Sermons() {
           <Text>{sermon.title}</Text>
           <Text>{sermon.speakerName}</Text>
           <Text>{sermon.date}</Text>
-          <Text>{sermon.isFavorited ? "⭐" : ""}</Text>
+          {/* <Text>{sermon.isFavorited ? "⭐" : ""}</Text> */}
         </Pressable>
       ))}
     </View>

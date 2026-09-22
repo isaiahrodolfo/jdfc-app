@@ -4,12 +4,16 @@ import NoteEditor from "../NoteEditor";
 import Slides from "./Slides";
 
 export default function NotesPage({
-  id,
+  lessonId,
   title,
 }: {
-  id: string;
+  lessonId: string;
   title: string;
 }) {
+  const handleSaveNotes = async () => {
+    return;
+  };
+
   return (
     <View>
       <Stack.Screen
@@ -19,10 +23,10 @@ export default function NotesPage({
         }}
       />
       <Text>Notes Page</Text>
-      <Text>Sermon ID: {id}</Text>
+      <Text>Lesson ID: {lessonId}</Text>
 
       <Slides />
-      <NoteEditor />
+      <NoteEditor initialContent={""} onSaveNotes={handleSaveNotes} />
     </View>
   );
 }

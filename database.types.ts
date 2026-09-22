@@ -74,7 +74,6 @@ export type Database = {
           created_at: string
           date: string | null
           id: number
-          is_favorited: boolean
           series_id: number | null
           title: string
         }
@@ -82,7 +81,6 @@ export type Database = {
           created_at?: string
           date?: string | null
           id?: number
-          is_favorited?: boolean
           series_id?: number | null
           title: string
         }
@@ -90,7 +88,6 @@ export type Database = {
           created_at?: string
           date?: string | null
           id?: number
-          is_favorited?: boolean
           series_id?: number | null
           title?: string
         }
@@ -297,6 +294,7 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          is_favorited: boolean
           lesson_id: number
           notes: string | null
           user_id: string
@@ -304,6 +302,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: number
+          is_favorited?: boolean
           lesson_id: number
           notes?: string | null
           user_id: string
@@ -311,6 +310,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: number
+          is_favorited?: boolean
           lesson_id?: number
           notes?: string | null
           user_id?: string

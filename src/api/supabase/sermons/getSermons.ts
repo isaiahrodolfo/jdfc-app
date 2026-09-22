@@ -5,7 +5,6 @@ export type Sermon = {
   title: string;
   date: string | null;
   seriesId: number | null;
-  isFavorited: boolean;
   slideshowLink: string | null;
   speakerName: string | null;
   isLive: boolean;
@@ -51,7 +50,7 @@ export async function getSermons(
           title,
           date,
           series_id,
-          is_favorited
+          )
         )
       )
     `,
@@ -70,7 +69,6 @@ export async function getSermons(
       title: lesson.title,
       date: lesson.date,
       seriesId: lesson.series_id,
-      isFavorited: lesson.is_favorited,
       slideshowLink: slideshow.slideshow_link,
       speakerName: slideshow.speaker_name,
       isLive: slideshow.is_live,

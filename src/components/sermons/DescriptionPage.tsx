@@ -7,6 +7,7 @@ type DescriptionPageProps = {
   date: string;
   isFavorited: boolean;
   speakerName: string;
+  slideshowLink: string;
   youtubeLink: string;
   handleTakeNotesPress: () => void;
   handleToggleFavorited: () => void;
@@ -18,6 +19,7 @@ export default function DescriptionPage({
   date,
   isFavorited,
   speakerName,
+  slideshowLink,
   youtubeLink,
   handleTakeNotesPress,
   handleToggleFavorited,
@@ -36,6 +38,9 @@ export default function DescriptionPage({
       <Pressable onPress={handleToggleFavorited}>
         <Text>Favorite?: {isFavorited ? "true" : "false"}</Text>
       </Pressable>
+      <Text>Speaker Name: {speakerName}</Text>
+      <Text>Slideshow Link: {slideshowLink}</Text>
+      <Text>YouTube Link: {youtubeLink}</Text>
       <Pressable onPress={handleTakeNotesPress}>
         <Text>Take Notes</Text>
       </Pressable>

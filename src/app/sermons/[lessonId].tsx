@@ -48,6 +48,7 @@ export default function SermonPage() {
         date={date.toString()}
         isFavorited={isFavorited ? true : false}
         speakerName={speakerName.toString()}
+        slideshowLink={slideshowLink.toString()}
         youtubeLink={youtubeLink ? youtubeLink.toString() : ""}
         handleTakeNotesPress={handleTakeNotesPress}
         handleToggleFavorited={handleToggleFavorited}

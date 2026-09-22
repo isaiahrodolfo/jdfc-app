@@ -1,4 +1,5 @@
 import AuthProvider from "@/providers/auth-provider";
+import SermonsPageProvider from "@/providers/sermons-page-provider";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import Auth from "../components/Auth";
@@ -47,23 +48,25 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      {userId ? (
-        <Stack>
-          {/* The main tab group */}
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          {/* Individual screens outside the tab structure */}
-          <Stack.Screen
-            name="sermons/[lessonId]"
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="devotion/[link]"
-            options={{ headerShown: true }}
-          />
-        </Stack>
-      ) : (
-        <Auth />
-      )}
+      <SermonsPageProvider>
+        {userId ? (
+          <Stack>
+            {/* The main tab group */}
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            {/* Individual screens outside the tab structure */}
+            <Stack.Screen
+              name="sermons/[lessonId]"
+              options={{ headerShown: true }}
+            />
+            <Stack.Screen
+              name="devotion/[link]"
+              options={{ headerShown: true }}
+            />
+          </Stack>
+        ) : (
+          <Auth />
+        )}
+      </SermonsPageProvider>
     </AuthProvider>
   );
 }

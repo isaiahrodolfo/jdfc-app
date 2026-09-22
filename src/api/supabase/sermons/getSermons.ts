@@ -28,11 +28,13 @@ export type Sermon = {
 export async function getSermons(
   page: number,
   pageSize: number,
+  userId?: string,
 ): Promise<{
   data: Sermon[];
   count: number | null;
   totalPages: number;
 }> {
+  console.log("getSermons called with ", { page, pageSize, userId });
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
@@ -59,6 +61,28 @@ export async function getSermons(
 
   if (error) throw error;
 
+  // Join with user favorited lessons (skip this step if anonymous user)
+  const lessonIds = data.map((sermon) => sermon.slideshows.lessons.id);
+
+  let favoriteMap = new Map<number, boolean>();
+
+  if (userId) {
+    const { data: userLessons, error: userLessonsError } = await supabase
+      .from("users_lessons")
+      .select("lesson_id, is_favorited")
+      .eq("user_id", userId)
+      .in("lesson_id", lessonIds);
+
+    if (userLessonsError) throw userLessonsError;
+
+    favoriteMap = new Map(
+      userLessons.map((userLesson) => [
+        userLesson.lesson_id,
+        userLesson.is_favorited,
+      ]),
+    );
+  }
+
   const sermons: Sermon[] = data.map((sermon) => {
     const slideshow = sermon.slideshows;
     const lesson = slideshow.lessons;
@@ -72,6 +96,7 @@ export async function getSermons(
       speakerName: slideshow.speaker_name,
       isLive: slideshow.is_live,
       youtubeLink: sermon.youtube_link,
+      isFavorited: favoriteMap.get(lesson.id) ?? false,
     };
   });
 

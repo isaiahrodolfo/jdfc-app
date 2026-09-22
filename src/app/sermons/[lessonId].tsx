@@ -1,7 +1,9 @@
 import { toggleFavorited } from "@/api/supabase/lessons/toggleFavorited";
 import { useAuthContext } from "@/hooks/use-auth-context";
-import { useLocalSearchParams } from "expo-router";
+import { useSermonsPageContext } from "@/hooks/use-sermons-page-context";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+import { View } from "react-native";
 import DescriptionPage from "../../components/sermons/DescriptionPage";
 import NotesPage from "../../components/sermons/NotesPage";
 
@@ -9,6 +11,7 @@ type PageMode = "description" | "notes";
 
 export default function SermonPage() {
   const { user } = useAuthContext();
+  const { setSermons } = useSermonsPageContext();
 
   const {
     lessonId,
@@ -32,31 +35,56 @@ export default function SermonPage() {
   };
 
   const handleToggleFavorited = async () => {
+    if (typeof lessonId !== "number") return;
+
+    const newIsFavorited = !isFavorited;
+
     try {
-      toggleFavorited(user.id, Number(lessonId), !isFavorited);
-      setIsFavorited((f) => !f);
-    } catch {
-      console.error("Error toggling favorite for sermon");
+      await toggleFavorited(user.id, lessonId, newIsFavorited);
+      setIsFavorited(newIsFavorited);
+      setSermons((currentSermons) =>
+        currentSermons.map((sermon) =>
+          sermon.lessonId === Number(lessonId)
+            ? { ...sermon, isFavorited: newIsFavorited }
+            : sermon,
+        ),
+      );
+    } catch (error) {
+      console.log("Failed to toggle favorite", error);
     }
   };
 
   if (pageMode === "description") {
     return (
-      <DescriptionPage
-        lessonId={lessonId.toString()}
-        title={title.toString()}
-        date={date.toString()}
-        isFavorited={isFavorited ? true : false}
-        speakerName={speakerName.toString()}
-        slideshowLink={slideshowLink.toString()}
-        youtubeLink={youtubeLink ? youtubeLink.toString() : ""}
-        handleTakeNotesPress={handleTakeNotesPress}
-        handleToggleFavorited={handleToggleFavorited}
-      />
+      <View>
+        <Stack.Screen
+          options={{
+            title: title?.toString() || "Sermon",
+          }}
+        />
+        <DescriptionPage
+          lessonId={lessonId.toString()}
+          title={title.toString()}
+          date={date.toString()}
+          isFavorited={isFavorited ? true : false}
+          speakerName={speakerName.toString()}
+          slideshowLink={slideshowLink.toString()}
+          youtubeLink={youtubeLink ? youtubeLink.toString() : ""}
+          handleTakeNotesPress={handleTakeNotesPress}
+          handleToggleFavorited={handleToggleFavorited}
+        />
+      </View>
     );
   } else {
     return (
-      <NotesPage lessonId={lessonId.toString()} title={title.toString()} />
+      <View>
+        <Stack.Screen
+          options={{
+            title: title?.toString() || "Sermon",
+          }}
+        />
+        <NotesPage lessonId={lessonId.toString()} title={title.toString()} />
+      </View>
     );
   }
 }

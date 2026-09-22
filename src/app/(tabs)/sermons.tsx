@@ -1,46 +1,21 @@
-import { getSermons, Sermon } from "@/api/supabase/sermons/getSermons";
+import { Sermon } from "@/api/supabase/sermons/getSermons";
+import { useSermonsPageContext } from "@/hooks/use-sermons-page-context";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 // import sermonData from "../../constants/exampleSermonDataSimple.json";
 
 export default function Sermons() {
-  const [sermons, setSermons] = useState<Sermon[]>([]);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const [pageNumber, setPageNumber] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // TODO: Load is_favorited from users_lessons table, not lessons table
-  useEffect(() => {
-    const loadSermons = async () => {
-      try {
-        setLoading(true);
-        const result = await getSermons(pageNumber, 50);
-        console.log(result);
-        setSermons(result.data);
-      } catch (error) {
-        console.error("Failed to fetch sermons:", error);
-        setError(error instanceof Error ? error.message : String(error));
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadSermons();
-  }, []);
-
-  // TODO: Change this to filter sermons on the backend, and show the first 50 items, for example
-  const handleSearchQueryChange = (text: string) => {
-    const filteredSermons = sermons.filter((sermon) =>
-      sermon.title?.toLowerCase().includes(text.toLowerCase()),
-    );
-    setSermons(filteredSermons);
-    setSearchQuery(text);
-  };
+  const {
+    sermons,
+    setSermons,
+    isLoading,
+    error,
+    pageNumber,
+    searchQuery,
+    handleSearchQueryChange,
+    handleChangePage,
+  } = useSermonsPageContext();
 
   const handleSermonPress = (sermon: Sermon) => {
     // Navigate to a detailed view
@@ -69,6 +44,8 @@ export default function Sermons() {
           {/* <Text>{sermon.isFavorited ? "⭐" : ""}</Text> */}
         </Pressable>
       ))}
+      {/* toasts */}
+      <Text>Loading?: {isLoading}</Text>
     </View>
   );
 }

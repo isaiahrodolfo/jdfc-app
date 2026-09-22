@@ -35,12 +35,10 @@ export default function SermonPage() {
   };
 
   const handleToggleFavorited = async () => {
-    if (typeof lessonId !== "number") return;
-
     const newIsFavorited = !isFavorited;
 
     try {
-      await toggleFavorited(user.id, lessonId, newIsFavorited);
+      await toggleFavorited(user.id, Number(lessonId), newIsFavorited);
       setIsFavorited(newIsFavorited);
       setSermons((currentSermons) =>
         currentSermons.map((sermon) =>

@@ -49,8 +49,7 @@ export async function getSermons(
           id,
           title,
           date,
-          series_id,
-          )
+          series_id
         )
       )
     `,

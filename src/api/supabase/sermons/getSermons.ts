@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-export type Sermon = {
+export type UserSermon = {
   lessonId: number;
   title: string;
   date: string | null;
@@ -9,6 +9,7 @@ export type Sermon = {
   speakerName: string | null;
   isLive: boolean;
   youtubeLink: string | null;
+  isFavorited: boolean;
 };
 
 /**
@@ -20,7 +21,7 @@ export type Sermon = {
  * @param {number} page - The page number (1-indexed).
  * @param {number} pageSize - The amount of items (sermons) per page.
  * @returns {Promise<{
- *   data: Sermon[];
+ *   data: UserSermon[];
  *   count: number | null;
  *   totalPages: number;
  * }>}
@@ -30,7 +31,7 @@ export async function getSermons(
   pageSize: number,
   userId?: string,
 ): Promise<{
-  data: Sermon[];
+  data: UserSermon[];
   count: number | null;
   totalPages: number;
 }> {
@@ -83,7 +84,7 @@ export async function getSermons(
     );
   }
 
-  const sermons: Sermon[] = data.map((sermon) => {
+  const sermons: UserSermon[] = data.map((sermon) => {
     const slideshow = sermon.slideshows;
     const lesson = slideshow.lessons;
 

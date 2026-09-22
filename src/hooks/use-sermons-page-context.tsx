@@ -1,9 +1,9 @@
-import { Sermon } from "@/api/supabase/sermons/getSermons";
+import { UserSermon } from "@/api/supabase/sermons/getSermons";
 import { createContext, useContext } from "react";
 
 export type SermonsPage = {
-  sermons: Sermon[];
-  setSermons: React.Dispatch<React.SetStateAction<Sermon[]>>;
+  sermons: UserSermon[];
+  setSermons: React.Dispatch<React.SetStateAction<UserSermon[]>>;
   isLoading: boolean;
   error: string;
   setError: React.Dispatch<React.SetStateAction<string>>;

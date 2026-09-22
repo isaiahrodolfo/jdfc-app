@@ -1,4 +1,4 @@
-import { getSermons, Sermon } from "@/api/supabase/sermons/getSermons";
+import { getSermons, UserSermon } from "@/api/supabase/sermons/getSermons";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { SermonsPageContext } from "@/hooks/use-sermons-page-context";
 import { PropsWithChildren, useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { PropsWithChildren, useEffect, useState } from "react";
 export default function SermonsPageProvider({ children }: PropsWithChildren) {
   const { user } = useAuthContext();
 
-  const [sermons, setSermons] = useState<Sermon[]>([]);
+  const [sermons, setSermons] = useState<UserSermon[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState("");
   const [pageNumber, setPageNumber] = useState(1);

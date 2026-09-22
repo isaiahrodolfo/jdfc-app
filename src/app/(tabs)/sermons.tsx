@@ -1,4 +1,4 @@
-import { Sermon } from "@/api/supabase/sermons/getSermons";
+import { UserSermon } from "@/api/supabase/sermons/getSermons";
 import { useSermonsPageContext } from "@/hooks/use-sermons-page-context";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -17,12 +17,13 @@ export default function Sermons() {
     handleChangePage,
   } = useSermonsPageContext();
 
-  const handleSermonPress = (sermon: Sermon) => {
+  const handleSermonPress = (sermon: UserSermon) => {
     // Navigate to a detailed view
     router.push({
       pathname: "/sermons/[lessonId]",
       params: {
         ...sermon,
+        isFavorited: sermon.isFavorited.toString(),
         isLive: sermon.isLive.toString(),
       },
     });
@@ -41,7 +42,7 @@ export default function Sermons() {
           <Text>{sermon.title}</Text>
           <Text>{sermon.speakerName}</Text>
           <Text>{sermon.date}</Text>
-          {/* <Text>{sermon.isFavorited ? "⭐" : ""}</Text> */}
+          <Text>{sermon.isFavorited ? "⭐" : ""}</Text>
         </Pressable>
       ))}
       {/* toasts */}

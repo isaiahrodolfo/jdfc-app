@@ -12,33 +12,29 @@ export default function SermonsPageProvider({ children }: PropsWithChildren) {
   const [pageNumber, setPageNumber] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const loadSermons = async (searchQuery: string) => {
+    try {
+      setIsLoading(true);
+      const result = await getSermons(pageNumber, 50, user.id, searchQuery);
+      console.log(result);
+      setSermons(result.data);
+    } catch (error) {
+      console.error("Failed to fetch sermons:", error);
+      setError("Failed to fetch sermons");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Load sermons on initial mount
   useEffect(() => {
     if (!user) return;
-    const loadSermons = async () => {
-      try {
-        setIsLoading(true);
-        const result = await getSermons(pageNumber, 50, user.id);
-        console.log(result);
-        setSermons(result.data);
-      } catch (error) {
-        console.error("Failed to fetch sermons:", error);
-        setError("Failed to fetch sermons");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadSermons();
+    loadSermons("");
   }, [user]);
 
-  // TODO: Change this to filter sermons on the backend, and show the first 50 items, for example
   const handleSearchQueryChange = (searchQuery: string) => {
-    const filteredSermons = sermons.filter((sermon) =>
-      sermon.title?.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-    setSermons(filteredSermons);
     setSearchQuery(searchQuery);
+    loadSermons(searchQuery);
   };
 
   const handleChangePage = (pageNumber: number) => {

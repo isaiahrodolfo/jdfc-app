@@ -30,25 +30,29 @@ export async function getSermons(
   page: number,
   pageSize: number,
   userId?: string,
+  searchQuery?: string,
 ): Promise<{
   data: UserSermon[];
   count: number | null;
   totalPages: number;
 }> {
-  console.log("getSermons called with ", { page, pageSize, userId });
+  console.log("getSermons called with ", {
+    page,
+    pageSize,
+    userId,
+    searchQuery,
+  });
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  const { data, error, count } = await supabase
-    .from("sermons")
-    .select(
-      `
+  let query = supabase.from("sermons").select(
+    `
       youtube_link,
       slideshows (
         slideshow_link,
         speaker_name,
         is_live,
-        lessons (
+        lessons!inner (
           id,
           title,
           date,
@@ -56,14 +60,34 @@ export async function getSermons(
         )
       )
     `,
-      { count: "exact" },
-    )
-    .range(from, to);
+    { count: "exact" },
+  );
 
-  if (error) throw error;
+  // Search by lessons.title
+  if (searchQuery?.trim()) {
+    query = query.ilike("slideshows.lessons.title", `%${searchQuery.trim()}%`);
+  }
+
+  const { data, error, count } = await query.range(from, to);
+
+  console.log("data: ", data);
+
+  // TODO: Gracefully handle error
+  if (error) {
+    throw error;
+  }
 
   // Join with user favorited lessons (skip this step if anonymous user)
-  const lessonIds = data.map((sermon) => sermon.slideshows.lessons.id);
+  const lessonIds = data
+    .filter((sermon) => sermon.slideshows != null)
+    .map((sermon) => sermon.slideshows!.lessons.id);
+
+  const matchedSermons = data.filter(
+    (sermon) => sermon.slideshows?.lessons != null,
+  );
+
+  console.log("lessonIds: ", lessonIds);
+  console.log("matchedSermons: ", matchedSermons);
 
   let favoriteMap = new Map<number, boolean>();
 
@@ -84,7 +108,7 @@ export async function getSermons(
     );
   }
 
-  const sermons: UserSermon[] = data.map((sermon) => {
+  const sermons: UserSermon[] = matchedSermons.map((sermon) => {
     const slideshow = sermon.slideshows;
     const lesson = slideshow.lessons;
 

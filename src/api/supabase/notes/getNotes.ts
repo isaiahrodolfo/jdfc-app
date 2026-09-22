@@ -43,8 +43,9 @@ export async function getNotes(
     .eq("lesson_id", lessonId)
     .single();
 
-  if (error) {
-    throw error;
+  if (error || !data) {
+    console.log("Lesson not found");
+    return "";
   }
 
   return data?.notes ?? "";

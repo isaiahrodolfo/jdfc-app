@@ -25,6 +25,8 @@ export default function Sermons() {
         ...sermon,
         isFavorited: sermon.isFavorited.toString(),
         isLive: sermon.isLive.toString(),
+        speakerName: sermon.speakerName ? sermon.speakerName : "",
+        slideshowLink: sermon.slideshowLink ? sermon.slideshowLink : "",
       },
     });
   };
@@ -46,7 +48,7 @@ export default function Sermons() {
         </Pressable>
       ))}
       {/* toasts */}
-      <Text>Loading?: {isLoading}</Text>
+      {/* <Text>Loading?: {isLoading}</Text> */}
     </View>
   );
 }

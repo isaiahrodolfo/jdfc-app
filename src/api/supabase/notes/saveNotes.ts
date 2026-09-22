@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 import { findDevotional } from "../devotion/findDevotional";
-export type NoteType = "devotionals" | "slideshows";
+export type NoteType = "devotional" | "slideshow";
 
 /**
  * Save user-written notes in the users_lessons table.
@@ -32,7 +32,29 @@ export async function saveNotes(
     noteType,
   });
 
-  if (noteType === "slideshows") return;
+  // NoteType = "slideshow"
+  if (noteType === "slideshow") {
+    try {
+      const { error } = await supabase
+        .from("users_lessons")
+        .upsert(
+          {
+            user_id: user.id,
+            lesson_id: Number(uniqueIdentifier),
+            notes: text,
+          },
+          {
+            onConflict: "user_id,lesson_id",
+          },
+        )
+        .select()
+        .single();
+    } catch (error) {
+      console.error("Error saving notes:", error);
+    }
+  }
+
+  // NoteType = "devotional"
   if (!title || !date) return; // Make sure devotionals have a title and a date
   // TODO: Write the code for saving slideshows
 

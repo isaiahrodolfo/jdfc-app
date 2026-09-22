@@ -75,7 +75,7 @@ export default function SermonPage() {
     );
   } else {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Stack.Screen
           options={{
             title: title?.toString() || "Sermon",

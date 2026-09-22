@@ -22,7 +22,11 @@ export default function DevotionPage() {
 
     const loadNotes = async () => {
       try {
-        const notes = await getNotes(user.id, link.toString());
+        const notes = await getNotes(
+          user.id,
+          link.toString(),
+          "devotional" as NoteType,
+        );
         setInitialContent(notes);
       } catch (error) {
         console.error("Error loading notes:", error);
@@ -42,7 +46,7 @@ export default function DevotionPage() {
         user,
         html,
         link.toString(),
-        "devotion" as NoteType,
+        "devotional" as NoteType,
         title.toString(),
         date.toString(),
       );

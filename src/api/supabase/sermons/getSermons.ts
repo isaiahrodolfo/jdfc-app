@@ -5,6 +5,7 @@ export type UserSermon = {
   title: string;
   date: string | null;
   seriesId: number | null;
+  slideshowId: number;
   slideshowLink: string | null;
   speakerName: string | null;
   isLive: boolean;
@@ -36,12 +37,6 @@ export async function getSermons(
   count: number | null;
   totalPages: number;
 }> {
-  console.log("getSermons called with ", {
-    page,
-    pageSize,
-    userId,
-    searchQuery,
-  });
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
@@ -49,6 +44,7 @@ export async function getSermons(
     `
       youtube_link,
       slideshows (
+        id,
         slideshow_link,
         speaker_name,
         is_live,
@@ -70,8 +66,6 @@ export async function getSermons(
 
   const { data, error, count } = await query.range(from, to);
 
-  console.log("data: ", data);
-
   // TODO: Gracefully handle error
   if (error) {
     throw error;
@@ -85,9 +79,6 @@ export async function getSermons(
   const matchedSermons = data.filter(
     (sermon) => sermon.slideshows?.lessons != null,
   );
-
-  console.log("lessonIds: ", lessonIds);
-  console.log("matchedSermons: ", matchedSermons);
 
   let favoriteMap = new Map<number, boolean>();
 
@@ -117,6 +108,7 @@ export async function getSermons(
       title: lesson.title,
       date: lesson.date,
       seriesId: lesson.series_id,
+      slideshowId: slideshow.id,
       slideshowLink: slideshow.slideshow_link,
       speakerName: slideshow.speaker_name,
       isLive: slideshow.is_live,

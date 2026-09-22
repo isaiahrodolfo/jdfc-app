@@ -9,9 +9,11 @@ import Slides from "./Slides";
 
 export default function NotesPage({
   lessonId,
+  slideshowId,
   title,
 }: {
   lessonId: string;
+  slideshowId: string;
   title: string;
 }) {
   const { user } = useAuthContext();
@@ -67,7 +69,7 @@ export default function NotesPage({
       <Text>Notes Page</Text>
       <Text>Lesson ID: {lessonId}</Text>
 
-      <Slides />
+      <Slides slideshowId={slideshowId.toString()} />
       <NoteEditor
         initialContent={initialContent}
         onSaveNotes={handleSaveNotes}

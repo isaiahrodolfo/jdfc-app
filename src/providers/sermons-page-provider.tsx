@@ -16,7 +16,6 @@ export default function SermonsPageProvider({ children }: PropsWithChildren) {
     try {
       setIsLoading(true);
       const result = await getSermons(pageNumber, 50, user.id, searchQuery);
-      console.log(result);
       setSermons(result.data);
     } catch (error) {
       console.error("Failed to fetch sermons:", error);

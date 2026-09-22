@@ -18,11 +18,12 @@ export default function SermonPage() {
     title,
     date,
     seriesId,
-    isFavorited: isFavoritedInitial,
+    slideshowId,
     slideshowLink,
     speakerName,
     isLive,
     youtubeLink,
+    isFavorited: isFavoritedInitial,
   } = useLocalSearchParams();
 
   const [pageMode, setPageMode] = useState<PageMode>("description");
@@ -81,7 +82,11 @@ export default function SermonPage() {
             title: title?.toString() || "Sermon",
           }}
         />
-        <NotesPage lessonId={lessonId.toString()} title={title.toString()} />
+        <NotesPage
+          lessonId={lessonId.toString()}
+          slideshowId={slideshowId.toString()}
+          title={title.toString()}
+        />
       </View>
     );
   }

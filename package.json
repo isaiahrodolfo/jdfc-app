@@ -5,7 +5,16 @@
   "dependencies": {
     "@10play/tentap-editor": "^1.0.1",
     "@expo/ui": "~57.0.18",
+    "@gorhom/bottom-sheet": "latest",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/datetimepicker": "latest",
+    "@react-native-community/slider": "latest",
+    "@storybook/addon-ondevice-actions": "latest",
+    "@storybook/addon-ondevice-controls": "latest",
+    "@storybook/react-native": "latest",
+    "@storybook/react-native-ui-lite": "latest",
     "@supabase/supabase-js": "^2.116.0",
+    "cross-env": "latest",
     "expo": "~57.0.23",
     "expo-constants": "~57.0.18",
     "expo-device": "~57.0.2",
@@ -25,11 +34,13 @@
     "react-native": "0.86.3",
     "react-native-gesture-handler": "~2.32.0",
     "react-native-reanimated": "4.5.1",
-    "react-native-safe-area-context": "~5.7.0",
+    "react-native-safe-area-context": "^5.8.0",
     "react-native-screens": "~4.26.0",
+    "react-native-svg": "latest",
     "react-native-web": "~0.21.0",
     "react-native-webview": "13.16.1",
-    "react-native-worklets": "0.10.1"
+    "react-native-worklets": "0.10.1",
+    "storybook": "^10.6.0"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
@@ -41,7 +52,10 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "storybook": "cross-env STORYBOOK_ENABLED=true expo start",
+    "storybook:ios": "cross-env STORYBOOK_ENABLED=true expo run:ios",
+    "storybook:android": "cross-env STORYBOOK_ENABLED=true expo run:android"
   },
   "private": true
 }

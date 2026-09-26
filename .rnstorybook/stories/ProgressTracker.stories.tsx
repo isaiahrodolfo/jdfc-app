@@ -3,11 +3,11 @@ import { Colors } from "../../src/constants/theme";
 
 import { View } from "react-native";
 
-import CheckboxesContainer from "../../src/components/progress_tracker/CheckboxesContainer";
+import ProgressTracker from "../../src/components/progress_tracker/ProgressTracker";
 
 const meta = {
-  title: "Example/CheckboxesContainer",
-  component: CheckboxesContainer,
+  title: "Example/ProgressTracker",
+  component: ProgressTracker,
   decorators: [
     (Story) => (
       <View
@@ -25,7 +25,7 @@ const meta = {
   tags: ["autodocs"],
   // Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
   //   args: { onPress: fn() },
-} satisfies Meta<typeof CheckboxesContainer>;
+} satisfies Meta<typeof ProgressTracker>;
 
 export default meta;
 
@@ -81,5 +81,6 @@ export const PurplePrimary: Story = {
         isCurrent: true,
       },
     ],
+    subtitles: ["6/7 complete!", "You can do this!"],
   },
 };

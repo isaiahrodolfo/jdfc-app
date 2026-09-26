@@ -28,7 +28,7 @@ export default function Checkbox({
 
   return (
     // Pass the evaluated themeKey variable inside brackets
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <Pressable
         style={[
           styles.circleContainer,

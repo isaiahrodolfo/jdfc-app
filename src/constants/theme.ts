@@ -3,7 +3,7 @@ import "@/global.css";
 import { Platform } from "react-native";
 
 const COLORS = {
-  INDIGO_1: "#24314E",
+  INDIGO_1: "#081739",
   INDIGO_2: "#172645",
   INDIGO_3: "#24314E",
   INDIGO_4: "#384768",

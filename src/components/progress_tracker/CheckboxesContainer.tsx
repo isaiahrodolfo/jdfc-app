@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import Checkbox from "./Checkbox";
 
-type CheckboxData = {
+export type CheckboxData = {
   date: number;
   isChecked: boolean;
   isCurrent: boolean;
@@ -9,13 +9,11 @@ type CheckboxData = {
 
 type CheckboxesContainerProps = {
   colorName: "yellow" | "green" | "blue" | "purple";
-  type: "Primary" | "Secondary";
   checkboxesData: CheckboxData[];
 };
 
 export default function CheckboxesContainer({
   colorName,
-  type,
   checkboxesData,
 }: CheckboxesContainerProps) {
   return (
@@ -25,7 +23,7 @@ export default function CheckboxesContainer({
           key={checkbox.date}
           isChecked={checkbox.isChecked}
           colorName={colorName}
-          type={type}
+          type={"Primary"}
           isCurrent={checkbox.isCurrent}
         />
       ))}

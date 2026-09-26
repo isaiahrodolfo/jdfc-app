@@ -27,15 +27,17 @@
     },
     "plugins": [
       "expo-router",
+      "expo-sqlite",
       [
-        "expo-splash-screen",
+        "expo-font",
         {
-          "backgroundColor": "#208AEF",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "fonts": [
+            "./assets/fonts/GlacialIndifference-Bold.otf",
+            "./assets/fonts/GlacialIndifference-Italic.otf",
+            "./assets/fonts/GlacialIndifference-Regular.otf"
+          ]
         }
-      ],
-      "expo-sqlite"
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

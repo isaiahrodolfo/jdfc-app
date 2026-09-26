@@ -139,20 +139,16 @@ export const Colors = {
 export type ThemeColor = keyof typeof Colors.light;
 
 export const Fonts = {
-  family: Platform.select({
-    ios: "Glacial Indifference",
-    android: "GlacialIndifference",
-    default: "sans-serif",
-  }),
+  family: "Glacial Indifference",
   sizes: {
     h1: 40,
     h2: 30,
     h3: 24,
     h4: 20,
-    bodyLarge: 18,
-    body: 14,
-    caption: 12,
-    tiny: 10,
+    h5: 18,
+    h6: 14,
+    p: 12,
+    small: 10,
   } as const,
 };
 

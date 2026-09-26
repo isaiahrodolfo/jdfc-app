@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 12 + 34,
-    padding: 17,
+    gap: 11,
   },
 });

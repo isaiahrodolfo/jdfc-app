@@ -13,7 +13,7 @@ export default function ProgressTracker({
   checkboxesData,
   subtitles,
 }: ProgressTrackerProps) {
-  const { theme } = useTheme();
+  const { theme, fonts } = useTheme();
 
   return (
     <View style={styles.container}>
@@ -23,7 +23,15 @@ export default function ProgressTracker({
       />
       <View style={styles.textContainer}>
         {subtitles.map((subtitle, index) => (
-          <Text key={index} style={{ color: theme.textAlt }}>
+          <Text
+            key={index}
+            style={{
+              color: theme.textAlt,
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h6,
+              fontWeight: "regular",
+            }}
+          >
             {subtitle}
           </Text>
         ))}

@@ -47,13 +47,12 @@ export default function Checkbox({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
   },
   circleContainer: {
-    width: 34,
-    height: 34,
-    borderRadius: 34 / 2,
+    width: 32,
+    height: 32,
+    borderRadius: 32 / 2,
     justifyContent: "center",
     alignItems: "center",
   },

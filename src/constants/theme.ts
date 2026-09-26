@@ -84,6 +84,10 @@ export const Colors = {
     purplePrimaryDisabled: COLORS.INDIGO_5,
     purpleSecondaryEnabled: COLORS.PURPLE_1,
     purpleSecondaryDisabled: COLORS.PURPLE_LIGHT,
+
+    sundayService: COLORS.WHITE,
+    prayerService: COLORS.GRAY_LIGHT,
+    lifeGroup: "#D26A20", // TODO: make this type-safe and add a light mode version of it
   },
   dark: {
     primary: COLORS.INDIGO_1,
@@ -133,6 +137,10 @@ export const Colors = {
     purplePrimaryDisabled: COLORS.INDIGO_5,
     purpleSecondaryEnabled: COLORS.PURPLE_1,
     purpleSecondaryDisabled: COLORS.PURPLE_LIGHT,
+
+    sundayService: COLORS.WHITE,
+    prayerService: COLORS.GRAY_LIGHT,
+    lifeGroup: "#D26A20", // TODO: make this type-safe and add a light mode version of it
   },
 } as const;
 

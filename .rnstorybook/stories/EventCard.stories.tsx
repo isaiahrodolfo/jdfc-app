@@ -3,11 +3,11 @@ import { Colors } from "../../src/constants/theme";
 
 import { View } from "react-native";
 
-import AnnouncementCard from "../../src/components/cards/AnnouncementCard";
+import EventCard from "../../src/components/cards/EventCard";
 
 const meta = {
-  title: "Example/AnnouncementCard",
-  component: AnnouncementCard,
+  title: "Example/EventCard",
+  component: EventCard,
   decorators: [
     (Story) => (
       <View
@@ -25,16 +25,18 @@ const meta = {
   tags: ["autodocs"],
   // Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
   //   args: { onPress: fn() },
-} satisfies Meta<typeof AnnouncementCard>;
+} satisfies Meta<typeof EventCard>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Welcome: Story = {
+export const PrayerService: Story = {
   args: {
-    title: "Welcome to the JDFC App!",
-    subtitle: "JDFC App",
-    colorName: "accent",
+    title: "Prayer Service",
+    date: "September 30, 2026",
+    time: "7:00 pm",
+    location: "Jesus’ Disciples Family Church",
+    colorName: "prayerService",
   },
 };

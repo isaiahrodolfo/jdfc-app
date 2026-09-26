@@ -26,7 +26,7 @@ export default function ProgressTrackerCard({
         style={{
           color: theme.text,
           fontFamily: fonts.family,
-          fontSize: fonts.sizes.h6,
+          fontSize: fonts.sizes.h5,
           fontWeight: "bold",
           textTransform: "uppercase",
         }}

@@ -1,5 +1,6 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import CheckmarkIndigo1 from "../../../assets/icons/CheckmarkIndigo1.svg";
 
 type CheckboxProps = {
   isChecked: boolean;
@@ -38,7 +39,7 @@ export default function Checkbox({
           },
         ]}
       >
-        <Text style={{ color: theme.primary }}>{isChecked ? "✓" : ""}</Text>
+        <View>{isChecked ? <CheckmarkIndigo1 /> : <View></View>}</View>
       </Pressable>
     </View>
   );
@@ -50,9 +51,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   circleContainer: {
-    width: 30,
-    height: 30,
-    borderRadius: 30 / 2,
+    width: 34,
+    height: 34,
+    borderRadius: 34 / 2,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -1,6 +1,6 @@
 import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
-import DividingLine from "../DividingLine";
+import DividingLine from "../miscellaneous/DividingLine";
 import { CheckboxData } from "./CheckboxesContainer";
 import ProgressTracker from "./ProgressTracker";
 

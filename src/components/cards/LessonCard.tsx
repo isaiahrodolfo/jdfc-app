@@ -1,9 +1,9 @@
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
-import ChevronCompact from "../../assets/icons/ChevronCompactIndigo5.svg";
-import DividingLine from "./DividingLine";
-import Checkbox from "./progress_tracker/Checkbox";
+import ChevronCompact from "../../../assets/icons/ChevronCompactIndigo5.svg";
+import DividingLine from "../miscellaneous/DividingLine";
+import Checkbox from "../progress_tracker/Checkbox";
 
 type LessonCardProps = {
   isCompleted: boolean;

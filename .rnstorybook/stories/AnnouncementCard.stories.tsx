@@ -3,11 +3,11 @@ import { Colors } from "../../src/constants/theme";
 
 import { View } from "react-native";
 
-import LessonCard from "../../src/components/cards/LessonCard";
+import AnnouncementCard from "../../src/components/cards/AnnouncementCard";
 
 const meta = {
-  title: "Example/LessonCard",
-  component: LessonCard,
+  title: "Example/AnnouncementCard",
+  component: AnnouncementCard,
   decorators: [
     (Story) => (
       <View
@@ -25,7 +25,7 @@ const meta = {
   tags: ["autodocs"],
   // Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
   //   args: { onPress: fn() },
-} satisfies Meta<typeof LessonCard>;
+} satisfies Meta<typeof AnnouncementCard>;
 
 export default meta;
 
@@ -33,12 +33,8 @@ type Story = StoryObj<typeof meta>;
 
 export const GreenCompleted: Story = {
   args: {
-    isCompleted: true,
-    colorName: "green",
-    size: "big",
-    descriptionHeading: "September 12, 2026",
-    descriptionSubheading: "Today",
-    titleSubheading: "Week 1: Learning From Our Mistakes",
-    titleHeading: "The Best Deal Of Your Life",
+    title: "Welcome to the JDFC App!",
+    subtitle: "JDFC App",
+    colorName: "accent",
   },
 };

@@ -27,11 +27,13 @@ type Story = StoryObj<typeof meta>;
 export const Checked: Story = {
   args: {
     isChecked: true,
+    isCurrent: false,
   },
 };
 
 export const Not_Checked: Story = {
   args: {
     isChecked: false,
+    isCurrent: false,
   },
 };

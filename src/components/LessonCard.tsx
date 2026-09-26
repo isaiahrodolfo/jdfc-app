@@ -46,7 +46,7 @@ export default function LessonCard({
           <Checkbox
             colorName={colorName}
             type={"Secondary"}
-            isChecked={true}
+            isChecked={isCompleted}
             isCurrent={false}
           />
         </View>
@@ -112,7 +112,7 @@ export default function LessonCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 330,
+    width: 330, // Testing, should be 100% width
   },
   topAccentShape: {
     width: "100%",

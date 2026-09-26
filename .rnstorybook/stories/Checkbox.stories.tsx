@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-native";
+import { Colors } from "../../src/constants/theme";
 
 import { View } from "react-native";
 
@@ -9,7 +10,13 @@ const meta = {
   component: Checkbox,
   decorators: [
     (Story) => (
-      <View style={{ flex: 1, alignItems: "flex-start" }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "flex-start",
+          backgroundColor: Colors.dark.primary,
+        }}
+      >
         <Story />
       </View>
     ),
@@ -24,16 +31,20 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Checked: Story = {
+export const PurplePrimaryCheckedNotCurrent: Story = {
   args: {
     isChecked: true,
+    colorName: "purple",
+    type: "Primary",
     isCurrent: false,
   },
 };
 
-export const Not_Checked: Story = {
+export const PurpleSecondaryCheckedCurrent: Story = {
   args: {
-    isChecked: false,
-    isCurrent: false,
+    isChecked: true,
+    colorName: "purple",
+    type: "Secondary",
+    isCurrent: true,
   },
 };

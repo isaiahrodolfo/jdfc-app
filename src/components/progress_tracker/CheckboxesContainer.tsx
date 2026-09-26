@@ -1,3 +1,4 @@
+import { AccentColor } from "@/constants/theme";
 import { StyleSheet, View } from "react-native";
 import Checkbox from "./Checkbox";
 
@@ -8,7 +9,7 @@ export type CheckboxData = {
 };
 
 type CheckboxesContainerProps = {
-  colorName: "yellow" | "green" | "blue" | "purple";
+  colorName: AccentColor;
   checkboxesData: CheckboxData[];
 };
 

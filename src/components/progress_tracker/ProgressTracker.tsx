@@ -1,9 +1,10 @@
+import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 import CheckboxesContainer, { CheckboxData } from "./CheckboxesContainer";
 
 type ProgressTrackerProps = {
-  colorName: "yellow" | "green" | "blue" | "purple";
+  colorName: AccentColor;
   checkboxesData: CheckboxData[];
   subtitles: string[];
 };

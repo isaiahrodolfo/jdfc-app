@@ -136,6 +136,8 @@ export const Colors = {
   },
 } as const;
 
+export type AccentColor = "yellow" | "green" | "blue" | "purple";
+
 export type ThemeColor = keyof typeof Colors.light;
 
 export const Fonts = {

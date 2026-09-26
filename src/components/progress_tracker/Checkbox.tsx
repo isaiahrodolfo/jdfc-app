@@ -1,10 +1,11 @@
+import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Pressable, StyleSheet, View } from "react-native";
 import CheckmarkIndigo1 from "../../../assets/icons/CheckmarkIndigo1.svg";
 
 type CheckboxProps = {
   isChecked: boolean;
-  colorName: "yellow" | "green" | "blue" | "purple";
+  colorName: AccentColor;
   type: "Primary" | "Secondary";
   isCurrent: boolean;
 };

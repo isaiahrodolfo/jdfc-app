@@ -35,6 +35,7 @@ const COLORS = {
   PURPLE_DARK: "#171A21",
 
   GRAY_DARK: "#2E3137",
+  GRAY_DARK_2: "#484848",
   GRAY_LIGHT: "#A9AFBA",
 };
 
@@ -47,6 +48,7 @@ export const Colors = {
     accent: COLORS.YELLOW_2,
     accentAlt: COLORS.YELLOW_1,
     accentGray: COLORS.GRAY_DARK,
+    accentGraySecondary: COLORS.GRAY_DARK_2,
     accentGrayAlt: COLORS.GRAY_LIGHT,
     accentOpposite: COLORS.INDIGO_6,
     text: COLORS.WHITE,
@@ -101,6 +103,7 @@ export const Colors = {
     accent: COLORS.YELLOW_2,
     accentAlt: COLORS.YELLOW_1,
     accentGray: COLORS.GRAY_DARK,
+    accentGraySecondary: COLORS.GRAY_DARK_2,
     accentGrayAlt: COLORS.GRAY_LIGHT,
     accentOpposite: COLORS.INDIGO_6,
     text: COLORS.WHITE,

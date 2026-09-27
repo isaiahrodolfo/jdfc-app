@@ -52,7 +52,7 @@ export default function PersonInfoCard({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.primaryAlt }]}>
       <View style={styles.textColumns}>
         <TextContainer icon="ph" fieldName="Phone" fieldContent={phoneNumber} />
         <TextContainer icon="bc" fieldName="Birthday" fieldContent={birthday} />

@@ -31,7 +31,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const GreenCompleted: Story = {
+export const GreenBigCompleted: Story = {
   args: {
     isCompleted: true,
     colorName: "green",
@@ -39,6 +39,42 @@ export const GreenCompleted: Story = {
     descriptionHeading: "September 12, 2026",
     descriptionSubheading: "Today",
     titleSubheading: "Week 1: Learning From Our Mistakes",
+    titleHeading: "The Best Deal Of Your Life",
+  },
+};
+
+export const GreenSmallCompleted: Story = {
+  args: {
+    isCompleted: true,
+    colorName: "green",
+    size: "small",
+    descriptionHeading: "September 12, 2026",
+    descriptionSubheading: "Today",
+    titleSubheading: "Week 1: Learning From Our Mistakes",
+    titleHeading: "The Best Deal Of Your Life",
+  },
+};
+
+export const GreenSmallCompletedNoDescriptions: Story = {
+  args: {
+    isCompleted: true,
+    colorName: "green",
+    size: "small",
+    descriptionHeading: "",
+    descriptionSubheading: "",
+    titleSubheading: "Week 1: Learning From Our Mistakes",
+    titleHeading: "The Best Deal Of Your Life",
+  },
+};
+
+export const GreenSmallCompletedNoTitleSubheading: Story = {
+  args: {
+    isCompleted: true,
+    colorName: "green",
+    size: "small",
+    descriptionHeading: "",
+    descriptionSubheading: "",
+    titleSubheading: "",
     titleHeading: "The Best Deal Of Your Life",
   },
 };

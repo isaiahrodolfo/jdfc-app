@@ -56,54 +56,67 @@ export default function LessonCard({
             { backgroundColor: theme.secondary },
           ]}
         >
-          <View style={styles.descriptionColumn}>
-            <Text
-              style={{
-                fontFamily: fonts.family,
-                fontSize: fonts.sizes.h6,
-                fontStyle: "italic",
-                textTransform: "uppercase",
-                color: theme.text,
-              }}
-            >
-              {descriptionSubheading}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.family,
-                fontSize: fonts.sizes.h4,
-                fontWeight: "bold",
-                color: theme.text,
-              }}
-            >
-              {descriptionHeading}
-            </Text>
-          </View>
-          <DividingLine color={theme.secondaryAlt} />
-          <View style={styles.titleColumn}>
-            <Text
-              style={{
-                fontFamily: fonts.family,
-                fontSize: fonts.sizes.h6,
-                fontStyle: "italic",
-                color: theme.text,
-              }}
-            >
-              {titleSubheading}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.family,
-                fontSize: fonts.sizes.h5,
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                color: theme.text,
-              }}
-            >
-              {titleHeading}
-            </Text>
-            <ChevronCompact style={styles.chevronCompact} />
-          </View>
+          {(descriptionSubheading || descriptionSubheading) && (
+            <View style={styles.descriptionColumn}>
+              {descriptionSubheading && (
+                <Text
+                  style={{
+                    fontFamily: fonts.family,
+                    fontSize: fonts.sizes.h6,
+                    fontStyle: "italic",
+                    textTransform: "uppercase",
+                    color: theme.text,
+                  }}
+                >
+                  {descriptionSubheading}
+                </Text>
+              )}
+              {descriptionHeading && (
+                <Text
+                  style={{
+                    fontFamily: fonts.family,
+                    fontSize: fonts.sizes.h4,
+                    fontWeight: "bold",
+                    color: theme.text,
+                  }}
+                >
+                  {descriptionHeading}
+                </Text>
+              )}
+            </View>
+          )}
+          {(descriptionSubheading || descriptionSubheading) &&
+            (titleSubheading || titleHeading) && (
+              <DividingLine color={theme.secondaryAlt} />
+            )}
+          {(titleSubheading || titleHeading) && (
+            <View style={styles.titleColumn}>
+              {titleSubheading && (
+                <Text
+                  style={{
+                    fontFamily: fonts.family,
+                    fontSize: fonts.sizes.h6,
+                    fontStyle: "italic",
+                    color: theme.text,
+                  }}
+                >
+                  {titleSubheading}
+                </Text>
+              )}
+              <Text
+                style={{
+                  fontFamily: fonts.family,
+                  fontSize: fonts.sizes.h5,
+                  fontWeight: "bold",
+                  textTransform: "uppercase",
+                  color: theme.text,
+                }}
+              >
+                {titleHeading}
+              </Text>
+              <ChevronCompact style={styles.chevronCompact} />
+            </View>
+          )}
         </View>
       </View>
     </View>

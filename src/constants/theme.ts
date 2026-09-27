@@ -2,6 +2,9 @@
 import "@/global.css";
 import { Platform } from "react-native";
 
+import NotesIndigo3 from "@/assets/icons/NotesIndigo3.svg";
+import PlayIndigo3 from "@/assets/icons/PlayIndigo3.svg";
+
 const COLORS = {
   INDIGO_1: "#081739",
   INDIGO_2: "#172645",
@@ -52,6 +55,7 @@ export const Colors = {
     iconPrimary: COLORS.INDIGO_6,
     iconSecondary: COLORS.INDIGO_5,
     iconAccent: COLORS.INDIGO_3,
+    iconAccentAlt: COLORS.WHITE,
 
     // Yellow
     yellow: COLORS.YELLOW_2,
@@ -105,6 +109,7 @@ export const Colors = {
     iconPrimary: COLORS.INDIGO_6,
     iconSecondary: COLORS.INDIGO_5,
     iconAccent: COLORS.INDIGO_3,
+    iconAccentAlt: COLORS.WHITE,
 
     // Yellow
     yellow: COLORS.YELLOW_2,
@@ -171,6 +176,13 @@ export const Spacing = {
   five: 32,
   six: 64,
 } as const;
+
+export const Icons = {
+  accent: {
+    play: PlayIndigo3,
+    notes: NotesIndigo3,
+  },
+};
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;

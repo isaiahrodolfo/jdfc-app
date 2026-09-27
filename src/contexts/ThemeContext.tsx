@@ -1,7 +1,7 @@
 // src/context/ThemeContext.tsx
 import React, { createContext, useContext } from "react";
 import { useColorScheme } from "react-native";
-import { Colors, Fonts, Spacing } from "../constants/theme"; // Match paths
+import { Colors, Fonts, Icons, Spacing } from "../constants/theme"; // Match paths
 
 type ThemeType = typeof Colors.light;
 
@@ -9,6 +9,7 @@ interface ThemeContextProps {
   theme: ThemeType;
   fonts: typeof Fonts;
   spacing: typeof Spacing;
+  icons: typeof Icons;
   isDarkMode: boolean;
 }
 
@@ -23,7 +24,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ theme, fonts: Fonts, spacing: Spacing, isDarkMode }}
+      value={{
+        theme,
+        fonts: Fonts,
+        spacing: Spacing,
+        icons: Icons,
+        isDarkMode,
+      }}
     >
       {children}
     </ThemeContext.Provider>

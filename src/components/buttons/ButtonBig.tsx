@@ -1,26 +1,26 @@
 import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 
-type ButtonSmallProps = {
+type ButtonBigProps = {
   icon: React.ComponentType;
   text: string;
 };
 
-export default function ButtonSmall({ icon: Icon, text }: ButtonSmallProps) {
+export default function ButtonBig({ icon: Icon, text }: ButtonBigProps) {
   const { theme, fonts } = useTheme();
 
   console.log("Icon:", Icon);
   console.log("Icon type:", typeof Icon);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.accentGrayAlt }]}>
+    <View style={[styles.container, { backgroundColor: theme.iconPrimary }]}>
       <Icon />
       <Text
         style={[
           styles.text,
           {
             fontFamily: fonts.family,
-            fontSize: fonts.sizes.h6,
+            fontSize: fonts.sizes.h5,
             fontWeight: "bold",
             textTransform: "uppercase",
             color: theme.textAccent,
@@ -35,14 +35,14 @@ export default function ButtonSmall({ icon: Icon, text }: ButtonSmallProps) {
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingRight: 10,
-    paddingLeft: 10,
-    borderRadius: 8,
+    gap: 12,
+    paddingTop: 16,
+    paddingBottom: 16, // TODO: Do I add paddingLeft and Right if this button is always centered?
+    borderRadius: 12,
+    justifyContent: "center",
   },
   text: {},
 });

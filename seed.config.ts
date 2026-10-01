@@ -5,13 +5,30 @@ import { Client } from "pg";
 
 dotenv.config({ path: ".env.local" });
 
+// Remote
+// export default defineConfig({
+//   adapter: async () => {
+//     const client = new Client({
+//       host: "aws-0-us-west-2.pooler.supabase.com",
+//       port: 5432,
+//       user: "postgres.rkqwfymfrlqbpbvcozff",
+//       password: process.env.DATABASE_PASSWORD,
+//       database: "postgres",
+//     });
+
+//     await client.connect();
+//     return new SeedPg(client);
+//   },
+// });
+
+// Local
 export default defineConfig({
   adapter: async () => {
     const client = new Client({
-      host: "aws-0-us-west-2.pooler.supabase.com",
-      port: 5432,
-      user: "postgres.rkqwfymfrlqbpbvcozff",
-      password: process.env.DATABASE_PASSWORD,
+      host: "127.0.0.1",
+      port: 54322,
+      user: "postgres",
+      password: "postgres",
       database: "postgres",
     });
 

@@ -1,3 +1,5 @@
--- Life group events: event_id must be unique.
-CREATE UNIQUE INDEX idx_life_group_events_event_id
-ON life_group_events (event_id);
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name = 'series'
+ORDER BY ordinal_position;

@@ -1,6 +1,9 @@
 import { SeedPg } from "@snaplet/seed/adapter-pg";
 import { defineConfig } from "@snaplet/seed/config";
+import dotenv from "dotenv";
 import { Client } from "pg";
+
+dotenv.config({ path: ".env.local" });
 
 export default defineConfig({
   adapter: async () => {
@@ -11,6 +14,7 @@ export default defineConfig({
       password: process.env.DATABASE_PASSWORD,
       database: "postgres",
     });
+
     await client.connect();
     return new SeedPg(client);
   },

@@ -1,25 +1,94 @@
-/**
- * ! Executing this script will delete all data in your database and seed it with 10 users.
- * ! Make sure to adjust the script to your needs.
- * Use any TypeScript runner to run this script, for example: `npx tsx seed.ts`
- * Learn more about the Seed Client by following our guide: https://docs.snaplet.dev/seed/getting-started
- */
 import { createSeedClient } from "@snaplet/seed";
 
-const main = async () => {
-  const seed = await createSeedClient();
+const seed = await createSeedClient();
 
-  // Truncate all tables in the database
-  await seed.$resetDatabase();
+await seed.$resetDatabase();
 
-  // Seed the database with 10 users
-  await seed.users((x) => x(10));
+await seed.tracks([
+  {
+    id: 1,
+    name: "Sunday Service",
+    heading: null,
+  },
+  {
+    id: 2,
+    name: "Prayer Service",
+    heading: null,
+  },
+  {
+    id: 3,
+    name: "Consolidation",
+    heading: null,
+  },
+  {
+    id: 4,
+    name: "Life Class",
+    heading: "Week",
+  },
+  {
+    id: 5,
+    name: "Destiny Training",
+    heading: "Module",
+  },
+]);
 
-  // Type completion not working? You might want to reload your TypeScript Server to pick up the changes
+await seed.series([
+  {
+    id: 1,
+    name: "Consolidation",
+    series_number: null,
+    track_id: 3,
+  },
+  {
+    id: 2,
+    name: "Learning From Our Mistakes",
+    series_number: 1,
+    track_id: 4,
+  },
+  {
+    id: 11,
+    name: "DT Example Title",
+    series_number: 1,
+    track_id: 5,
+  },
+  {
+    id: 68,
+    name: "Sunday Service Sermon Series",
+    series_number: null,
+    track_id: 1,
+  },
+  {
+    id: 124,
+    name: "Prayer Service Sermon Series",
+    series_number: null,
+    track_id: 2,
+  },
+]);
 
-  console.log("Database seeded successfully!");
+await seed.life_group_roles([
+  {
+    id: 1,
+    name: "Leader",
+  },
+  {
+    id: 2,
+    name: "Co-leader",
+  },
+]);
 
-  process.exit();
-};
+await seed.event_availabilities([
+  {
+    id: 1,
+    name: "Going",
+  },
+  {
+    id: 2,
+    name: "Maybe",
+  },
+  {
+    id: 3,
+    name: "Not Going",
+  },
+]);
 
-main();
+console.log("Database seeded!");

@@ -12,6 +12,7 @@ type PreviewTitleCardProps = {
   timestamp?: Date;
   location?: string;
   hasTopAccent?: boolean;
+  backgroundColor?: "primary" | "secondary";
 };
 
 export default function PreviewTitleCard({
@@ -21,9 +22,11 @@ export default function PreviewTitleCard({
   timestamp,
   location,
   hasTopAccent = true,
+  backgroundColor = "secondary",
 }: PreviewTitleCardProps) {
   const { theme, fonts } = useTheme();
   const { height } = useWindowDimensions();
+
   const colorName = getCategoryColor(title);
 
   return (
@@ -44,7 +47,7 @@ export default function PreviewTitleCard({
         style={[
           styles.contentContainer,
           {
-            backgroundColor: theme.secondary,
+            backgroundColor: theme[backgroundColor],
             top: hasTopAccent ? 192 : 0,
           },
         ]}

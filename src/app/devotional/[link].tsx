@@ -4,7 +4,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { useLocalSearchParams } from "expo-router";
 import { useRef } from "react";
-import { Animated, Image, StyleSheet, View } from "react-native";
+import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
 const IMAGE_HEIGHT = 192;
 
@@ -53,8 +53,10 @@ export default function DevotionPage() {
     extrapolate: "clamp",
   });
 
+  console.log(devotional.content.replace(/\n/g, "\\n").replace(/\t/g, "\\t"));
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.primary }]}>
+    <View style={[styles.container, { backgroundColor: theme.secondary }]}>
       <Animated.ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
@@ -94,7 +96,112 @@ export default function DevotionPage() {
           category={date.toDateString()}
           subtitle={devotional.author.toString() || "No Author"}
           hasTopAccent={false}
+          backgroundColor={"primary"}
         />
+        {/* Verse */}
+        <View
+          style={[
+            styles.textContainer,
+            {
+              backgroundColor: theme.primary,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h4,
+              color: theme.text,
+              fontStyle: "italic",
+            }}
+          >
+            {devotional.verse}
+          </Text>
+        </View>
+        {/* Read */}
+        <View
+          style={[
+            styles.textContainer,
+            {
+              backgroundColor: theme.primary,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h4,
+              color: theme.text,
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
+            Read
+          </Text>
+          {devotional.content
+            .replace(/\n\t/g, " ")
+            .replace(/\n\t\t/g, " ")
+            .replace(/\n/g, "-----------")
+            .split("-----------")
+            .map((paragraph, index) => (
+              <Text
+                key={index}
+                style={[
+                  styles.paragraph,
+                  {
+                    fontFamily: fonts.family,
+                    fontSize: fonts.sizes.h5,
+                    color: theme.text,
+                  },
+                ]}
+              >
+                {paragraph.replace(/\n/g, " ").trim()}
+              </Text>
+            ))}
+        </View>
+        {/* Reflect & Pray */}
+        <View
+          style={[
+            styles.textContainer,
+            {
+              backgroundColor: theme.primary,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h4,
+              color: theme.text,
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
+            Reflect & Pray
+          </Text>
+          <View style={{ gap: 10 }}>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h5,
+                color: theme.text,
+                fontWeight: "bold",
+              }}
+            >
+              {devotional.response.replace(/\s+/g, " ").trim()}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h5,
+                color: theme.text,
+                fontStyle: "italic",
+              }}
+            >
+              {devotional.thought.replace(/\s+/g, " ").trim()}
+            </Text>
+          </View>
+        </View>
       </Animated.ScrollView>
     </View>
   );
@@ -111,6 +218,17 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     paddingTop: IMAGE_HEIGHT,
+    gap: 2,
+  },
+
+  paragraph: {
+    marginBottom: 16,
+  },
+
+  textContainer: {
+    gap: 16,
+    padding: 24,
+    borderRadius: 8,
   },
 
   imageContainer: {

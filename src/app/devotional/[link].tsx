@@ -1,13 +1,17 @@
 import PreviewTitleCard from "@/components/cards/PreviewTitleCard";
+import NoteEditor from "@/components/miscellaneous/NoteEditor";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { useLocalSearchParams } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Animated,
   Image,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -20,6 +24,11 @@ export default function DevotionPage() {
   const { theme, fonts } = useTheme();
   const { link, title, dateKey } = useLocalSearchParams();
   const { devotionals } = useTabs();
+
+  const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
+  const [editorHeight, setEditorHeight] = useState(300);
+  const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
+  const [saveNotesRequest, setSaveNotesRequest] = useState(0);
 
   const devotional =
     devotionals.find((devotional) => devotional.dateKey === dateKey) ?? null;
@@ -40,6 +49,14 @@ export default function DevotionPage() {
   }
 
   const date = new Date(devotional.dateKey);
+
+  const handleTakeNotesPress = () => {
+    if (isTakingNotes) {
+      setSaveNotesRequest((request) => request + 1);
+    } else {
+      setIsTakingNotes(true);
+    }
+  };
 
   /*
    * The ScrollView itself moves the image upward by scrollY.
@@ -64,39 +81,15 @@ export default function DevotionPage() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
-      <Animated.ScrollView
+      <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  y: scrollY,
-                },
-              },
-            },
-          ],
-          {
-            useNativeDriver: true,
-          },
-        )}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
-        <Animated.View
-          style={[
-            styles.imageContainer,
-            {
-              transform: [
-                {
-                  translateY: imageTranslateY,
-                },
-              ],
-            },
-          ]}
-        >
+        <View style={styles.imageContainer}>
           <Image source={{ uri: devotional.imageUrl }} style={styles.image} />
-        </Animated.View>
+        </View>
 
         <PreviewTitleCard
           title={devotional.title.toString() || "No Title"}
@@ -125,6 +118,24 @@ export default function DevotionPage() {
             {devotional.verse}
           </Text>
         </View>
+        {/* Take Notes Button */}
+        <Pressable
+          style={[styles.button, { backgroundColor: theme.iconPrimary }]}
+          onPress={handleTakeNotesPress}
+        >
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h4,
+              color: theme.iconAccent,
+              textTransform: "uppercase",
+              fontWeight: "bold",
+              // TODO: Add notes icon
+            }}
+          >
+            {isTakingNotes ? "Save Notes" : "Take Notes"}
+          </Text>
+        </Pressable>
         {/* Today's Scripture */}
         <View
           style={[
@@ -288,7 +299,38 @@ export default function DevotionPage() {
             </Text>
           </View>
         </View>
-      </Animated.ScrollView>
+      </ScrollView>
+
+      {isTakingNotes && (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={0}
+          style={styles.noteEditorOverlay}
+          pointerEvents="box-none"
+        >
+          <View
+            style={styles.noteEditorOverlayContent}
+            pointerEvents="box-none"
+            onLayout={(event) => {
+              setEditorAvailableHeight(event.nativeEvent.layout.height);
+            }}
+          >
+            <NoteEditor
+              initialContent=""
+              onSaveNotes={(html) => {
+                console.log("Saving notes:", html);
+              }}
+              onClose={() => setIsTakingNotes(false)}
+              height={editorHeight}
+              maxHeight={editorAvailableHeight * 0.8}
+              onHeightChange={setEditorHeight}
+              keyboardAvoiding={false}
+              saveRequest={saveNotesRequest}
+              showDoneButton={false}
+            />
+          </View>
+        </KeyboardAvoidingView>
+      )}
     </View>
   );
 }
@@ -336,5 +378,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 4,
     padding: 8,
+  },
+
+  button: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 12,
+  },
+
+  noteEditorOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 100,
+    elevation: 100,
+  },
+
+  noteEditorOverlayContent: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 });

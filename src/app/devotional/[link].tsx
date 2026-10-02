@@ -4,10 +4,11 @@ import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { useLocalSearchParams } from "expo-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Image,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -29,11 +30,30 @@ export default function DevotionPage() {
   const [editorHeight, setEditorHeight] = useState(300);
   const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
   const [saveNotesRequest, setSaveNotesRequest] = useState(0);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const devotional =
     devotionals.find((devotional) => devotional.dateKey === dateKey) ?? null;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener(
+      "keyboardDidShow",
+      (event) => {
+        setKeyboardHeight(event.endCoordinates.height);
+      },
+    );
+
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardHeight(0);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   if (!devotional) {
     return (
@@ -83,7 +103,10 @@ export default function DevotionPage() {
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[
+          styles.contentContainer,
+          isTakingNotes && { paddingBottom: editorHeight + keyboardHeight },
+        ]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
       >

@@ -1,14 +1,34 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useState } from "react";
 
 export default function Home() {
   const { theme, fonts } = useTheme();
-  const { announcements, liveEvents, upcomingEvents } = useTabs();
+  const { announcements, liveEvents, upcomingEvents, refreshHomePage } =
+    useTabs();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+
+    try {
+      await refreshHomePage();
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   return (
     <ScrollView
@@ -20,6 +40,13 @@ export default function Home() {
         paddingHorizontal: 40,
       }}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={theme.iconPrimary}
+        />
+      }
     >
       <View style={styles.container}>
         <Text

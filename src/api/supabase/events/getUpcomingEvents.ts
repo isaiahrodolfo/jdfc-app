@@ -29,13 +29,14 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
       repeat_every_days
     `,
     )
-    .gte("timestamp", new Date().toISOString())
-    .eq("lessons_events.lessons_events_link.is_live", false);
+    .gte("timestamp", new Date().toISOString());
 
   if (error || !data) {
     console.log("Upcoming events not found", error);
     return [];
   }
+
+  console.log(data);
 
   return data.map((event) => {
     return {

@@ -3,7 +3,8 @@ import type { Database } from "../../../../database.types";
 import { createLesson } from "../lessons/createLesson";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
-export type Devotional = Database["public"]["Tables"]["devotionals"]["Row"];
+export type Devotional =
+  Database["public"]["Tables"]["devotion_lessons"]["Row"];
 
 /**
  * Gets a devotional entry by its unique identifier.
@@ -25,9 +26,9 @@ export async function findDevotional(
   console.log("checking whether the devotional exists");
 
   const { data: devotional, error: devotionalError } = await supabase
-    .from("devotionals")
+    .from("devotion_lessons")
     .select("*")
-    .eq("link", uniqueIdentifier)
+    .eq("odb_link", uniqueIdentifier)
     .maybeSingle();
 
   if (devotionalError) {
@@ -43,14 +44,15 @@ export async function findDevotional(
     console.log("trying to create the lesson");
 
     // Create the lesson
-    const lesson = await createLesson(title, date);
+    const lesson = await createLesson(title);
 
     // Create the devotional using the new lesson
     const { data: newDevotional, error: newDevotionalError } = await supabase
-      .from("devotionals")
+      .from("devotion_lessons")
       .insert({
-        link: uniqueIdentifier,
+        odb_link: uniqueIdentifier,
         lesson_id: lesson.id,
+        date: new Date(date).toISOString(),
       })
       .select()
       .single();

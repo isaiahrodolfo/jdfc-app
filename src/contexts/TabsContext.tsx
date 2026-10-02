@@ -11,6 +11,7 @@ import {
   getAnnouncements,
 } from "@/api/supabase/announcements/getAnnouncements";
 
+import { findDevotional } from "@/api/supabase/devotion/findDevotional";
 import { LiveEvent, getLiveEvents } from "@/api/supabase/events/getLiveEvents";
 import {
   UpcomingEvent,
@@ -56,6 +57,19 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     setUpcomingEvents(upcomingEventsData);
 
     const devotionalsData = await getDevotionals();
+    // Make sure the devotionals can be found within Supabase
+    devotionalsData.forEach((devotional) => {
+      findDevotional(
+        devotional.odbUrl,
+        devotional.title,
+        devotional.dateKey,
+      ).catch((error) => {
+        console.error(
+          `Error upserting devotional with link ${devotional.odbUrl}:`,
+          error,
+        );
+      });
+    });
     setDevotionals(devotionalsData);
     setTodaysDevotional(
       devotionalsData.find((devotional) => devotional.dateKey === dateKey) ??

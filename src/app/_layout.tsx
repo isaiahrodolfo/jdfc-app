@@ -3,7 +3,7 @@ import AuthProvider from "@/providers/auth-provider";
 import SermonsPageProvider from "@/providers/sermons-page-provider";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import Auth from "../components/Auth";
+import Auth from "../components/pages/Auth";
 import { supabase } from "../lib/supabase";
 
 export default function RootLayout() {
@@ -63,6 +63,10 @@ export default function RootLayout() {
               <Stack.Screen
                 name="devotion/[link]"
                 options={{ headerShown: true }}
+              />
+              <Stack.Screen
+                name="info/[link]"
+                options={{ headerShown: false }}
               />
             </Stack>
           ) : (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 // import Avatar from "./Avatar";
-import { appStyles } from "../styles/styles";
+import { appStyles } from "../../styles/styles";
 
 // ...
 

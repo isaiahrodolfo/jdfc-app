@@ -50,6 +50,29 @@ export default function Home() {
     });
   };
 
+  const handleInfoPress = (
+    title: string,
+    subtitle?: string,
+    category?: string,
+    timestamp?: Date,
+    location?: string,
+    information?: string,
+  ) => {
+    // Navigate to a detailed view
+    router.push({
+      pathname: "/info/[link]",
+      params: {
+        link: title.toLowerCase().replace(/\s+/g, "-"), // Example: convert title to a URL-friendly format
+        title: title,
+        subtitle: subtitle,
+        category: category,
+        timestamp: timestamp?.toISOString(),
+        location: location,
+        information: information,
+      },
+    });
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.primary }}
@@ -173,6 +196,14 @@ export default function Home() {
             title={upcomingEvent.title}
             location={upcomingEvent.location}
             date={upcomingEvent.date}
+            onInfoPress={() =>
+              handleInfoPress(
+                upcomingEvent.title,
+                upcomingEvent.location,
+                "Event",
+                upcomingEvent.date,
+              )
+            }
           />
         ))}
       </View>

@@ -1,32 +1,39 @@
-import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 
+import { useWindowDimensions } from "react-native";
+import { dateFormatter } from "../helpers/dateFormatter";
+import getCategoryColor from "../helpers/getCategoryColor";
+
 type PreviewTitleCardProps = {
   title: string;
+  subtitle?: string;
   category?: string;
-  colorName: AccentColor;
-  date: string;
-  time: string;
-  location: string;
+  timestamp?: Date;
+  location?: string;
 };
 
 export default function PreviewTitleCard({
   title,
+  subtitle,
   category,
-  colorName,
-  date,
-  time,
+  timestamp,
   location,
 }: PreviewTitleCardProps) {
   const { theme, fonts } = useTheme();
+  const { height } = useWindowDimensions();
+  const colorName = getCategoryColor(title);
 
   return (
     <View style={styles.container}>
       <View
         style={[
           styles.topAccentShape,
-          { backgroundColor: theme[`${colorName}`] },
+          {
+            backgroundColor: theme[colorName],
+            top: -height,
+            height: 192 + height,
+          },
         ]}
       ></View>
       <View
@@ -36,7 +43,7 @@ export default function PreviewTitleCard({
           <Text
             style={{
               fontFamily: fonts.family,
-              fontSize: fonts.sizes.h6,
+              fontSize: fonts.sizes.h5,
               color: theme.text,
             }}
           >
@@ -46,23 +53,46 @@ export default function PreviewTitleCard({
         <Text
           style={{
             fontFamily: fonts.family,
-            fontSize: fonts.sizes.h3,
+            fontSize: fonts.sizes.h2,
             fontWeight: "bold",
             color: theme.text,
           }}
         >
           {title}
         </Text>
-        <Text
-          style={{
-            fontFamily: fonts.family,
-            fontSize: fonts.sizes.h5,
-            color: theme.text,
-          }}
-        >
-          {date} @{time} {"\n"}
-          {location}
-        </Text>
+        {subtitle !== undefined && (
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h6,
+              color: theme.text,
+            }}
+          >
+            {subtitle}
+          </Text>
+        )}
+        {timestamp && (
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h6,
+              color: theme.text,
+            }}
+          >
+            {dateFormatter.format(timestamp)}
+          </Text>
+        )}
+        {location && (
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h6,
+              color: theme.text,
+            }}
+          >
+            {location}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -70,13 +100,14 @@ export default function PreviewTitleCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 402, // Testing, should be width = device width
-  },
-  topAccentShape: {
     width: "100%",
-    height: 64,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    position: "relative",
+  },
+
+  topAccentShape: {
+    position: "absolute",
+    left: 0,
+    width: "100%",
   },
   //   bottomHalf: {
   //     flexDirection: "row",
@@ -90,11 +121,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     width: "100%",
     flexDirection: "column",
-    gap: 8,
-    paddingTop: 20,
-    paddingRight: 16,
-    paddingBottom: 16,
-    paddingLeft: 16,
+    gap: 4,
+    top: 192,
+    paddingHorizontal: 24,
+    paddingVertical: 24,
     borderBottomRightRadius: 8,
   },
   //   textColumn: {

@@ -1,4 +1,4 @@
-import Account from "@/components/Account";
+import Account from "@/components/pages/Account";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { Text, View } from "react-native";
 

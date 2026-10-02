@@ -1,45 +1,25 @@
-import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import InfoIcon from "../../../assets/icons/InfoIndigo5.svg";
+import { dateFormatter } from "../helpers/dateFormatter";
+import getCategoryColor from "../helpers/getCategoryColor";
 
 type EventCardSmallProps = {
   title: string;
   date: Date;
   location: string;
+  onInfoPress: (title: string, date: Date, location: string) => void;
 };
-
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  timeZone: "America/Los_Angeles",
-  weekday: "long",
-  month: "long",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-});
 
 export default function EventCardSmall({
   title,
   date,
   location,
+  onInfoPress,
 }: EventCardSmallProps) {
   const { theme, fonts } = useTheme();
 
-  let colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor;
-  switch (title) {
-    case "Sunday Service":
-      colorName = "sundayService";
-      break;
-    case "Prayer Service":
-      colorName = "prayerService";
-      break;
-    case "Life Group":
-      colorName = "lifeGroup";
-      break;
-    default:
-      colorName = "yellow";
-  }
+  const colorName = getCategoryColor(title);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
@@ -73,7 +53,12 @@ export default function EventCardSmall({
           {location}
         </Text>
       </View>
-      <InfoIcon style={styles.infoIcon} />
+      <Pressable
+        style={styles.infoIcon}
+        onPress={() => onInfoPress(title, date, location)}
+      >
+        <InfoIcon />
+      </Pressable>
     </View>
   );
 }
@@ -99,7 +84,7 @@ const styles = StyleSheet.create({
   },
   infoIcon: {
     position: "absolute",
-    top: 12,
-    right: 12,
+    top: 16,
+    right: 16,
   },
 });

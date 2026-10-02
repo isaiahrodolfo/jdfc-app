@@ -4,7 +4,7 @@ import { useAuthContext } from "@/hooks/use-auth-context";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import NoteEditor from "../NoteEditor";
+import NoteEditor from "../miscellaneous/NoteEditor";
 import Slides from "./Slides";
 
 export default function NotesPage({

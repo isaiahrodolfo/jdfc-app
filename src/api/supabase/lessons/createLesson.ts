@@ -14,19 +14,13 @@ export type Lesson = Database["public"]["Tables"]["lessons"]["Row"];
  * @returns {Promise<Lesson>} A promise that resolves to the newly created lesson object.
  * @throws Will throw an error if the insert operation fails.
  */
-export async function createLesson(
-  title: string,
-  date: string,
-  seriesId?: number,
-): Promise<Lesson> {
+export async function createLesson(title: string): Promise<Lesson> {
   console.log("creating lesson");
 
   const { data: lesson, error: lessonError } = await supabase
     .from("lessons")
     .insert({
       title,
-      date,
-      series_id: seriesId,
     })
     .select()
     .single();

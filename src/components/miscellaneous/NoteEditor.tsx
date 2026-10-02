@@ -17,7 +17,7 @@ export default function NoteEditor({
   initialContent,
 }: NoteEditorProps) {
   const editor = useEditorBridge({
-    autofocus: true,
+    autofocus: true, // TODO: Change to false
     avoidIosKeyboard: true,
     initialContent,
   });

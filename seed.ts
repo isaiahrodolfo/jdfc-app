@@ -1,5 +1,7 @@
 import { createSeedClient } from "@snaplet/seed";
 
+const TEST_USER_ID = "00000000-0000-0000-0000-000000000001";
+
 async function main() {
   const seed = await createSeedClient();
 
@@ -96,6 +98,14 @@ async function main() {
       name: "Welcome to the JDFC App!",
       category: "JDFC App",
       announcement_end: new Date("January 1, 2027"),
+    },
+  ]);
+
+  await seed.users([
+    {
+      id: TEST_USER_ID,
+      email: "a@mail.com",
+      encrypted_password: "123456",
     },
   ]);
 

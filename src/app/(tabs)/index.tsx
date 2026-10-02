@@ -1,27 +1,28 @@
-import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+
+import {
+  Announcement,
+  getAnnouncements,
+} from "@/api/supabase/announcements/getAnnouncements";
+import AnnouncementCard from "@/components/cards/AnnouncementCard";
 
 export default function Home() {
-  const [titles, setTitles] = useState<string[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
-    supabase
-      .from("todos")
-      .select()
-      .then(({ data, error }) => {
-        if (error) {
-          setTitles([error.message]);
-          return;
-        }
-        setTitles(data.map((todo) => todo.title));
-      });
+    getAnnouncements().then(setAnnouncements);
   }, []);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {titles.map((title) => (
-        <Text key={title}>{title}</Text>
+      {announcements.map((announcement) => (
+        <AnnouncementCard
+          key={announcement.name}
+          title={announcement.name}
+          subtitle={announcement.category}
+          colorName="accent"
+        />
       ))}
     </View>
   );

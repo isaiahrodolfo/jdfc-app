@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import InfoIcon from "../../../assets/icons/InfoIndigo3.svg";
 
 type AnnouncementCardProps = {
-  title: string;
-  subtitle: string;
+  title: string | null;
+  subtitle: string | null;
   colorName: "accent" | "accentAlt";
 };
 

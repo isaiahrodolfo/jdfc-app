@@ -14,6 +14,7 @@ type LessonCardProps = {
   descriptionSubheading?: string;
   titleHeading: string;
   titleSubheading?: string;
+  onLessonPress: () => void;
 };
 
 export default function LessonCard({
@@ -24,6 +25,7 @@ export default function LessonCard({
   descriptionSubheading,
   titleHeading,
   titleSubheading,
+  onLessonPress,
 }: LessonCardProps) {
   const { theme, fonts } = useTheme();
 
@@ -106,8 +108,9 @@ export default function LessonCard({
               style={({ pressed }) => [
                 styles.titleColumn,
                 { backgroundColor: theme.secondary },
-                { opacity: pressed ? 0.6 : 1 },
+                { opacity: pressed ? 0.7 : 1 },
               ]}
+              onPress={onLessonPress}
             >
               <View style={styles.columnContent}>
                 {titleSubheading && (

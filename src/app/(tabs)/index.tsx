@@ -6,12 +6,14 @@ import {
   View,
 } from "react-native";
 
+import { Devotional } from "@/api/supabase/our_daily_bread/odb_api";
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
 import LessonCard from "@/components/cards/LessonCard";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { router } from "expo-router";
 import { useState } from "react";
 
 export default function Home() {
@@ -34,6 +36,18 @@ export default function Home() {
     } finally {
       setRefreshing(false);
     }
+  };
+
+  const handleDevotionalPress = (devotional: Devotional) => {
+    // Navigate to a detailed view
+    router.push({
+      pathname: "/devotion/[link]",
+      params: {
+        link: devotional.odbUrl,
+        title: devotional.title,
+        date: devotional.dateKey,
+      },
+    });
   };
 
   return (
@@ -135,6 +149,7 @@ export default function Home() {
             descriptionHeading={"Daily Devotion"}
             size="big"
             colorName="yellow"
+            onLessonPress={() => handleDevotionalPress(todaysDevotional)}
           />
         )}
 

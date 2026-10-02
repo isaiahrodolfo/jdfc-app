@@ -119,7 +119,7 @@ async function main() {
     {
       id: 1,
       title: "Sunday Service",
-      timestamp: new Date("2026-10-25T10:00:00-07:00"), // October 25, 2026 10:00 am PDT
+      timestamp: new Date("2026-10-25T10:00:00-07:00"), // October 25, 2026 10:00 am Local Time
       location: "Jesus' Disciples Family Church",
       information: "Weekly church service",
     },
@@ -147,7 +147,7 @@ async function main() {
     {
       id: 2,
       title: "Prayer Service",
-      timestamp: new Date("2026-10-28T19:00:00-07:00"), // October 28, 2026 7:00 pm PDT
+      timestamp: new Date("2026-10-28T19:00:00-07:00"), // October 28, 2026 7:00 pm Local Time
       location: "Jesus' Disciples Family Church",
       information: "Weekly prayer service",
       repeat_every_days: 7,

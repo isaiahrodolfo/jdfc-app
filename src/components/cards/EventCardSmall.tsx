@@ -10,10 +10,13 @@ type EventCardSmallProps = {
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Los_Angeles",
   weekday: "long",
   month: "long",
   day: "numeric",
   year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
 });
 
 export default function EventCardSmall({
@@ -23,8 +26,7 @@ export default function EventCardSmall({
 }: EventCardSmallProps) {
   const { theme, fonts } = useTheme();
 
-  let colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor; // fix "let"
-
+  let colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor;
   switch (title) {
     case "Sunday Service":
       colorName = "sundayService";

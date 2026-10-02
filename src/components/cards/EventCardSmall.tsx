@@ -10,6 +10,13 @@ type EventCardSmallProps = {
   colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor;
 };
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
 export default function EventCardSmall({
   title,
   date,
@@ -44,8 +51,8 @@ export default function EventCardSmall({
             color: theme.text,
           }}
         >
-          {date.toLocaleDateString()}
-          {"  "}
+          {dateFormatter.format(date)}
+          {"\n"}
           {location}
         </Text>
       </View>
@@ -57,7 +64,7 @@ export default function EventCardSmall({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    width: 330, //testing
+    width: "100%",
     borderRadius: 8,
   },
   leftAccentShape: {

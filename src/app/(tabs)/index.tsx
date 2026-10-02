@@ -9,14 +9,20 @@ import {
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
+import LessonCard from "@/components/cards/LessonCard";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useState } from "react";
 
 export default function Home() {
   const { theme, fonts } = useTheme();
-  const { announcements, liveEvents, upcomingEvents, refreshHomePage } =
-    useTabs();
+  const {
+    announcements,
+    liveEvents,
+    upcomingEvents,
+    todaysDevotional,
+    refreshHomePage,
+  } = useTabs();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -107,6 +113,30 @@ export default function Home() {
             colorName={"accent"}
           />
         ))}
+
+        {/* Today */}
+        <Text
+          style={[
+            styles.h2,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+              color: theme.textH2,
+            },
+          ]}
+        >
+          Today
+        </Text>
+
+        {todaysDevotional && (
+          <LessonCard
+            isCompleted={false}
+            titleHeading={todaysDevotional?.title || "No Devotional Today"}
+            descriptionHeading={"Daily Devotion"}
+            size="big"
+            colorName="yellow"
+          />
+        )}
 
         {/* Upcoming Events */}
         <Text

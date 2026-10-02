@@ -10,9 +10,9 @@ type LessonCardProps = {
   colorName: AccentColor;
   size: "big" | "small";
   descriptionHeading: string;
-  descriptionSubheading: string;
+  descriptionSubheading?: string;
   titleHeading: string;
-  titleSubheading: string;
+  titleSubheading?: string;
 };
 
 export default function LessonCard({
@@ -56,7 +56,7 @@ export default function LessonCard({
             { backgroundColor: theme.secondary },
           ]}
         >
-          {(descriptionSubheading || descriptionSubheading) && (
+          {(descriptionSubheading || descriptionHeading) && (
             <View style={styles.descriptionColumn}>
               {descriptionSubheading && (
                 <Text
@@ -85,7 +85,7 @@ export default function LessonCard({
               )}
             </View>
           )}
-          {(descriptionSubheading || descriptionSubheading) &&
+          {(descriptionSubheading || descriptionHeading) &&
             (titleSubheading || titleHeading) && (
               <DividingLine color={theme.secondaryAlt} />
             )}
@@ -125,7 +125,7 @@ export default function LessonCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 330, // Testing, should be 100% width
+    width: "100%",
   },
   topAccentShape: {
     width: "100%",

@@ -1,4 +1,7 @@
-import { Devotional, fetchDevotionals } from "@/api/odb_api";
+import {
+  Devotional,
+  fetchDevotionals,
+} from "@/api/supabase/our_daily_bread/odb_api";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";

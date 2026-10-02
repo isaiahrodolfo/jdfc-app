@@ -16,11 +16,14 @@ import {
   UpcomingEvent,
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
+import { getTodaysDevotional } from "@/api/supabase/our_daily_bread/getTodaysDevotional";
+import { Devotional } from "@/api/supabase/our_daily_bread/odb_api";
 
 type TabsContextType = {
   announcements: Announcement[];
   liveEvents: LiveEvent[];
   upcomingEvents: UpcomingEvent[];
+  todaysDevotional: Devotional | null;
   refreshHomePage: () => Promise<void>;
 };
 
@@ -30,6 +33,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
+  const [todaysDevotional, setTodaysDevotional] = useState<Devotional | null>(
+    null,
+  );
 
   const refreshHomePage = async () => {
     const liveEventsData = await getLiveEvents();
@@ -40,6 +46,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
 
     const upcomingEventsData = await getUpcomingEvents();
     setUpcomingEvents(upcomingEventsData);
+
+    const todaysDevotionalData = await getTodaysDevotional();
+    setTodaysDevotional(todaysDevotionalData);
   };
 
   useEffect(() => {
@@ -52,6 +61,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         announcements,
         liveEvents,
         upcomingEvents,
+        todaysDevotional,
         refreshHomePage,
       }}
     >

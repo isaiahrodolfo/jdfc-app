@@ -26,10 +26,19 @@ type TabsContextType = {
   upcomingEvents: UpcomingEvent[];
   devotionals: Devotional[];
   todaysDevotional: Devotional | null;
+  todaysDateKey: string;
   refreshHomePage: () => Promise<void>;
 };
 
 const TabsContext = createContext<TabsContextType | undefined>(undefined);
+
+const getTodaysDateKey = (): string => {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+    2,
+    "0",
+  )}-${String(today.getDate()).padStart(2, "0")}`;
+};
 
 export function TabsProvider({ children }: { children: ReactNode }) {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -39,12 +48,17 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const [todaysDevotional, setTodaysDevotional] = useState<Devotional | null>(
     null,
   );
+  const [todaysDateKey, setTodaysDateKey] = useState<string>(() => {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+      2,
+      "0",
+    )}-${String(today.getDate()).padStart(2, "0")}`;
+  });
 
-  const today = new Date();
-
-  const dateKey = `${today.getFullYear()}-${String(
-    today.getMonth() + 1,
-  ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  useEffect(() => {
+    setTodaysDateKey(getTodaysDateKey());
+  }, []);
 
   const refreshHomePage = async () => {
     const liveEventsData = await getLiveEvents();
@@ -71,9 +85,13 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       });
     });
     setDevotionals(devotionalsData);
+
+    const todaysDateKey = getTodaysDateKey();
+    setTodaysDateKey(todaysDateKey);
     setTodaysDevotional(
-      devotionalsData.find((devotional) => devotional.dateKey === dateKey) ??
-        null,
+      devotionalsData.find(
+        (devotional) => devotional.dateKey === todaysDateKey,
+      ) ?? null,
     );
   };
 
@@ -89,6 +107,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         upcomingEvents,
         devotionals,
         todaysDevotional,
+        todaysDateKey,
         refreshHomePage,
       }}
     >

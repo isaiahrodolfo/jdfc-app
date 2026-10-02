@@ -41,11 +41,11 @@ export default function Home() {
   const handleDevotionalPress = (devotional: Devotional) => {
     // Navigate to a detailed view
     router.push({
-      pathname: "/devotion/[link]",
+      pathname: "/devotional/[link]",
       params: {
         link: devotional.odbUrl,
         title: devotional.title,
-        date: devotional.dateKey,
+        dateKey: devotional.dateKey,
       },
     });
   };

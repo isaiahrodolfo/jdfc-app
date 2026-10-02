@@ -61,8 +61,13 @@ export default function RootLayout() {
                 options={{ headerShown: true }}
               />
               <Stack.Screen
-                name="devotion/[link]"
-                options={{ headerShown: true }}
+                name="devotional"
+                options={{
+                  headerTitle: "",
+                  headerShown: true,
+                  headerBackButtonDisplayMode: "minimal", // Circle back button
+                  headerTransparent: true,
+                }}
               />
               <Stack.Screen
                 name="info/[link]"

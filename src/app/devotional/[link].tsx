@@ -4,7 +4,14 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { useLocalSearchParams } from "expo-router";
 import { useRef } from "react";
-import { Animated, Image, StyleSheet, Text, View } from "react-native";
+import {
+  Animated,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 const IMAGE_HEIGHT = 192;
 
@@ -118,6 +125,48 @@ export default function DevotionPage() {
             {devotional.verse}
           </Text>
         </View>
+        {/* Today's Scripture */}
+        <View
+          style={[
+            styles.textContainer,
+            {
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              backgroundColor: theme.primary,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h5,
+              color: theme.iconSecondary,
+              textTransform: "uppercase",
+            }}
+          >
+            Today's Scripture
+          </Text>
+          <Pressable
+            style={[
+              styles.passageLinkButton,
+              {
+                backgroundColor: theme.iconAccent,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h6,
+                color: theme.iconPrimary,
+                textDecorationLine: "underline",
+              }}
+            >
+              {devotional.passageReference}
+            </Text>
+          </Pressable>
+        </View>
         {/* Read */}
         <View
           style={[
@@ -139,8 +188,8 @@ export default function DevotionPage() {
             Read
           </Text>
           {devotional.content
-            .replace(/\n\t/g, " ")
             .replace(/\n\t\t/g, " ")
+            .replace(/\n\t/g, " ")
             .replace(/\n/g, "-----------")
             .split("-----------")
             .map((paragraph, index) => (
@@ -202,6 +251,43 @@ export default function DevotionPage() {
             </Text>
           </View>
         </View>
+        {/* Insight */}
+        <View
+          style={[
+            styles.textContainer,
+            {
+              backgroundColor: theme.primary,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h4,
+              color: theme.text,
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
+            Insight
+          </Text>
+          <View style={{ gap: 10 }}>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h5,
+                color: theme.text,
+              }}
+            >
+              {devotional.insights
+                .replace(/\s+/g, " ")
+                .replace(/&ldquo;/g, "'")
+                .replace(/&rsquo;/g, "'")
+                .replace(/&rdquo;/g, "'")
+                .trim()}
+            </Text>
+          </View>
+        </View>
       </Animated.ScrollView>
     </View>
   );
@@ -243,5 +329,12 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },
+
+  passageLinkButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    padding: 8,
   },
 });

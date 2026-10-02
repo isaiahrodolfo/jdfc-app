@@ -1,6 +1,5 @@
 import { createSeedClient } from "@snaplet/seed";
-
-const TEST_USER_ID = "00000000-0000-0000-0000-000000000001";
+import bcrypt from "bcrypt";
 
 async function main() {
   const seed = await createSeedClient();
@@ -101,13 +100,17 @@ async function main() {
     },
   ]);
 
-  await seed.users([
-    {
+  const TEST_USER_ID = "00000000-0000-0000-0000-000000000001";
+
+  const passwordHash = await bcrypt.hash("123456", 10);
+
+  await seed.users((x) =>
+    x(1, {
       id: TEST_USER_ID,
       email: "a@mail.com",
-      encrypted_password: "123456",
-    },
-  ]);
+      encrypted_password: passwordHash,
+    }),
+  );
 
   console.log("Database seeded!");
 }

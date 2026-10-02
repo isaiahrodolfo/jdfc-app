@@ -3,7 +3,7 @@ import React, { createContext, useContext } from "react";
 import { useColorScheme } from "react-native";
 import { Colors, Fonts, Icons, Spacing } from "../constants/theme"; // Match paths
 
-type ThemeType = typeof Colors.light;
+type ThemeType = typeof Colors.dark;
 
 interface ThemeContextProps {
   theme: ThemeType;

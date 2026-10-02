@@ -1,8 +1,18 @@
+import { useTheme } from "@/contexts/ThemeContext";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
+import { DynamicColorIOS } from "react-native";
 
 export default function TabLayout() {
+  const { theme } = useTheme();
+
   return (
-    <NativeTabs>
+    <NativeTabs
+      tintColor={DynamicColorIOS({
+        dark: "white",
+        light: "black",
+      })}
+      backgroundColor={theme.primary}
+    >
       <NativeTabs.Trigger name="education">
         <NativeTabs.Trigger.Label>Education</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="graduationcap" md="school" />

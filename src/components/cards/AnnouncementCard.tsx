@@ -47,7 +47,7 @@ export default function AnnouncementCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 330, //testing
+    width: "100%",
     borderRadius: 8,
     paddingTop: 16,
     paddingLeft: 16,

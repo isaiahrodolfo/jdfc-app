@@ -48,7 +48,11 @@ export default function Home() {
         </Text>
 
         {liveEvents.map((liveEvent) => (
-          <EventCardBig title={liveEvent.title} subtitle={""} />
+          <EventCardBig
+            title={liveEvent.title}
+            subtitle={""}
+            livestreamLink={liveEvent.livestream_link}
+          />
         ))}
 
         <Text

@@ -1,19 +1,28 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
+import type { SvgProps } from "react-native-svg";
 
 type ButtonSmallProps = {
-  icon: React.ComponentType;
+  icon: React.ComponentType<SvgProps>;
   text: string;
+  onPress: () => void;
 };
 
-export default function ButtonSmall({ icon: Icon, text }: ButtonSmallProps) {
+export default function ButtonSmall({
+  icon: Icon,
+  text,
+  onPress,
+}: ButtonSmallProps) {
   const { theme, fonts } = useTheme();
 
   console.log("Icon:", Icon);
   console.log("Icon type:", typeof Icon);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.accentGrayAlt }]}>
+    <Pressable
+      style={[styles.container, { backgroundColor: theme.accentGrayAlt }]}
+      onPress={onPress}
+    >
       <Icon />
       <Text
         style={[
@@ -29,7 +38,7 @@ export default function ButtonSmall({ icon: Icon, text }: ButtonSmallProps) {
       >
         {text}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 

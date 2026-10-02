@@ -1,5 +1,5 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, Linking, StyleSheet, Text, View } from "react-native";
 import ButtonSmall from "../buttons/ButtonSmall";
 
 import NotesIcon from "@/assets/icons/NotesIndigo3.svg";
@@ -8,10 +8,30 @@ import PlayIcon from "@/assets/icons/PlayIndigo3.svg";
 type EventCardBigProps = {
   title: string;
   subtitle: string;
+  livestreamLink: string | null;
 };
 
-export default function EventCardBig({ title, subtitle }: EventCardBigProps) {
+export default function EventCardBig({
+  title,
+  subtitle,
+  livestreamLink,
+}: EventCardBigProps) {
   const { theme, fonts } = useTheme();
+
+  const handleWatchButtonPress = async () => {
+    // Open the livestream link in a web browser
+    if (!livestreamLink) return;
+
+    // Check if the device has a supported app installed to handle the URL
+    const supported = await Linking.canOpenURL(livestreamLink);
+
+    if (supported) {
+      // Open the link in the default external browser / window
+      await Linking.openURL(livestreamLink);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${livestreamLink}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -60,8 +80,14 @@ export default function EventCardBig({ title, subtitle }: EventCardBigProps) {
           )}
         </View>
         <View style={styles.buttonsContainer}>
-          <ButtonSmall text={"Watch"} icon={PlayIcon} />
-          <ButtonSmall text={"Notes"} icon={NotesIcon} />
+          {livestreamLink && (
+            <ButtonSmall
+              text={"Watch"}
+              icon={PlayIcon}
+              onPress={handleWatchButtonPress}
+            />
+          )}
+          <ButtonSmall text={"Notes"} icon={NotesIcon} onPress={() => {}} />
         </View>
       </View>
     </View>

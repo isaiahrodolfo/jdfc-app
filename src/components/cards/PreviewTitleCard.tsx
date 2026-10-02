@@ -11,6 +11,7 @@ type PreviewTitleCardProps = {
   category?: string;
   timestamp?: Date;
   location?: string;
+  hasTopAccent?: boolean;
 };
 
 export default function PreviewTitleCard({
@@ -19,6 +20,7 @@ export default function PreviewTitleCard({
   category,
   timestamp,
   location,
+  hasTopAccent = true,
 }: PreviewTitleCardProps) {
   const { theme, fonts } = useTheme();
   const { height } = useWindowDimensions();
@@ -26,18 +28,26 @@ export default function PreviewTitleCard({
 
   return (
     <View style={styles.container}>
+      {hasTopAccent && (
+        <View
+          style={[
+            styles.topAccentShape,
+            {
+              backgroundColor: theme[colorName],
+              top: -height,
+              height: 192 + height,
+            },
+          ]}
+        ></View>
+      )}
       <View
         style={[
-          styles.topAccentShape,
+          styles.contentContainer,
           {
-            backgroundColor: theme[colorName],
-            top: -height,
-            height: 192 + height,
+            backgroundColor: theme.secondary,
+            top: hasTopAccent ? 192 : 0,
           },
         ]}
-      ></View>
-      <View
-        style={[styles.contentContainer, { backgroundColor: theme.secondary }]}
       >
         {category !== undefined && (
           <Text
@@ -122,7 +132,6 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     gap: 4,
-    top: 192,
     paddingHorizontal: 24,
     paddingVertical: 24,
     borderBottomLeftRadius: 8,

@@ -2,12 +2,13 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
+import EventCardSmall from "@/components/cards/EventCardSmall";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Home() {
   const { theme, fonts } = useTheme();
-  const { announcements, liveEvents } = useTabs();
+  const { announcements, liveEvents, upcomingEvents } = useTabs();
 
   return (
     <ScrollView
@@ -34,6 +35,7 @@ export default function Home() {
           Home
         </Text>
 
+        {/* Live Events */}
         <Text
           style={[
             styles.h2,
@@ -55,6 +57,7 @@ export default function Home() {
           />
         ))}
 
+        {/* Announcements */}
         <Text
           style={[
             styles.h2,
@@ -75,6 +78,30 @@ export default function Home() {
             subtitle={announcement.category}
             // colorName={announcement.color as "accent" | "accentAlt"}
             colorName={"accent"}
+          />
+        ))}
+
+        {/* Upcoming Events */}
+        <Text
+          style={[
+            styles.h2,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+              color: theme.textH2,
+            },
+          ]}
+        >
+          Upcoming Events
+        </Text>
+
+        {upcomingEvents.map((upcomingEvent) => (
+          <EventCardSmall
+            key={upcomingEvent.title}
+            title={upcomingEvent.title}
+            location={upcomingEvent.location}
+            date={upcomingEvent.date}
+            colorName={"prayerService"}
           />
         ))}
       </View>

@@ -5,8 +5,7 @@ import InfoIcon from "../../../assets/icons/InfoIndigo5.svg";
 
 type EventCardSmallProps = {
   title: string;
-  date: string;
-  time: string;
+  date: Date;
   location: string;
   colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor;
 };
@@ -14,7 +13,6 @@ type EventCardSmallProps = {
 export default function EventCardSmall({
   title,
   date,
-  time,
   location,
   colorName,
 }: EventCardSmallProps) {
@@ -46,9 +44,8 @@ export default function EventCardSmall({
             color: theme.text,
           }}
         >
-          {date}
-          {"  "}@{time}
-          {"\n"}
+          {date.toLocaleDateString()}
+          {"  "}
           {location}
         </Text>
       </View>

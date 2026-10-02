@@ -12,12 +12,16 @@ import {
 } from "@/api/supabase/announcements/getAnnouncements";
 
 import { LiveEvent, getLiveEvents } from "@/api/supabase/events/getLiveEvents";
+import {
+  UpcomingEvent,
+  getUpcomingEvents,
+} from "@/api/supabase/events/getUpcomingEvents";
 
 type TabsContextType = {
   announcements: Announcement[];
   liveEvents: LiveEvent[];
-  refreshAnnouncements: () => Promise<void>;
-  refreshLiveEvents: () => Promise<void>;
+  upcomingEvents: UpcomingEvent[];
+  refreshHomePage: () => Promise<void>;
 };
 
 const TabsContext = createContext<TabsContextType | undefined>(undefined);
@@ -25,20 +29,21 @@ const TabsContext = createContext<TabsContextType | undefined>(undefined);
 export function TabsProvider({ children }: { children: ReactNode }) {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
 
-  const refreshAnnouncements = async () => {
-    const data = await getAnnouncements();
-    setAnnouncements(data);
-  };
+  const refreshHomePage = async () => {
+    const liveEventsData = await getLiveEvents();
+    setLiveEvents(liveEventsData);
 
-  const refreshLiveEvents = async () => {
-    const data = await getLiveEvents();
-    setLiveEvents(data);
+    const announcementsData = await getAnnouncements();
+    setAnnouncements(announcementsData);
+
+    const upcomingEventsData = await getUpcomingEvents();
+    setUpcomingEvents(upcomingEventsData);
   };
 
   useEffect(() => {
-    refreshAnnouncements();
-    refreshLiveEvents();
+    refreshHomePage();
   }, []);
 
   return (
@@ -46,8 +51,8 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       value={{
         announcements,
         liveEvents,
-        refreshAnnouncements,
-        refreshLiveEvents,
+        upcomingEvents,
+        refreshHomePage,
       }}
     >
       {children}

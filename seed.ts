@@ -142,6 +142,18 @@ async function main() {
     },
   ]);
 
+  // Seeding an upcoming Prayer Service
+  await seed.events([
+    {
+      id: 2,
+      title: "Prayer Service",
+      timestamp: new Date("2026-10-28T19:00:00-07:00"), // October 28, 2026 7:00 pm PDT
+      location: "Jesus' Disciples Family Church",
+      information: "Weekly prayer service",
+      repeat_every_days: 7,
+    },
+  ]);
+
   console.log("Database seeded!");
 }
 

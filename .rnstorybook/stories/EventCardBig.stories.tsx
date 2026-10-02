@@ -28,7 +28,7 @@ export const SundayServiceWithSubtitle: Story = {
   args: {
     title: "Sunday Service",
     subtitle: "17th Anniversary Service",
-    livestream_link: "youtube.com",
+    livestreamLink: "youtube.com",
   },
 };
 
@@ -36,6 +36,6 @@ export const SundayServiceWithoutSubtitle: Story = {
   args: {
     title: "Sunday Service",
     subtitle: "",
-    livestream_link: "youtube.com",
+    livestreamLink: "youtube.com",
   },
 };

@@ -128,7 +128,6 @@ export default function Home() {
             title={upcomingEvent.title}
             location={upcomingEvent.location}
             date={upcomingEvent.date}
-            colorName={"prayerService"}
           />
         ))}
       </View>

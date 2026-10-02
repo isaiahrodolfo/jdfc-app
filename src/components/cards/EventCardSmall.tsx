@@ -7,7 +7,6 @@ type EventCardSmallProps = {
   title: string;
   date: Date;
   location: string;
-  colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor;
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -21,9 +20,25 @@ export default function EventCardSmall({
   title,
   date,
   location,
-  colorName,
 }: EventCardSmallProps) {
   const { theme, fonts } = useTheme();
+
+  let colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor; // fix "let"
+
+  switch (title) {
+    case "Sunday Service":
+      colorName = "sundayService";
+      break;
+    case "Prayer Service":
+      colorName = "prayerService";
+      break;
+    case "Life Group":
+      colorName = "lifeGroup";
+      break;
+    default:
+      colorName = "yellow";
+  }
+
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
       <View

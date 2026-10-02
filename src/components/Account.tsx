@@ -14,8 +14,9 @@ export default function Account({
   email?: string;
 }) {
   const [loading, setLoading] = useState(true);
-  const [website, setWebsite] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [facebookLink, setFacebookLink] = useState("");
+  const [instagramLink, setInstagramLink] = useState("");
+  const [avatarLink, setAvatarLink] = useState("");
   const styles = appStyles;
 
   useEffect(() => {
@@ -28,16 +29,22 @@ export default function Account({
 
       let { data, error, status } = await supabase
         .from("profiles")
-        .select(`website, avatar_url`)
+        .select(`facebook_link, instagram_link, avatar_link`)
         .eq("id", userId)
         .single();
       if (error && status !== 406) {
         throw error;
       }
 
-      if (data) {
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
+      if (
+        data &&
+        data.facebook_link &&
+        data.instagram_link &&
+        data?.avatar_link
+      ) {
+        setFacebookLink(data.facebook_link);
+        setInstagramLink(data.instagram_link);
+        setAvatarLink(data.avatar_link);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -49,20 +56,23 @@ export default function Account({
   }
 
   async function updateProfile({
-    website,
-    avatar_url,
+    avatarLink,
+    facebookLink,
+    instagramLink,
   }: {
-    website: string;
-    avatar_url: string;
+    avatarLink: string;
+    facebookLink: string;
+    instagramLink: string;
   }) {
     try {
       setLoading(true);
 
       const updates = {
         id: userId,
-        website,
-        avatar_url,
-        updated_at: new Date(),
+        avatar_link: avatarLink,
+        facebook_link: facebookLink,
+        instagram_link: instagramLink,
+        updated_at: new Date().toISOString(),
       };
 
       let { error } = await supabase.from("profiles").upsert(updates);
@@ -91,10 +101,18 @@ export default function Account({
         />
       </View>
       <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>Website</Text>
+        <Text style={styles.label}>Facebook</Text>
         <TextInput
-          value={website || ""}
-          onChangeText={(text) => setWebsite(text)}
+          value={facebookLink || ""}
+          onChangeText={(text) => setFacebookLink(text)}
+          style={styles.input}
+        />
+      </View>
+      <View style={styles.verticallySpaced}>
+        <Text style={styles.label}>Instagram</Text>
+        <TextInput
+          value={instagramLink || ""}
+          onChangeText={(text) => setInstagramLink(text)}
           style={styles.input}
         />
       </View>
@@ -102,7 +120,13 @@ export default function Account({
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => updateProfile({ website, avatar_url: avatarUrl })}
+          onPress={() =>
+            updateProfile({
+              facebookLink,
+              instagramLink,
+              avatarLink,
+            })
+          }
           disabled={loading}
         >
           <Text style={styles.buttonText}>

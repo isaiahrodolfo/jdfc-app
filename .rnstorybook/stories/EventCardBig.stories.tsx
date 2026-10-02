@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-native";
 
 import { View } from "react-native";
 
-import LiveEventCard from "../../src/components/cards/LiveEventCard";
+import EventCardBig from "../../src/components/cards/EventCardBig";
 
 const meta = {
-  title: "Example/LiveEventCard",
-  component: LiveEventCard,
+  title: "Example/EventCardBig",
+  component: EventCardBig,
   decorators: [
     (Story) => (
       <View style={{ flex: 1, alignItems: "flex-start" }}>
@@ -18,7 +18,7 @@ const meta = {
   tags: ["autodocs"],
   // Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
   // args: { onPress: fn() },
-} satisfies Meta<typeof LiveEventCard>;
+} satisfies Meta<typeof EventCardBig>;
 
 export default meta;
 

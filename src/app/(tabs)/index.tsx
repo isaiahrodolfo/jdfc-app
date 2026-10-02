@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
-import {
-  Announcement,
-  getAnnouncements,
-} from "@/api/supabase/announcements/getAnnouncements";
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
+import EventCardBig from "@/components/cards/EventCardBig";
+import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Home() {
   const { theme, fonts } = useTheme();
-
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-
-  useEffect(() => {
-    getAnnouncements().then(setAnnouncements);
-  }, []);
+  const { announcements, liveEvents } = useTabs();
 
   return (
     <ScrollView
@@ -24,7 +16,7 @@ export default function Home() {
         flexGrow: 1,
         paddingTop: 96,
         paddingBottom: 96,
-        paddingHorizontal: 36,
+        paddingHorizontal: 40,
       }}
       showsVerticalScrollIndicator={false}
     >
@@ -41,6 +33,24 @@ export default function Home() {
         >
           Home
         </Text>
+
+        <Text
+          style={[
+            styles.h2,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+              color: theme.textH2,
+            },
+          ]}
+        >
+          Live
+        </Text>
+
+        {liveEvents.map((liveEvent) => (
+          <EventCardBig title={liveEvent.title} subtitle={""} />
+        ))}
+
         <Text
           style={[
             styles.h2,
@@ -53,12 +63,14 @@ export default function Home() {
         >
           Announcements
         </Text>
+
         {announcements.map((announcement) => (
           <AnnouncementCard
             key={announcement.name}
             title={announcement.name}
             subtitle={announcement.category}
-            colorName={announcement.color as "accent" | "accentAlt"}
+            // colorName={announcement.color as "accent" | "accentAlt"}
+            colorName={"accent"}
           />
         ))}
       </View>
@@ -73,10 +85,11 @@ const styles = StyleSheet.create({
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",
-    paddingBottom: 24,
+    paddingBottom: 4,
   },
   h2: {
     fontWeight: "bold",
     textTransform: "uppercase",
+    paddingTop: 20,
   },
 });

@@ -3,11 +3,11 @@ import { Colors } from "../../src/constants/theme";
 
 import { View } from "react-native";
 
-import EventCard from "../../src/components/cards/EventCard";
+import EventCardSmall from "../../src/components/cards/EventCardSmall";
 
 const meta = {
-  title: "Example/EventCard",
-  component: EventCard,
+  title: "Example/EventCardSmall",
+  component: EventCardSmall,
   decorators: [
     (Story) => (
       <View
@@ -25,7 +25,7 @@ const meta = {
   tags: ["autodocs"],
   // Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
   //   args: { onPress: fn() },
-} satisfies Meta<typeof EventCard>;
+} satisfies Meta<typeof EventCardSmall>;
 
 export default meta;
 

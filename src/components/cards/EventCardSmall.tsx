@@ -3,7 +3,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 import InfoIcon from "../../../assets/icons/InfoIndigo5.svg";
 
-type EventCardProps = {
+type EventCardSmallProps = {
   title: string;
   date: string;
   time: string;
@@ -11,13 +11,13 @@ type EventCardProps = {
   colorName: "sundayService" | "prayerService" | "lifeGroup" | AccentColor;
 };
 
-export default function EventCard({
+export default function EventCardSmall({
   title,
   date,
   time,
   location,
   colorName,
-}: EventCardProps) {
+}: EventCardSmallProps) {
   const { theme, fonts } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>

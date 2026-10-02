@@ -5,12 +5,12 @@ import ButtonSmall from "../buttons/ButtonSmall";
 import NotesIcon from "@/assets/icons/NotesIndigo3.svg";
 import PlayIcon from "@/assets/icons/PlayIndigo3.svg";
 
-type LiveEventCardProps = {
+type EventCardBigProps = {
   title: string;
   subtitle: string;
 };
 
-export default function LiveEventCard({ title, subtitle }: LiveEventCardProps) {
+export default function EventCardBig({ title, subtitle }: EventCardBigProps) {
   const { theme, fonts } = useTheme();
 
   return (
@@ -70,7 +70,7 @@ export default function LiveEventCard({ title, subtitle }: LiveEventCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 330, // testing
+    width: "100%",
   },
   topHalf: {
     width: "100%",

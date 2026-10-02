@@ -107,6 +107,41 @@ async function main() {
     },
   ]);
 
+  // Seeding a (live) Sunday Service
+  await seed.lessons([
+    {
+      id: 1,
+      title: "Sunday Sermon Title",
+    },
+  ]);
+
+  await seed.events([
+    {
+      id: 1,
+      title: "Sunday Service",
+      timestamp: new Date("2026-10-25T10:00:00-07:00"), // October 25, 2026 10:00 am PDT
+      location: "Jesus' Disciples Family Church",
+      information: "Weekly church service",
+    },
+  ]);
+
+  await seed.lessons_events([
+    {
+      id: 1,
+      lesson_id: 1,
+      event_id: 1,
+    },
+  ]);
+
+  await seed.lessons_events_link([
+    {
+      id: 1,
+      livestream_link: "youtube.com", // testing
+      is_live: true,
+      lessons_events_id: 1,
+    },
+  ]);
+
   console.log("Database seeded!");
 }
 

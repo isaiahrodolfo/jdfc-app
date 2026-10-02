@@ -25,13 +25,13 @@ export type Database = {
           Tables: {
             "announcements": {
                   Row: {
-                    "announcement_end": string | null,"category": string | null,"color": string | null,"created_at": string,"id": number,"name": string | null
+                    "announcement_end": string | null,"category": string | null,"color": string | null,"created_at": string,"id": number,"information": string | null,"name": string | null
                   }
                   Insert: {
-                    "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"name"?: string | null
+                    "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"name"?: string | null
                   }
                   Update: {
-                    "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"name"?: string | null
+                    "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"name"?: string | null
                   }
                   Relationships: [
                     
@@ -63,13 +63,13 @@ isOneToOne: false
                   ]
                 },"devotion_lessons": {
                   Row: {
-                    "created_at": string,"date": string,"id": number,"lesson_id": number | null,"odb_link": string,"title": string | null
+                    "created_at": string,"date": string,"id": number,"lesson_id": number | null,"odb_link": string
                   }
                   Insert: {
-                    "created_at"?: string,"date": string,"id"?: number,"lesson_id"?: number | null,"odb_link": string,"title"?: string | null
+                    "created_at"?: string,"date": string,"id"?: number,"lesson_id"?: number | null,"odb_link": string
                   }
                   Update: {
-                    "created_at"?: string,"date"?: string,"id"?: number,"lesson_id"?: number | null,"odb_link"?: string,"title"?: string | null
+                    "created_at"?: string,"date"?: string,"id"?: number,"lesson_id"?: number | null,"odb_link"?: string
                   }
                   Relationships: [
                     {

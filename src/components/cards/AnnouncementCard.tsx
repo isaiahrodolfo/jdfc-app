@@ -1,17 +1,19 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import InfoIcon from "../../../assets/icons/InfoIndigo3.svg";
 
 type AnnouncementCardProps = {
   title: string | null;
-  subtitle: string | null;
+  category: string | null;
   colorName: "accent" | "accentAlt";
+  onIconPress: (title: string | null, category: string | null) => void;
 };
 
 export default function AnnouncementCard({
   title,
-  subtitle,
+  category,
   colorName,
+  onIconPress,
 }: AnnouncementCardProps) {
   const { theme, fonts } = useTheme();
   return (
@@ -26,7 +28,7 @@ export default function AnnouncementCard({
             color: theme.textAccent,
           }}
         >
-          {subtitle}
+          {category}
         </Text>
         <Text
           style={{
@@ -40,7 +42,15 @@ export default function AnnouncementCard({
           {title}
         </Text>
       </View>
-      <InfoIcon style={styles.infoIcon} />
+      <Pressable
+        style={({ pressed }) => [
+          styles.infoIcon,
+          { opacity: pressed ? 0.5 : 1 },
+        ]}
+        onPress={() => onIconPress(title, category)}
+      >
+        <InfoIcon />
+      </Pressable>
     </View>
   );
 }

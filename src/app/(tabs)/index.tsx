@@ -50,14 +50,21 @@ export default function Home() {
     });
   };
 
-  const handleInfoPress = (
-    title: string,
-    subtitle?: string,
-    category?: string,
-    timestamp?: Date,
-    location?: string,
-    information?: string,
-  ) => {
+  const handleInfoPress = ({
+    title,
+    subtitle,
+    category,
+    timestamp,
+    location,
+    information,
+  }: {
+    title: string;
+    subtitle?: string;
+    category?: string;
+    timestamp?: Date;
+    location?: string;
+    information?: string;
+  }) => {
     // Navigate to a detailed view
     router.push({
       pathname: "/info/[link]",
@@ -128,42 +135,54 @@ export default function Home() {
         ))}
 
         {/* Announcements */}
-        <Text
-          style={[
-            styles.h2,
-            {
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h2,
-              color: theme.textH2,
-            },
-          ]}
-        >
-          Announcements
-        </Text>
+        {announcements && (
+          <Text
+            style={[
+              styles.h2,
+              {
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h2,
+                color: theme.textH2,
+              },
+            ]}
+          >
+            Announcements
+          </Text>
+        )}
 
         {announcements.map((announcement) => (
           <AnnouncementCard
             key={announcement.name}
             title={announcement.name}
-            subtitle={announcement.category}
+            category={announcement.category}
             // colorName={announcement.color as "accent" | "accentAlt"}
             colorName={"accent"}
+            onIconPress={() =>
+              handleInfoPress({
+                title: announcement.name || "No Title",
+                category: "Announcement",
+                subtitle: announcement.category || "No Category",
+                information: announcement.information || "",
+              })
+            }
           />
         ))}
 
         {/* Today */}
-        <Text
-          style={[
-            styles.h2,
-            {
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h2,
-              color: theme.textH2,
-            },
-          ]}
-        >
-          Today
-        </Text>
+        {todaysDevotional && (
+          <Text
+            style={[
+              styles.h2,
+              {
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h2,
+                color: theme.textH2,
+              },
+            ]}
+          >
+            Today
+          </Text>
+        )}
 
         {todaysDevotional && (
           <LessonCard
@@ -177,18 +196,20 @@ export default function Home() {
         )}
 
         {/* Upcoming Events */}
-        <Text
-          style={[
-            styles.h2,
-            {
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h2,
-              color: theme.textH2,
-            },
-          ]}
-        >
-          Upcoming Events
-        </Text>
+        {upcomingEvents && (
+          <Text
+            style={[
+              styles.h2,
+              {
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h2,
+                color: theme.textH2,
+              },
+            ]}
+          >
+            Upcoming Events
+          </Text>
+        )}
 
         {upcomingEvents.map((upcomingEvent) => (
           <EventCardSmall
@@ -197,12 +218,13 @@ export default function Home() {
             location={upcomingEvent.location}
             date={upcomingEvent.date}
             onInfoPress={() =>
-              handleInfoPress(
-                upcomingEvent.title,
-                upcomingEvent.location,
-                "Event",
-                upcomingEvent.date,
-              )
+              handleInfoPress({
+                title: upcomingEvent.title,
+                timestamp: upcomingEvent.date,
+                location: upcomingEvent.location,
+                information: upcomingEvent.information,
+                category: "Event",
+              })
             }
           />
         ))}

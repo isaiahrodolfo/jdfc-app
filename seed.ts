@@ -97,6 +97,8 @@ async function main() {
       category: "JDFC App",
       announcement_end: new Date("January 1, 2027"),
       color: "accent",
+      information:
+        "Hi! Welcome to the JDFC App! This is a sample announcement. You can edit or delete this announcement in the Supabase dashboard.",
     },
     {
       id: 2,
@@ -104,6 +106,8 @@ async function main() {
       category: "Financial",
       announcement_end: new Date("January 1, 2027"),
       color: "accentAlt",
+      information:
+        "This is a sample financial announcement. You can edit or delete this announcement in the Supabase dashboard.",
     },
   ]);
 

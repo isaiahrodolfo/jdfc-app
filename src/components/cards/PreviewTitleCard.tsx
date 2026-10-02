@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     top: 192,
     paddingHorizontal: 24,
     paddingVertical: 24,
+    borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
   },
   //   textColumn: {

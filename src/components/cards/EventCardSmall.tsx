@@ -54,7 +54,10 @@ export default function EventCardSmall({
         </Text>
       </View>
       <Pressable
-        style={styles.infoIcon}
+        style={({ pressed }) => [
+          styles.infoIcon,
+          { opacity: pressed ? 0.5 : 1 },
+        ]}
         onPress={() => onInfoPress(title, date, location)}
       >
         <InfoIcon />

@@ -4,7 +4,7 @@ import type { Database } from "../../../../database.types";
 // Define explicit TypeScript types extracted from the Supabase Schema
 export type Announcement = Pick<
   Database["public"]["Tables"]["announcements"]["Row"],
-  "name" | "category" | "announcement_end" | "color" // only include the fields we need for announcements
+  "name" | "category" | "announcement_end" | "color" | "information" // only include the fields we need for announcements
 >;
 
 /**
@@ -17,7 +17,7 @@ export type Announcement = Pick<
 export async function getAnnouncements(): Promise<Announcement[]> {
   const { data, error } = await supabase
     .from("announcements")
-    .select("name, category, announcement_end, color");
+    .select("name, category, announcement_end, color, information");
 
   if (error || !data) {
     console.log("Announcements not found");

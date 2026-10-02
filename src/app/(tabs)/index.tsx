@@ -58,7 +58,7 @@ export default function Home() {
             key={announcement.name}
             title={announcement.name}
             subtitle={announcement.category}
-            colorName="accent"
+            colorName={announcement.color as "accent" | "accentAlt"}
           />
         ))}
       </View>

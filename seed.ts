@@ -1,5 +1,4 @@
 import { createSeedClient } from "@snaplet/seed";
-import bcrypt from "bcrypt";
 
 async function main() {
   const seed = await createSeedClient();
@@ -97,20 +96,16 @@ async function main() {
       name: "Welcome to the JDFC App!",
       category: "JDFC App",
       announcement_end: new Date("January 1, 2027"),
+      color: "accent",
+    },
+    {
+      id: 2,
+      name: "Financial Announcement",
+      category: "Financial",
+      announcement_end: new Date("January 1, 2027"),
+      color: "accentAlt",
     },
   ]);
-
-  const TEST_USER_ID = "00000000-0000-0000-0000-000000000001";
-
-  const passwordHash = await bcrypt.hash("123456", 10);
-
-  await seed.users((x) =>
-    x(1, {
-      id: TEST_USER_ID,
-      email: "a@mail.com",
-      encrypted_password: passwordHash,
-    }),
-  );
 
   console.log("Database seeded!");
 }

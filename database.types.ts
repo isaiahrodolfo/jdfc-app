@@ -25,13 +25,13 @@ export type Database = {
           Tables: {
             "announcements": {
                   Row: {
-                    "announcement_end": string | null,"category": string | null,"created_at": string,"id": number,"name": string | null
+                    "announcement_end": string | null,"category": string | null,"color": string | null,"created_at": string,"id": number,"name": string | null
                   }
                   Insert: {
-                    "announcement_end"?: string | null,"category"?: string | null,"created_at"?: string,"id"?: number,"name"?: string | null
+                    "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"name"?: string | null
                   }
                   Update: {
-                    "announcement_end"?: string | null,"category"?: string | null,"created_at"?: string,"id"?: number,"name"?: string | null
+                    "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"name"?: string | null
                   }
                   Relationships: [
                     

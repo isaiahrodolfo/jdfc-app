@@ -105,7 +105,7 @@ export default function DevotionPage() {
         style={styles.scrollView}
         contentContainerStyle={[
           styles.contentContainer,
-          isTakingNotes && { paddingBottom: editorHeight + keyboardHeight },
+          isTakingNotes && { paddingBottom: editorHeight + keyboardHeight + 4 },
         ]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
@@ -262,7 +262,7 @@ export default function DevotionPage() {
           >
             Reflect & Pray
           </Text>
-          <View style={{ gap: 10 }}>
+          <View style={{ gap: 24, marginBottom: 8 }}>
             <Text
               style={{
                 fontFamily: fonts.family,
@@ -305,7 +305,7 @@ export default function DevotionPage() {
           >
             Insight
           </Text>
-          <View style={{ gap: 10 }}>
+          <View style={{ gap: 8, marginBottom: 8 }}>
             <Text
               style={{
                 fontFamily: fonts.family,
@@ -350,6 +350,11 @@ export default function DevotionPage() {
               keyboardAvoiding={false}
               saveRequest={saveNotesRequest}
               showDoneButton={false}
+              backgroundColor={theme.primary}
+              accentColor={theme.iconSecondary}
+              borderColor={theme.iconAccent}
+              textColor={theme.text}
+              fontFamily={fonts.family}
             />
           </View>
         </KeyboardAvoidingView>
@@ -373,7 +378,7 @@ const styles = StyleSheet.create({
   },
 
   paragraph: {
-    marginBottom: 16,
+    marginBottom: 8,
   },
 
   textContainer: {

@@ -1,13 +1,11 @@
-import { RichText, Toolbar, useEditorBridge } from "@10play/tentap-editor";
+import { RichText, useEditorBridge } from "@10play/tentap-editor";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
   PanResponder,
   Platform,
-  Pressable,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -23,6 +21,11 @@ type NoteEditorProps = {
   keyboardAvoiding?: boolean;
   saveRequest?: number;
   showDoneButton?: boolean;
+  backgroundColor?: string;
+  accentColor?: string;
+  borderColor?: string;
+  textColor?: string;
+  fontFamily?: string;
 };
 
 export default function NoteEditor({
@@ -35,11 +38,17 @@ export default function NoteEditor({
   keyboardAvoiding = true,
   saveRequest = 0,
   showDoneButton = true,
+  backgroundColor = "white",
+  accentColor = "#999",
+  borderColor = accentColor,
+  textColor = "black",
+  fontFamily = "sans-serif",
 }: NoteEditorProps) {
   const { height: windowHeight } = useWindowDimensions();
   const [localHeight, setLocalHeight] = useState<number | null>(null);
   const closing = useRef(false);
   const lastSaveRequest = useRef(saveRequest);
+  const keyboardTop = useRef<number | null>(null);
   const heightAtStart = useRef(height ?? localHeight ?? 300);
   const measuredHeight = useRef(0);
   const maxHeight = Math.min(
@@ -72,10 +81,81 @@ export default function NoteEditor({
   };
 
   const editor = useEditorBridge({
-    autofocus: true,
+    autofocus: false,
     avoidIosKeyboard: true,
     initialContent,
+    theme: {
+      webview: {
+        backgroundColor,
+      },
+      toolbar: {
+        toolbarBody: {
+          backgroundColor,
+          borderTopColor: accentColor,
+          borderBottomColor: accentColor,
+        },
+        toolbarButton: {
+          backgroundColor,
+        },
+        icon: {
+          tintColor: textColor,
+        },
+        iconDisabled: {
+          tintColor: accentColor,
+        },
+        iconActive: {
+          tintColor: accentColor,
+        },
+        iconWrapper: {
+          backgroundColor,
+        },
+        iconWrapperActive: {
+          backgroundColor: accentColor,
+        },
+        linkBarTheme: {
+          addLinkContainer: {
+            backgroundColor,
+            borderTopColor: accentColor,
+            borderBottomColor: accentColor,
+          },
+          linkInput: {
+            backgroundColor,
+            color: textColor,
+          },
+          placeholderTextColor: textColor,
+          doneButton: {
+            backgroundColor: accentColor,
+          },
+          doneButtonText: {
+            color: backgroundColor,
+          },
+        },
+      },
+    },
   });
+  const editorCss = `
+    html, body, #root {
+      background-color: ${backgroundColor} !important;
+    }
+    .ProseMirror {
+      box-sizing: border-box;
+      min-height: calc(100% - 48px);
+      margin: 24px;
+      padding: 24px !important;
+      border: 1px solid ${borderColor};
+      background-color: ${backgroundColor} !important;
+      color: ${textColor} !important;
+      caret-color: ${textColor};
+      font-family: '${fontFamily}', sans-serif !important;
+    }
+    .ProseMirror * {
+      color: ${textColor};
+      font-family: '${fontFamily}', sans-serif !important;
+    }
+    .ProseMirror:focus {
+      outline: none;
+    }
+  `;
 
   const handleClose = useCallback(
     async (dismissKeyboard = true) => {
@@ -94,6 +174,22 @@ export default function NoteEditor({
     },
     [editor, onClose, onSaveNotes],
   );
+  const handleCloseRef = useRef(handleClose);
+  handleCloseRef.current = handleClose;
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", (event) => {
+      keyboardTop.current = event.endCoordinates.screenY;
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      keyboardTop.current = null;
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   useEffect(() => {
     if (saveRequest !== lastSaveRequest.current) {
@@ -110,12 +206,26 @@ export default function NoteEditor({
         onMoveShouldSetPanResponder: (_, gestureState) =>
           Math.abs(gestureState.dy) > 4,
         onPanResponderGrant: () => {
-          const { panelHeight: currentPanelHeight, windowHeight: currentWindowHeight } =
-            resizeValues.current;
+          const {
+            panelHeight: currentPanelHeight,
+            windowHeight: currentWindowHeight,
+          } = resizeValues.current;
           heightAtStart.current =
-            currentPanelHeight ?? (measuredHeight.current || currentWindowHeight);
+            currentPanelHeight ??
+            (measuredHeight.current || currentWindowHeight);
         },
         onPanResponderMove: (_, gestureState) => {
+          const currentKeyboardTop = keyboardTop.current;
+          if (
+            currentKeyboardTop !== null &&
+            gestureState.moveY >= currentKeyboardTop
+          ) {
+            void handleCloseRef.current().catch((error: unknown) => {
+              console.error("Error saving notes:", error);
+            });
+            return;
+          }
+
           const {
             height: currentHeight,
             maxHeight: currentMaxHeight,
@@ -139,36 +249,34 @@ export default function NoteEditor({
     <SafeAreaView
       style={[
         styles.container,
-        panelHeight === undefined ? styles.flexContainer : { height: panelHeight },
+        { backgroundColor },
+        panelHeight === undefined
+          ? styles.flexContainer
+          : { height: panelHeight },
       ]}
       edges={["bottom"]}
       onLayout={(event) => {
         measuredHeight.current = event.nativeEvent.layout.height;
       }}
     >
-      <View style={styles.resizeHandle} {...resizePanResponder.panHandlers}>
-        <View style={styles.resizeGrip} />
+      <View
+        style={[styles.resizeHandle, { backgroundColor }]}
+        {...resizePanResponder.panHandlers}
+      >
+        <View style={[styles.resizeGrip, { backgroundColor: accentColor }]} />
       </View>
       <View style={styles.editorContainer}>
-        <RichText editor={editor} />
-      </View>
-
-      <View style={styles.toolbarContainer}>
-        <Toolbar editor={editor} />
-      </View>
-
-      {showDoneButton && (
-        <Pressable
-          style={styles.doneButton}
-          onPress={() => {
-            void handleClose().catch((error: unknown) => {
-              console.error("Error saving notes:", error);
-            });
+        <RichText
+          editor={editor}
+          onLoad={() => {
+            requestAnimationFrame(() => editor.injectCSS(editorCss));
           }}
-        >
-          <Text style={styles.doneText}>Done</Text>
-        </Pressable>
-      )}
+        />
+      </View>
+
+      {/* <View style={styles.toolbarContainer}>
+        <Toolbar editor={editor} />
+      </View> */}
     </SafeAreaView>
   );
 

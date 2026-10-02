@@ -16,13 +16,14 @@ import {
   UpcomingEvent,
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
-import { getTodaysDevotional } from "@/api/supabase/our_daily_bread/getTodaysDevotional";
+import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
 import { Devotional } from "@/api/supabase/our_daily_bread/odb_api";
 
 type TabsContextType = {
   announcements: Announcement[];
   liveEvents: LiveEvent[];
   upcomingEvents: UpcomingEvent[];
+  devotionals: Devotional[];
   todaysDevotional: Devotional | null;
   refreshHomePage: () => Promise<void>;
 };
@@ -33,9 +34,16 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
+  const [devotionals, setDevotionals] = useState<Devotional[]>([]);
   const [todaysDevotional, setTodaysDevotional] = useState<Devotional | null>(
     null,
   );
+
+  const today = new Date();
+
+  const dateKey = `${today.getFullYear()}-${String(
+    today.getMonth() + 1,
+  ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
   const refreshHomePage = async () => {
     const liveEventsData = await getLiveEvents();
@@ -47,8 +55,12 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     const upcomingEventsData = await getUpcomingEvents();
     setUpcomingEvents(upcomingEventsData);
 
-    const todaysDevotionalData = await getTodaysDevotional();
-    setTodaysDevotional(todaysDevotionalData);
+    const devotionalsData = await getDevotionals();
+    setDevotionals(devotionalsData);
+    setTodaysDevotional(
+      devotionalsData.find((devotional) => devotional.dateKey === dateKey) ??
+        null,
+    );
   };
 
   useEffect(() => {
@@ -61,6 +73,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         announcements,
         liveEvents,
         upcomingEvents,
+        devotionals,
         todaysDevotional,
         refreshHomePage,
       }}

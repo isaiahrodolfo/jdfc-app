@@ -2,16 +2,29 @@ import { toggleCompleted } from "@/api/supabase/lessons/toggleCompleted";
 import LessonCard from "@/components/cards/LessonCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
 import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
+import ProgressTrackerCard from "@/components/progress_tracker/ProgressTrackerCard";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { useState } from "react";
-import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function Devotion() {
   const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
-  const { devotionals, setDevotionals, todaysDateKey, refreshPage } = useTabs();
+  const {
+    devotionals,
+    setDevotionals,
+    devotionalsProgress,
+    todaysDateKey,
+    refreshPage,
+  } = useTabs();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -87,7 +100,29 @@ export default function Devotion() {
         />
       }
     >
-      {/* <ProgressTrackerCard colorName="yellow" progressTrackerData={} /> */}
+      <View style={styles.container}>
+        <Text
+          style={[
+            styles.h1,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h1,
+              color: theme.textH1,
+            },
+          ]}
+        >
+          Devotion
+        </Text>
+      </View>
+      <ProgressTrackerCard
+        colorName="yellow"
+        progressTrackerData={[
+          {
+            checkboxesData: devotionalsProgress,
+            subtitles: ["% completed this year"],
+          },
+        ]}
+      />
       <View style={styles.container}>
         {devotionals &&
           devotionals
@@ -140,5 +175,10 @@ export default function Devotion() {
 const styles = StyleSheet.create({
   container: {
     gap: 36,
+  },
+  h1: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    paddingBottom: 48,
   },
 });

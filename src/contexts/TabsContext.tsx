@@ -12,12 +12,14 @@ import {
 } from "@/api/supabase/announcements/getAnnouncements";
 
 import { findDevotional } from "@/api/supabase/devotion/findDevotional";
+import getDevotionalsProgress from "@/api/supabase/devotion/getDevotionalsProgress";
 import { LiveEvent, getLiveEvents } from "@/api/supabase/events/getLiveEvents";
 import {
   UpcomingEvent,
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
+import { CheckboxData } from "@/components/progress_tracker/CheckboxesContainer";
 import { useAuthContext } from "@/hooks/use-auth-context";
 
 export type DevotionLesson = {
@@ -51,6 +53,7 @@ type TabsContextType = {
   devotionals: DevotionLesson[];
   setDevotionals: React.Dispatch<React.SetStateAction<DevotionLesson[]>>;
   todaysDevotional: DevotionLesson | null;
+  devotionalsProgress: CheckboxData[];
   todaysDateKey: string;
   refreshPage: () => Promise<void>;
 };
@@ -73,6 +76,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const [devotionals, setDevotionals] = useState<DevotionLesson[]>([]);
   const [todaysDevotional, setTodaysDevotional] =
     useState<DevotionLesson | null>(null);
+  const [devotionalsProgress, setDevotionalsProgress] = useState<
+    CheckboxData[]
+  >([]);
   const [todaysDateKey, setTodaysDateKey] = useState<string>(() => {
     const today = new Date();
     return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
@@ -84,6 +90,46 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setTodaysDateKey(getTodaysDateKey());
   }, []);
+
+  useEffect(() => {
+    const progressDateKeys = new Map<number, string>();
+    const today = new Date(`${todaysDateKey}T00:00:00`);
+
+    for (let daysAgo = 0; daysAgo < 14; daysAgo += 1) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - daysAgo);
+      progressDateKeys.set(
+        date.getDate(),
+        `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+          2,
+          "0",
+        )}-${String(date.getDate()).padStart(2, "0")}`,
+      );
+    }
+
+    const devotionalsByDate = new Map(
+      devotionals.map((devotional) => [devotional.dateKey, devotional]),
+    );
+
+    setDevotionalsProgress((prev) => {
+      let hasChanges = false;
+      const next = prev.map((progress) => {
+        const dateKey = progressDateKeys.get(progress.date);
+        const devotional = dateKey
+          ? devotionalsByDate.get(dateKey)
+          : undefined;
+
+        if (!devotional || progress.isChecked === devotional.isCompleted) {
+          return progress;
+        }
+
+        hasChanges = true;
+        return { ...progress, isChecked: devotional.isCompleted };
+      });
+
+      return hasChanges ? next : prev;
+    });
+  }, [devotionals, todaysDateKey]);
 
   const refreshPage = async () => {
     const liveEventsData = await getLiveEvents();
@@ -118,6 +164,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       console.log(devotion.lessonId, devotion.isCompleted);
     });
 
+    const devotionalsProgressData = await getDevotionalsProgress();
+    setDevotionalsProgress(devotionalsProgressData);
+
     const todaysDateKey = getTodaysDateKey();
     setTodaysDateKey(todaysDateKey);
     setTodaysDevotional(
@@ -140,6 +189,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         devotionals,
         setDevotionals,
         todaysDevotional,
+        devotionalsProgress,
         todaysDateKey,
         refreshPage,
       }}

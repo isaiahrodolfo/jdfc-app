@@ -1,60 +1,60 @@
-import {
-  Devotional,
-  fetchDevotionals,
-} from "@/api/supabase/our_daily_bread/odb_api";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import LessonCard from "@/components/cards/LessonCard";
+import { useTabs } from "@/contexts/TabsContext";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useState } from "react";
+import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 
 export default function Devotion() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [devotionals, setDevotionals] = useState<Map<string, Devotional>>();
+  const { theme, fonts } = useTheme();
+  const { devotionals, refreshPage } = useTabs();
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const loadDevotionals = async () => {
-      try {
-        setLoading(true);
-        const result = await fetchDevotionals();
-        setDevotionals(result);
-      } catch (error) {
-        console.error("Failed to fetch devotionals:", error);
-        setError(error instanceof Error ? error.message : String(error));
-      } finally {
-        setLoading(false);
-      }
-    };
+  const onRefresh = async () => {
+    setRefreshing(true);
 
-    loadDevotionals();
-  }, []);
-
-  const handleDevotionPress = (devotional: Devotional) => {
-    // Navigate to a detailed view
-    router.push({
-      pathname: "/devotional/[link]",
-      params: {
-        link: devotional.odbUrl,
-        title: devotional.title,
-        dateKey: devotional.dateKey,
-      },
-    });
+    try {
+      await refreshPage();
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   return (
-    <View style={styles.container}>
-      {devotionals &&
-        Array.from(devotionals.values()).map((devotion, index) => (
-          <Pressable key={index} onPress={() => handleDevotionPress(devotion)}>
-            <Text>{devotion.title}</Text>
-          </Pressable>
-        ))}
-    </View>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: theme.primary }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingTop: 96,
+        paddingBottom: 96,
+        paddingHorizontal: 40,
+      }}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={theme.iconPrimary}
+        />
+      }
+    >
+      <View style={styles.container}>
+        {devotionals &&
+          devotionals.map((devotional) => (
+            <LessonCard
+              isCompleted={false}
+              titleHeading={todaysDevotional?.title || "No Devotional Today"}
+              descriptionHeading={"Daily Devotion"}
+              size="big"
+              colorName="yellow"
+              onLessonPress={() => handleDevotionalPress(todaysDevotional)}
+            />
+          ))}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  input: { height: 40, borderWidth: 1, borderColor: "#ccc", padding: 10 },
+  container: {},
 });

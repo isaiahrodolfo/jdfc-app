@@ -27,7 +27,7 @@ type TabsContextType = {
   devotionals: Devotional[];
   todaysDevotional: Devotional | null;
   todaysDateKey: string;
-  refreshHomePage: () => Promise<void>;
+  refreshPage: () => Promise<void>;
 };
 
 const TabsContext = createContext<TabsContextType | undefined>(undefined);
@@ -60,7 +60,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     setTodaysDateKey(getTodaysDateKey());
   }, []);
 
-  const refreshHomePage = async () => {
+  const refreshPage = async () => {
     const liveEventsData = await getLiveEvents();
     setLiveEvents(liveEventsData);
 
@@ -96,7 +96,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    refreshHomePage();
+    refreshPage();
   }, []);
 
   return (
@@ -108,7 +108,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         devotionals,
         todaysDevotional,
         todaysDateKey,
-        refreshHomePage,
+        refreshPage,
       }}
     >
       {children}

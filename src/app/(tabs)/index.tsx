@@ -23,7 +23,7 @@ export default function Home() {
     liveEvents,
     upcomingEvents,
     todaysDevotional,
-    refreshHomePage,
+    refreshPage,
   } = useTabs();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -32,7 +32,7 @@ export default function Home() {
     setRefreshing(true);
 
     try {
-      await refreshHomePage();
+      await refreshPage();
     } finally {
       setRefreshing(false);
     }

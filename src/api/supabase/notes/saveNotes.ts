@@ -32,60 +32,54 @@ export async function saveNotes(
     noteType,
   });
 
-  // NoteType = "slideshow"
   if (noteType === "slideshow") {
-    try {
-      const { error } = await supabase
-        .from("users_lessons")
-        .upsert(
-          {
-            user_id: user.id,
-            lesson_id: Number(uniqueIdentifier),
-            notes: text,
-          },
-          {
-            onConflict: "user_id,lesson_id",
-          },
-        )
-        .select()
-        .single();
-    } catch (error) {
-      console.error("Error saving notes:", error);
+    const { error } = await supabase
+      .from("users_lessons")
+      .upsert(
+        {
+          user_id: user.id,
+          lesson_id: Number(uniqueIdentifier),
+          notes: text,
+        },
+        {
+          onConflict: "user_id,lesson_id",
+        },
+      )
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
     }
+    return;
   }
 
-  // NoteType = "devotional"
-  if (!title || !date) return; // Make sure devotionals have a title and a date
-  // TODO: Write the code for saving slideshows
+  if (!title || !date) {
+    throw new Error("A devotional title and date are required to save notes.");
+  }
 
-  // Find the devotional's link
-  try {
-    const devotional = await findDevotional(uniqueIdentifier, title, date);
+  const devotional = await findDevotional(uniqueIdentifier, title, date);
 
-    if (!devotional.lesson_id) {
-      console.error("Devotional has no lesson ID");
-      return;
-    }
+  if (!devotional.lesson_id) {
+    throw new Error("Devotional has no lesson ID.");
+  }
 
-    try {
-      const { error } = await supabase
-        .from("users_lessons")
-        .upsert(
-          {
-            user_id: user.id,
-            lesson_id: devotional.lesson_id,
-            notes: text,
-          },
-          {
-            onConflict: "user_id,lesson_id",
-          },
-        )
-        .select()
-        .single();
-    } catch (error) {
-      console.error("Error saving notes:", error);
-    }
-  } catch (error) {
-    console.error("Error finding devotional:", error);
+  const { error } = await supabase
+    .from("users_lessons")
+    .upsert(
+      {
+        user_id: user.id,
+        lesson_id: devotional.lesson_id,
+        notes: text,
+      },
+      {
+        onConflict: "user_id,lesson_id",
+      },
+    )
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
   }
 }

@@ -1,5 +1,13 @@
 import { RichText, useEditorBridge } from "@10play/tentap-editor";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -11,6 +19,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+export type NoteEditorHandle = {
+  saveAndClose: () => Promise<void>;
+};
+
 type NoteEditorProps = {
   onSaveNotes: (html: string) => void | Promise<void>;
   onClose?: () => void;
@@ -19,7 +31,6 @@ type NoteEditorProps = {
   maxHeight?: number;
   onHeightChange?: (height: number) => void;
   keyboardAvoiding?: boolean;
-  saveRequest?: number;
   showDoneButton?: boolean;
   backgroundColor?: string;
   accentColor?: string;
@@ -28,26 +39,28 @@ type NoteEditorProps = {
   fontFamily?: string;
 };
 
-export default function NoteEditor({
-  onSaveNotes,
-  onClose,
-  initialContent,
-  height,
-  maxHeight: availableMaxHeight,
-  onHeightChange,
-  keyboardAvoiding = true,
-  saveRequest = 0,
-  showDoneButton = true,
-  backgroundColor = "white",
-  accentColor = "#999",
-  borderColor = accentColor,
-  textColor = "black",
-  fontFamily = "sans-serif",
-}: NoteEditorProps) {
+const NoteEditor = forwardRef<NoteEditorHandle, NoteEditorProps>(
+  function NoteEditor(
+    {
+      onSaveNotes,
+      onClose,
+      initialContent,
+      height,
+      maxHeight: availableMaxHeight,
+      onHeightChange,
+      keyboardAvoiding = true,
+      showDoneButton = true,
+      backgroundColor = "white",
+      accentColor = "#999",
+      borderColor = accentColor,
+      textColor = "black",
+      fontFamily = "sans-serif",
+    },
+    ref,
+  ) {
   const { height: windowHeight } = useWindowDimensions();
   const [localHeight, setLocalHeight] = useState<number | null>(null);
   const closing = useRef(false);
-  const lastSaveRequest = useRef(saveRequest);
   const keyboardTop = useRef<number | null>(null);
   const heightAtStart = useRef(height ?? localHeight ?? 300);
   const measuredHeight = useRef(0);
@@ -174,6 +187,15 @@ export default function NoteEditor({
     },
     [editor, onClose, onSaveNotes],
   );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      saveAndClose: () => handleClose(),
+    }),
+    [handleClose],
+  );
+
   const handleCloseRef = useRef(handleClose);
   handleCloseRef.current = handleClose;
 
@@ -190,15 +212,6 @@ export default function NoteEditor({
       hideSubscription.remove();
     };
   }, []);
-
-  useEffect(() => {
-    if (saveRequest !== lastSaveRequest.current) {
-      lastSaveRequest.current = saveRequest;
-      void handleClose().catch((error: unknown) => {
-        console.error("Error saving notes:", error);
-      });
-    }
-  }, [handleClose, saveRequest]);
 
   const resizePanResponder = useMemo(
     () =>
@@ -291,7 +304,10 @@ export default function NoteEditor({
       {content}
     </KeyboardAvoidingView>
   );
-}
+  },
+);
+
+export default NoteEditor;
 
 const styles = StyleSheet.create({
   keyboardContainer: {

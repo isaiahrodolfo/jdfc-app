@@ -1,6 +1,9 @@
 import { getNotes } from "@/api/supabase/notes/getNotes";
+import { saveNotes } from "@/api/supabase/notes/saveNotes";
 import PreviewTitleCard from "@/components/cards/PreviewTitleCard";
-import NoteEditor from "@/components/miscellaneous/NoteEditor";
+import NoteEditor, {
+  type NoteEditorHandle,
+} from "@/components/miscellaneous/NoteEditor";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
@@ -31,13 +34,13 @@ export default function DevotionPage() {
   const [notesHtml, setNotesHtml] = useState("");
   const [editorHeight, setEditorHeight] = useState(300);
   const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
-  const [saveNotesRequest, setSaveNotesRequest] = useState(0);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const devotional =
     devotionals.find((devotional) => devotional.dateKey === dateKey) ?? null;
 
   const scrollY = useRef(new Animated.Value(0)).current;
+  const noteEditorRef = useRef<NoteEditorHandle>(null);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener(
@@ -58,21 +61,21 @@ export default function DevotionPage() {
   }, []);
 
   useEffect(() => {
-    console.log(link);
-    getNotes(user?.id ?? "", link.toString() ?? "", "devotional")
-      .then((html) => {
-        setNotesHtml(html);
-      })
-      .catch((error) => {
-        console.error("Error saving notes:", error);
-      });
-  }, [link]);
+    if (!user || !link) return;
 
-  useEffect(() => {
-    if (saveNotesRequest > 0) {
-      // Save notes to Supabase
+    let isActive = true;
+    getNotes(user.id, link.toString(), "devotional")
+      .then((html) => {
+        if (isActive) setNotesHtml(html);
+      })
+      .catch((error: unknown) => {
+        console.error("Error loading devotional notes:", error);
+      });
+
+    return () => {
+      isActive = false;
     }
-  }, [saveNotesRequest]);
+  }, [link, user]);
 
   if (!devotional) {
     return (
@@ -91,7 +94,9 @@ export default function DevotionPage() {
 
   const handleTakeNotesPress = () => {
     if (isTakingNotes) {
-      setSaveNotesRequest((request) => request + 1);
+      void noteEditorRef.current?.saveAndClose().catch((error: unknown) => {
+        console.error("Error saving devotional notes:", error);
+      });
     } else {
       setIsTakingNotes(true);
     }
@@ -115,8 +120,6 @@ export default function DevotionPage() {
     outputRange: [0, 0, 1],
     extrapolate: "clamp",
   });
-
-  console.log(devotional.content.replace(/\n/g, "\\n").replace(/\t/g, "\\t"));
 
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
@@ -358,14 +361,27 @@ export default function DevotionPage() {
             }}
           >
             <NoteEditor
+              ref={noteEditorRef}
               initialContent={notesHtml}
-              onSaveNotes={setNotesHtml}
+              onSaveNotes={async (html) => {
+                setNotesHtml(html);
+                if (!user) {
+                  throw new Error("Cannot save devotional notes without a user.");
+                }
+                await saveNotes(
+                  user,
+                  html,
+                  link.toString(),
+                  "devotional",
+                  devotional.title,
+                  devotional.dateKey,
+                );
+              }}
               onClose={() => setIsTakingNotes(false)}
               height={editorHeight}
               maxHeight={editorAvailableHeight * 0.8}
               onHeightChange={setEditorHeight}
               keyboardAvoiding={false}
-              saveRequest={saveNotesRequest}
               showDoneButton={false}
               backgroundColor={theme.primary}
               accentColor={theme.iconSecondary}

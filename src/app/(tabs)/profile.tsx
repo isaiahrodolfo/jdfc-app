@@ -4,7 +4,7 @@ import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   RefreshControl,
@@ -19,7 +19,7 @@ export default function Profile() {
   const { theme, fonts } = useTheme();
   const { refreshPage } = useTabs();
 
-  const [loading, setLoading] = useState(true);
+  const [isSaveProfileLoading, setIsSaveProfileLoading] = useState(true);
   const [fullName, setFullName] = useState("");
   const [birthday, setBirthday] = useState("");
   const [facebookLink, setFacebookLink] = useState("");
@@ -38,9 +38,13 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    getProfile();
+  }, [user]);
+
   async function getProfile() {
     try {
-      setLoading(true);
+      setIsSaveProfileLoading(true);
 
       let { data, error, status } = await supabase
         .from("profiles")
@@ -65,26 +69,19 @@ export default function Profile() {
         Alert.alert(error.message);
       }
     } finally {
-      setLoading(false);
+      setIsSaveProfileLoading(false);
     }
   }
 
-  async function updateProfile({
-    avatarLink,
-    facebookLink,
-    instagramLink,
-  }: {
-    avatarLink: string;
-    facebookLink: string;
-    instagramLink: string;
-  }) {
+  async function updateProfile() {
     try {
-      setLoading(true);
+      setIsSaveProfileLoading(true);
 
       const updatedAt = new Date().toISOString();
 
       const updates = {
         id: user.id,
+        full_name: fullName,
         avatar_link: avatarLink,
         facebook_link: facebookLink,
         instagram_link: instagramLink,
@@ -99,7 +96,7 @@ export default function Profile() {
     } catch (error: any) {
       Alert.alert(error.message);
     } finally {
-      setLoading(false);
+      setIsSaveProfileLoading(false);
     }
   }
 
@@ -253,7 +250,14 @@ export default function Profile() {
             />
           </View>
         </View>
-        <ButtonBig text={"Save Edits"} />
+        <ButtonBig
+          text={isSaveProfileLoading ? "Loading..." : "Save Edits"}
+          textColor={isSaveProfileLoading ? theme.textAlt : theme.textAccent}
+          backgroundColor={
+            isSaveProfileLoading ? theme.secondary : theme.iconSecondary
+          }
+          onButtonPress={updateProfile}
+        />
       </View>
     </ScrollView>
   );

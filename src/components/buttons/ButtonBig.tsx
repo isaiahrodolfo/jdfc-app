@@ -1,19 +1,31 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { ColorValue, Pressable, StyleSheet, Text } from "react-native";
 
 type ButtonBigProps = {
   icon?: React.ComponentType;
   text: string;
+  textColor: ColorValue;
+  backgroundColor: ColorValue;
+  onButtonPress: () => void;
 };
 
-export default function ButtonBig({ icon: Icon, text }: ButtonBigProps) {
+export default function ButtonBig({
+  icon: Icon,
+  text,
+  textColor,
+  backgroundColor,
+  onButtonPress,
+}: ButtonBigProps) {
   const { theme, fonts } = useTheme();
 
   // console.log("Icon:", Icon);
   // console.log("Icon type:", typeof Icon);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.iconPrimary }]}>
+    <Pressable
+      style={[styles.container, { backgroundColor: backgroundColor }]}
+      onPress={onButtonPress}
+    >
       {Icon && <Icon />}
       <Text
         style={[
@@ -23,13 +35,13 @@ export default function ButtonBig({ icon: Icon, text }: ButtonBigProps) {
             fontSize: fonts.sizes.h5,
             fontWeight: "bold",
             textTransform: "uppercase",
-            color: theme.textAccent,
+            color: textColor,
           },
         ]}
       >
         {text}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 

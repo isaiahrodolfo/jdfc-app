@@ -172,6 +172,7 @@ export default function Home() {
 
         {liveEvents.map((liveEvent) => (
           <EventCardBig
+            key={liveEvent.title}
             title={liveEvent.title}
             subtitle={""}
             livestreamLink={liveEvent.livestream_link}

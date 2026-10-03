@@ -37,7 +37,8 @@
             "./assets/fonts/GlacialIndifference-Regular.otf"
           ]
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true,

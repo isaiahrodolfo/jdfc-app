@@ -16,9 +16,8 @@ export default function Lessons() {
   const { theme, fonts } = useTheme();
   const { refreshPage } = useTabs();
 
-  const [refreshing, setRefreshing] = useState(false);
-
   const [isUpdating, setIsUpdating] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -62,6 +61,9 @@ export default function Lessons() {
           Lessons
         </Text>
         <Input
+          value={""}
+          autoComplete="off"
+          placeholderText="Search..."
           textColor={theme.text}
           borderColor={theme.iconSecondary}
           placeholderTextColor={theme.iconSecondary}

@@ -1,19 +1,34 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 
 type ButtonBigProps = {
   icon: React.ComponentType;
   text: string;
+  onPress?: () => void;
+  disabled?: boolean;
 };
 
-export default function ButtonBig({ icon: Icon, text }: ButtonBigProps) {
+export default function ButtonBig({
+  icon: Icon,
+  text,
+  onPress,
+  disabled = false,
+}: ButtonBigProps) {
   const { theme, fonts } = useTheme();
 
-  // console.log("Icon:", Icon);
-  // console.log("Icon type:", typeof Icon);
-
   return (
-    <View style={[styles.container, { backgroundColor: theme.iconPrimary }]}>
+    <Pressable
+      accessibilityRole="button"
+      disabled={disabled}
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.container,
+        {
+          backgroundColor: theme.iconPrimary,
+          opacity: disabled ? 0.5 : pressed ? 0.75 : 1,
+        },
+      ]}
+    >
       <Icon />
       <Text
         style={[
@@ -29,7 +44,7 @@ export default function ButtonBig({ icon: Icon, text }: ButtonBigProps) {
       >
         {text}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 

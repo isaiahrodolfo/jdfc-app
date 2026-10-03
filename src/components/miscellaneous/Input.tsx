@@ -1,21 +1,32 @@
-import { useState } from "react";
-import { ColorValue, StyleSheet, TextInput, View } from "react-native";
+import {
+  ColorValue,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native";
 
 type InputProps = {
+  value: string;
+  placeholderText: string;
+  autoComplete: TextInputProps["autoComplete"];
   textColor: ColorValue;
   placeholderTextColor: ColorValue;
   borderColor: ColorValue;
   backgroundColor?: ColorValue;
+  onChangeText?: (text: string) => void;
 };
 
 export default function Input({
+  value,
+  placeholderText,
+  autoComplete,
   textColor,
   placeholderTextColor,
   borderColor,
   backgroundColor,
+  onChangeText,
 }: InputProps) {
-  const [text, setText] = useState("");
-
   return (
     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
       <TextInput
@@ -23,10 +34,11 @@ export default function Input({
           styles.input,
           { color: textColor, borderWidth: 1, borderColor: borderColor },
         ]}
-        placeholder="Search..."
+        autoComplete={autoComplete}
+        placeholder={placeholderText}
         placeholderTextColor={placeholderTextColor}
-        value={text} // Binds the input value to state
-        onChangeText={setText} // Updates state automatically on every keystroke
+        value={value}
+        onChangeText={onChangeText}
       />
     </View>
   );

@@ -16,6 +16,8 @@ export default function Lessons() {
   const { theme, fonts } = useTheme();
   const { refreshPage } = useTabs();
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [refreshing, setRefreshing] = useState(false);
 
   const [isUpdating, setIsUpdating] = useState(false);
@@ -62,9 +64,13 @@ export default function Lessons() {
           Lessons
         </Text>
         <Input
+          value={searchQuery}
+          placeholderText="Search..."
+          autoComplete="off"
           textColor={theme.text}
           borderColor={theme.iconSecondary}
           placeholderTextColor={theme.iconSecondary}
+          onChangeText={(text) => setSearchQuery(text)}
         />
       </View>
     </ScrollView>

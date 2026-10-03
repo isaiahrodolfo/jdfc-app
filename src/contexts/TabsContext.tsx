@@ -19,6 +19,7 @@ import {
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
+import { getDevotionalsProgressStartDate } from "@/components/helpers/getDevotionalsProgressStartDate";
 import { CheckboxData } from "@/components/progress_tracker/CheckboxesContainer";
 import { useAuthContext } from "@/hooks/use-auth-context";
 
@@ -92,12 +93,15 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const progressDateKeys = new Map<number, string>();
     const today = new Date(`${todaysDateKey}T00:00:00`);
+    const startDate = getDevotionalsProgressStartDate(today);
+    const progressDateKeys = new Map<number, string>();
 
-    for (let daysAgo = 0; daysAgo < 14; daysAgo += 1) {
-      const date = new Date(today);
-      date.setDate(today.getDate() - daysAgo);
+    for (
+      const date = new Date(startDate);
+      date <= today;
+      date.setDate(date.getDate() + 1)
+    ) {
       progressDateKeys.set(
         date.getDate(),
         `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(

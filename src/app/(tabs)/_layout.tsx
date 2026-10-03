@@ -19,8 +19,8 @@ export default function TabLayout() {
           <NativeTabs.Trigger.Label>Education</NativeTabs.Trigger.Label>
           <NativeTabs.Trigger.Icon sf="graduationcap" md="school" />
         </NativeTabs.Trigger>
-        <NativeTabs.Trigger name="sermons">
-          <NativeTabs.Trigger.Label>Sermons</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger name="lessons">
+          <NativeTabs.Trigger.Label>Lessons</NativeTabs.Trigger.Label>
           <NativeTabs.Trigger.Icon sf="scroll" md="history_edu" />
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="index">

@@ -1,3 +1,4 @@
+import { getNotes } from "@/api/supabase/notes/getNotes";
 import PreviewTitleCard from "@/components/cards/PreviewTitleCard";
 import NoteEditor from "@/components/miscellaneous/NoteEditor";
 import { useTabs } from "@/contexts/TabsContext";
@@ -55,6 +56,23 @@ export default function DevotionPage() {
       hideSubscription.remove();
     };
   }, []);
+
+  useEffect(() => {
+    console.log(link);
+    getNotes(user?.id ?? "", link.toString() ?? "", "devotional")
+      .then((html) => {
+        setNotesHtml(html);
+      })
+      .catch((error) => {
+        console.error("Error saving notes:", error);
+      });
+  }, [link]);
+
+  useEffect(() => {
+    if (saveNotesRequest > 0) {
+      // Save notes to Supabase
+    }
+  }, [saveNotesRequest]);
 
   if (!devotional) {
     return (

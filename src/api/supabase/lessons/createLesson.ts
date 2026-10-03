@@ -15,7 +15,7 @@ export type Lesson = Database["public"]["Tables"]["lessons"]["Row"];
  * @throws Will throw an error if the insert operation fails.
  */
 export async function createLesson(title: string): Promise<Lesson> {
-  console.log("creating lesson");
+  // console.log("creating lesson");
 
   const { data: lesson, error: lessonError } = await supabase
     .from("lessons")

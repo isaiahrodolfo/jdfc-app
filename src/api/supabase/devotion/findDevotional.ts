@@ -23,7 +23,7 @@ export async function findDevotional(
   title: string,
   date: string,
 ): Promise<Devotional> {
-  console.log("checking whether the devotional exists");
+  // console.log("checking whether the devotional exists");
 
   const { data: devotional, error: devotionalError } = await supabase
     .from("devotion_lessons")
@@ -41,7 +41,7 @@ export async function findDevotional(
   }
 
   try {
-    console.log("trying to create the lesson");
+    // console.log("trying to create the lesson");
 
     // Create the lesson
     const lesson = await createLesson(title);

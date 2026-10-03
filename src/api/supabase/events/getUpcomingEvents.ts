@@ -36,8 +36,6 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
     return [];
   }
 
-  console.log(data);
-
   return data.map((event) => {
     return {
       title: event.title ?? "",

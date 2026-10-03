@@ -21,13 +21,18 @@ export async function getNotes(
 
   if (noteType === "devotional") {
     const { data: devotional, error: devotionalError } = await supabase
-      .from("devotionals")
+      .from("devotion_lessons")
       .select("lesson_id")
-      .eq("link", uniqueIdentifier)
+      .eq("odb_link", uniqueIdentifier)
       .single();
 
     if (devotionalError || !devotional) {
       console.log("Devotional not found");
+      return "";
+    }
+
+    if (!devotional.lesson_id) {
+      console.log("Lesson ID not found for devotional");
       return "";
     }
 

@@ -20,13 +20,15 @@ export default function CheckboxesContainer({
   return (
     <View style={styles.container}>
       {checkboxesData.map((checkbox) => (
-        <Checkbox
-          key={checkbox.date}
-          isChecked={checkbox.isChecked}
-          colorName={colorName}
-          type={"Primary"}
-          isCurrent={checkbox.isCurrent}
-        />
+        <View key={checkbox.date} style={styles.gridItem}>
+          <Checkbox
+            isChecked={checkbox.isChecked}
+            colorName={colorName}
+            type="Primary"
+            isCurrent={checkbox.isCurrent}
+            onCheckboxPress={() => {}}
+          />
+        </View>
       ))}
     </View>
   );
@@ -35,8 +37,13 @@ export default function CheckboxesContainer({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    paddingRight: 8,
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 11,
+  },
+  gridItem: {
+    width: "14.2857%",
+    alignItems: "flex-start",
+    marginBottom: 11,
   },
 });

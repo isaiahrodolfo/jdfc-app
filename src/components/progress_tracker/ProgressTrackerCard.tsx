@@ -53,7 +53,7 @@ export default function ProgressTrackerCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: 330, // Example width. Remember that this component relies on the device's screen width, which is responsive
+    width: "100%",
     flexDirection: "column",
     gap: 16,
     paddingTop: 20,

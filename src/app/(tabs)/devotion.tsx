@@ -113,17 +113,15 @@ export default function Devotion() {
         >
           Devotion
         </Text>
-      </View>
-      <ProgressTrackerCard
-        colorName="yellow"
-        progressTrackerData={[
-          {
-            checkboxesData: devotionalsProgress,
-            subtitles: ["% completed this year"],
-          },
-        ]}
-      />
-      <View style={styles.container}>
+        <ProgressTrackerCard
+          colorName="yellow"
+          progressTrackerData={[
+            {
+              checkboxesData: devotionalsProgress,
+              subtitles: ["% completed this year"],
+            },
+          ]}
+        />
         {devotionals &&
           devotionals
             .filter((devotional) => devotional.dateKey <= todaysDateKey)
@@ -179,6 +177,6 @@ const styles = StyleSheet.create({
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",
-    paddingBottom: 48,
+    paddingBottom: 12,
   },
 });

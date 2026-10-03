@@ -77,6 +77,19 @@ export default function Lessons() {
           placeholderTextColor={theme.iconSecondary}
           onChangeText={(text) => setSearchQuery(text)}
         />
+        {/* Categories */}
+        <Text
+          style={[
+            styles.h2,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+              color: theme.textH2,
+            },
+          ]}
+        >
+          Categories
+        </Text>
         <View style={styles.lessonCategoriesContainer}>
           <LessonCategoryCard
             color={theme.sundayService}
@@ -111,15 +124,20 @@ export default function Lessons() {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 36,
+    gap: 20,
   },
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",
-    paddingBottom: 12,
+    paddingBottom: 12 + 16,
+  },
+  h2: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    paddingTop: 12,
   },
   lessonCategoriesContainer: {
     gap: 16,
-    // paddingRight: 24,
+    paddingRight: 96,
   },
 });

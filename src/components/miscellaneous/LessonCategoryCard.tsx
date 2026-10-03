@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
 
   chevronCompact: {
     position: "absolute",
-    right: 24,
+    right: 12,
   },
 });

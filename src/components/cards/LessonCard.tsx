@@ -1,6 +1,6 @@
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import ChevronCompact from "../../../assets/icons/ChevronCompactIndigo5.svg";
 import DividingLine from "../miscellaneous/DividingLine";
@@ -9,11 +9,12 @@ import Checkbox from "../progress_tracker/Checkbox";
 type LessonCardProps = {
   isCompleted: boolean;
   colorName: AccentColor;
-  size: "big" | "small";
+  size: "big" | "medium" | "small";
   descriptionHeading: string;
   descriptionSubheading?: string;
   titleHeading: string;
   titleSubheading?: string;
+  imageLink?: string;
   onLessonPress: () => void;
 };
 
@@ -25,6 +26,7 @@ export default function LessonCard({
   descriptionSubheading,
   titleHeading,
   titleSubheading,
+  imageLink,
   onLessonPress,
 }: LessonCardProps) {
   const { theme, fonts } = useTheme();
@@ -35,11 +37,26 @@ export default function LessonCard({
 
   return (
     <View style={styles.container}>
-      {size === "big" && (
-        <View
-          style={[styles.topAccentShape, { backgroundColor: theme[colorName] }]}
-        />
-      )}
+      {(size === "medium" || size === "big") &&
+        (imageLink ? (
+          <Image
+            style={[
+              styles.topAccentShape,
+              { height: size === "medium" ? 56 : 196 },
+            ]}
+            source={{ uri: imageLink }}
+          />
+        ) : (
+          <View
+            style={[
+              styles.topAccentShape,
+              {
+                backgroundColor: theme[colorName],
+                height: size === "medium" ? 96 : 196,
+              },
+            ]}
+          />
+        ))}
 
       <View style={styles.bottomHalf}>
         <View
@@ -137,9 +154,8 @@ export default function LessonCard({
                 >
                   {titleHeading}
                 </Text>
-
-                <ChevronCompact style={styles.chevronCompact} />
               </View>
+              <ChevronCompact style={styles.chevronCompact} />
             </Pressable>
           )}
         </View>
@@ -155,7 +171,6 @@ const styles = StyleSheet.create({
 
   topAccentShape: {
     width: "100%",
-    height: 64,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
@@ -196,17 +211,17 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     paddingLeft: 16,
-    paddingRight: 24,
+    paddingRight: 48,
     paddingVertical: 16,
     gap: 2,
   },
 
   columnContent: {
-    // padding: 12,
+    gap: 4,
   },
 
   chevronCompact: {
     position: "absolute",
-    right: 0,
+    right: 24,
   },
 });

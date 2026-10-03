@@ -92,7 +92,7 @@ export default function PreviewTitleCard({
               color: theme.text,
             }}
           >
-            {dateFormatter.format(timestamp)}
+            {dateFormatter("full").format(timestamp)}
           </Text>
         )}
         {location && (

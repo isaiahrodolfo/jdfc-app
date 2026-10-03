@@ -1,6 +1,7 @@
 import { getNotes } from "@/api/supabase/notes/getNotes";
 import { saveNotes } from "@/api/supabase/notes/saveNotes";
 import PreviewTitleCard from "@/components/cards/PreviewTitleCard";
+import { dateFormatter } from "@/components/helpers/dateFormatter";
 import NoteEditor, {
   type NoteEditorHandle,
 } from "@/components/miscellaneous/NoteEditor";
@@ -74,7 +75,7 @@ export default function DevotionPage() {
 
     return () => {
       isActive = false;
-    }
+    };
   }, [link, user]);
 
   if (!devotional) {
@@ -138,7 +139,7 @@ export default function DevotionPage() {
 
         <PreviewTitleCard
           title={devotional.title.toString() || "No Title"}
-          category={date.toDateString()}
+          category={dateFormatter("date").format(date)}
           subtitle={devotional.author.toString() || "No Author"}
           hasTopAccent={false}
           backgroundColor={"primary"}
@@ -366,7 +367,9 @@ export default function DevotionPage() {
               onSaveNotes={async (html) => {
                 setNotesHtml(html);
                 if (!user) {
-                  throw new Error("Cannot save devotional notes without a user.");
+                  throw new Error(
+                    "Cannot save devotional notes without a user.",
+                  );
                 }
                 await saveNotes(
                   user,

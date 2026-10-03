@@ -1,4 +1,6 @@
 import LessonCard from "@/components/cards/LessonCard";
+import { dateFormatter } from "@/components/helpers/dateFormatter";
+import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useState } from "react";
@@ -6,7 +8,7 @@ import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 
 export default function Devotion() {
   const { theme, fonts } = useTheme();
-  const { devotionals, refreshPage } = useTabs();
+  const { devotionals, todaysDateKey, refreshPage } = useTabs();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -40,21 +42,52 @@ export default function Devotion() {
     >
       <View style={styles.container}>
         {devotionals &&
-          devotionals.map((devotional) => (
-            <LessonCard
-              isCompleted={false}
-              titleHeading={todaysDevotional?.title || "No Devotional Today"}
-              descriptionHeading={"Daily Devotion"}
-              size="big"
-              colorName="yellow"
-              onLessonPress={() => handleDevotionalPress(todaysDevotional)}
-            />
-          ))}
+          devotionals
+            .filter((devotional) => devotional.dateKey <= todaysDateKey)
+            .toReversed()
+            .map((devotional) => {
+              const yesterdayDate = new Date(todaysDateKey);
+              yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+
+              const date = new Date(devotional.dateKey);
+
+              const yesterdayDateKey = yesterdayDate
+                .toISOString()
+                .split("T")[0];
+
+              const size =
+                devotional.dateKey === todaysDateKey ||
+                devotional.dateKey === yesterdayDateKey
+                  ? "big"
+                  : "medium";
+
+              return (
+                <LessonCard
+                  key={devotional.dateKey}
+                  isCompleted={false}
+                  titleHeading={devotional.title || "No Devotional Today"}
+                  descriptionHeading="Daily Devotion"
+                  descriptionSubheading={
+                    devotional.dateKey === todaysDateKey
+                      ? "Today"
+                      : devotional.dateKey === yesterdayDateKey
+                        ? "Yesterday"
+                        : dateFormatter("date").format(date)
+                  }
+                  size={size}
+                  colorName="yellow"
+                  imageLink={devotional.imageUrl}
+                  onLessonPress={() => handleDevotionalPress(devotional)}
+                />
+              );
+            })}
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    gap: 36,
+  },
 });

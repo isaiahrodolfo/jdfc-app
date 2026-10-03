@@ -48,7 +48,7 @@ export default function EventCardSmall({
             color: theme.text,
           }}
         >
-          {dateFormatter.format(date)}
+          {dateFormatter("full").format(date)}
           {"\n"}
           {location}
         </Text>

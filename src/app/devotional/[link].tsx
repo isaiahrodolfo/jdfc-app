@@ -27,6 +27,7 @@ export default function DevotionPage() {
   const { devotionals } = useTabs();
 
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
+  const [notesHtml, setNotesHtml] = useState("");
   const [editorHeight, setEditorHeight] = useState(300);
   const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
   const [saveNotesRequest, setSaveNotesRequest] = useState(0);
@@ -339,10 +340,8 @@ export default function DevotionPage() {
             }}
           >
             <NoteEditor
-              initialContent=""
-              onSaveNotes={(html) => {
-                console.log("Saving notes:", html);
-              }}
+              initialContent={notesHtml}
+              onSaveNotes={setNotesHtml}
               onClose={() => setIsTakingNotes(false)}
               height={editorHeight}
               maxHeight={editorAvailableHeight * 0.8}

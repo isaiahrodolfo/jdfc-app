@@ -46,7 +46,7 @@ export default function Input({
 
 const styles = StyleSheet.create({
   container: {
-    width: 330, // testing
+    width: "100%",
     height: 48,
   },
   input: { padding: 12 },

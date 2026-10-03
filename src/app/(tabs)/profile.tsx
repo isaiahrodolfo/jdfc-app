@@ -1,3 +1,4 @@
+import ButtonBig from "@/components/buttons/ButtonBig";
 import Input from "@/components/miscellaneous/Input";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -168,7 +169,7 @@ export default function Profile() {
             <Text
               style={{
                 fontFamily: fonts.family,
-                fontSize: fonts.sizes.h3,
+                fontSize: fonts.sizes.h4,
                 fontWeight: "bold",
                 color: theme.textAlt,
               }}
@@ -190,7 +191,7 @@ export default function Profile() {
             <Text
               style={{
                 fontFamily: fonts.family,
-                fontSize: fonts.sizes.h3,
+                fontSize: fonts.sizes.h4,
                 fontWeight: "bold",
                 color: theme.textAlt,
               }}
@@ -199,15 +200,60 @@ export default function Profile() {
             </Text>
             <Input
               value={birthday}
-              placeholderText="Full Name"
+              placeholderText="Birthday"
               autoComplete="birthdate-full"
               textColor={theme.textAlt}
-              placeholderTextColor={theme.textAlt}
+              placeholderTextColor={theme.iconSecondary}
               borderColor={theme.textAlt}
               onChangeText={(text) => setBirthday(text)}
             />
           </View>
+          {/* Facebook Link */}
+          <View style={styles.field}>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h4,
+                fontWeight: "bold",
+                color: theme.textAlt,
+              }}
+            >
+              Facebook Link
+            </Text>
+            <Input
+              value={facebookLink}
+              placeholderText="facebook.com/your-profile"
+              autoComplete="off"
+              textColor={theme.textAlt}
+              placeholderTextColor={theme.iconSecondary}
+              borderColor={theme.textAlt}
+              onChangeText={(text) => setFacebookLink(text)}
+            />
+          </View>
+          {/* Instagram Link */}
+          <View style={styles.field}>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h4,
+                fontWeight: "bold",
+                color: theme.textAlt,
+              }}
+            >
+              Instagram Link
+            </Text>
+            <Input
+              value={instagramLink}
+              placeholderText="instagram.com/your-profile"
+              autoComplete="off"
+              textColor={theme.textAlt}
+              placeholderTextColor={theme.iconSecondary}
+              borderColor={theme.textAlt}
+              onChangeText={(text) => setInstagramLink(text)}
+            />
+          </View>
         </View>
+        <ButtonBig text={"Save Edits"} />
       </View>
     </ScrollView>
   );
@@ -215,8 +261,8 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: { gap: 20 },
-  fieldsContainer: { gap: 16 },
-  field: { gap: 12 },
+  fieldsContainer: { gap: 16, paddingRight: 24 },
+  field: { gap: 8 },
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",

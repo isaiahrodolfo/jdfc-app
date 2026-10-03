@@ -2,7 +2,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 
 type ButtonBigProps = {
-  icon: React.ComponentType;
+  icon?: React.ComponentType;
   text: string;
 };
 
@@ -14,7 +14,7 @@ export default function ButtonBig({ icon: Icon, text }: ButtonBigProps) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.iconPrimary }]}>
-      <Icon />
+      {Icon && <Icon />}
       <Text
         style={[
           styles.text,

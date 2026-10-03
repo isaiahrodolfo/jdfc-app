@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native";
 
+import { toggleCompleted } from "@/api/supabase/lessons/toggleCompleted";
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
@@ -13,20 +14,30 @@ import LessonCard from "@/components/cards/LessonCard";
 import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuthContext } from "@/hooks/use-auth-context";
 import { router } from "expo-router";
 import { useState } from "react";
 
 export default function Home() {
+  const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
   const {
     announcements,
     liveEvents,
     upcomingEvents,
-    todaysDevotional,
+    devotionals,
+    setDevotionals,
+    todaysDateKey,
     refreshPage,
   } = useTabs();
 
+  const todaysDevotional =
+    devotionals.find((devotional) => devotional.dateKey === todaysDateKey) ??
+    null;
+
   const [refreshing, setRefreshing] = useState(false);
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -35,6 +46,51 @@ export default function Home() {
       await refreshPage();
     } finally {
       setRefreshing(false);
+    }
+  };
+
+  const handleCheckboxPress = async (lessonId: number) => {
+    console.log("toggled in devotion page");
+    if (isUpdating) return;
+    console.log("Setting isUpdating to true");
+    setIsUpdating(true);
+
+    const newIsChecked = !devotionals.find(
+      (devotional) => devotional.lessonId === lessonId,
+    )?.isCompleted;
+
+    // Set the state right away
+    setDevotionals((prev) =>
+      prev.map((devotional) =>
+        devotional.lessonId === lessonId
+          ? { ...devotional, isCompleted: newIsChecked }
+          : devotional,
+      ),
+    );
+
+    try {
+      // Set the toggle remotely
+      console.log(
+        "Calling toggleCompleted with:",
+        user.id,
+        lessonId,
+        newIsChecked,
+      );
+      await toggleCompleted(user.id, lessonId, newIsChecked);
+    } catch (error) {
+      console.error("Error updating completion:", error);
+
+      // Revert the devotionals object if the isCompleted was not saved remotely
+      setDevotionals((prev) =>
+        prev.map((devotional) =>
+          devotional.lessonId === lessonId
+            ? { ...devotional, isCompleted: !newIsChecked }
+            : devotional,
+        ),
+      );
+    } finally {
+      console.log("Setting isUpdating to false");
+      setIsUpdating(false);
     }
   };
 
@@ -174,13 +230,15 @@ export default function Home() {
 
         {todaysDevotional && (
           <LessonCard
-            isCompleted={false}
+            isCompleted={todaysDevotional.isCompleted}
             titleHeading={todaysDevotional?.title || "No Devotional Today"}
             descriptionHeading={"Daily Devotion"}
             size="big"
             colorName="yellow"
             imageLink={todaysDevotional.imageUrl}
-            lessonId={todaysDevotional.lessonId}
+            onCheckboxPress={() =>
+              handleCheckboxPress(todaysDevotional.lessonId)
+            }
             onLessonPress={() => handleDevotionalPress(todaysDevotional)}
           />
         )}

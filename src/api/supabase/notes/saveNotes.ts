@@ -58,9 +58,9 @@ export async function saveNotes(
     throw new Error("A devotional title and date are required to save notes.");
   }
 
-  const devotionLessonId = await findDevotional(uniqueIdentifier, title, date);
+  const { lessonId } = await findDevotional(uniqueIdentifier, title, date);
 
-  if (!devotionLessonId) {
+  if (!lessonId) {
     throw new Error("Devotional has no lesson ID.");
   }
 
@@ -69,7 +69,7 @@ export async function saveNotes(
     .upsert(
       {
         user_id: user.id,
-        lesson_id: devotionLessonId,
+        lesson_id: lessonId,
         notes: text,
       },
       {

@@ -1,16 +1,21 @@
+import { toggleCompleted } from "@/api/supabase/lessons/toggleCompleted";
 import LessonCard from "@/components/cards/LessonCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
 import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuthContext } from "@/hooks/use-auth-context";
 import { useState } from "react";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 
 export default function Devotion() {
+  const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
-  const { devotionals, todaysDateKey, refreshPage } = useTabs();
+  const { devotionals, setDevotionals, todaysDateKey, refreshPage } = useTabs();
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -19,6 +24,48 @@ export default function Devotion() {
       await refreshPage();
     } finally {
       setRefreshing(false);
+    }
+  };
+
+  const handleCheckboxPress = async (lessonId: number) => {
+    if (isUpdating) return;
+
+    // Get the devotion to toggle its completion
+    const devotional = devotionals.find(
+      (devotional) => devotional.lessonId === lessonId,
+    );
+
+    if (!devotional) return;
+
+    const newIsChecked = !devotional.isCompleted;
+
+    // Set the devotionals object right away
+    setDevotionals((prev) =>
+      prev.map((devotional) =>
+        devotional.lessonId === lessonId
+          ? { ...devotional, isCompleted: newIsChecked }
+          : devotional,
+      ),
+    );
+
+    setIsUpdating(true);
+
+    try {
+      // Set the toggle remotely
+      await toggleCompleted(user.id, lessonId, newIsChecked);
+    } catch (error) {
+      console.error("Error updating completion:", error);
+
+      // Revert the devotionals object if the isCompleted was not saved remotely
+      setDevotionals((prev) =>
+        prev.map((devotional) =>
+          devotional.lessonId === lessonId
+            ? { ...devotional, isCompleted: !newIsChecked }
+            : devotional,
+        ),
+      );
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -65,7 +112,7 @@ export default function Devotion() {
               return (
                 <LessonCard
                   key={devotional.dateKey}
-                  isCompleted={false}
+                  isCompleted={devotional.isCompleted}
                   titleHeading={devotional.title || "No Devotional Today"}
                   descriptionHeading="Daily Devotion"
                   descriptionSubheading={
@@ -78,7 +125,9 @@ export default function Devotion() {
                   size={size}
                   colorName="yellow"
                   imageLink={devotional.imageUrl}
-                  lessonId={devotional.lessonId}
+                  onCheckboxPress={() =>
+                    handleCheckboxPress(devotional.lessonId)
+                  }
                   onLessonPress={() => handleDevotionalPress(devotional)}
                 />
               );

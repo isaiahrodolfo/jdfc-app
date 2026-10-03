@@ -18,9 +18,11 @@ import {
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
+import { useAuthContext } from "@/hooks/use-auth-context";
 
 export type DevotionLesson = {
   lessonId: number;
+  isCompleted: boolean;
   dateKey: string;
   title: string;
   author: string;
@@ -47,6 +49,7 @@ type TabsContextType = {
   liveEvents: LiveEvent[];
   upcomingEvents: UpcomingEvent[];
   devotionals: DevotionLesson[];
+  setDevotionals: React.Dispatch<React.SetStateAction<DevotionLesson[]>>;
   todaysDevotional: DevotionLesson | null;
   todaysDateKey: string;
   refreshPage: () => Promise<void>;
@@ -63,6 +66,7 @@ const getTodaysDateKey = (): string => {
 };
 
 export function TabsProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuthContext();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
@@ -95,19 +99,24 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     // Make sure the devotionals can be found within Supabase
     const devotionalsWithIds = await Promise.all(
       devotionalsData.map(async (devotional) => {
-        const devotionLessonId = await findDevotional(
+        const { lessonId, isCompleted } = await findDevotional(
           devotional.odbUrl,
           devotional.title,
           devotional.dateKey,
+          user.id,
         );
 
         return {
           ...devotional,
-          lessonId: devotionLessonId,
+          lessonId,
+          isCompleted,
         };
       }),
     );
     setDevotionals(devotionalsWithIds);
+    devotionalsWithIds.map((devotion) => {
+      console.log(devotion.lessonId, devotion.isCompleted);
+    });
 
     const todaysDateKey = getTodaysDateKey();
     setTodaysDateKey(todaysDateKey);
@@ -129,6 +138,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         liveEvents,
         upcomingEvents,
         devotionals,
+        setDevotionals,
         todaysDevotional,
         todaysDateKey,
         refreshPage,

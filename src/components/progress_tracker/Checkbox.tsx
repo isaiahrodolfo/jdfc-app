@@ -27,7 +27,7 @@ export default function Checkbox({
   const themeKey = `${colorName}${type}${stateSuffix}` as const;
   const borderThemeKey = `${colorName}SecondaryDisabled` as const;
 
-  console.log(themeKey);
+  // console.log(themeKey);
 
   return (
     // Pass the evaluated themeKey variable inside brackets

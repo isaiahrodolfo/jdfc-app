@@ -15,8 +15,8 @@ export default function ButtonSmall({
 }: ButtonSmallProps) {
   const { theme, fonts } = useTheme();
 
-  console.log("Icon:", Icon);
-  console.log("Icon type:", typeof Icon);
+  // console.log("Icon:", Icon);
+  // console.log("Icon type:", typeof Icon);
 
   return (
     <Pressable

@@ -70,7 +70,7 @@ export async function getSermons(
 
   const { data, error, count } = await query.range(from, to);
 
-  console.log("data: ", data);
+  // console.log("data: ", data);
 
   // TODO: Gracefully handle error
   if (error) {

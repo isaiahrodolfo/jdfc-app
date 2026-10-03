@@ -1,29 +1,50 @@
 import { supabase } from "@/lib/supabase";
 import type { Database } from "../../../../database.types";
 import { createLesson } from "../lessons/createLesson";
+import getCompletion from "../lessons/getCompletion";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
 export type Devotional =
   Database["public"]["Tables"]["devotion_lessons"]["Row"];
 
+type FindDevotionalProps = {
+  uniqueIdentifier: string;
+  title: string;
+  date: string;
+  userId?: string;
+};
+
 /**
- * Gets a devotional entry by its unique identifier.
+ * Gets a devotional's lesson id and completion status by its unique identifier.
  * If it does not exist, automatically creates the associated lesson and devotional entries.
  *
  * @export
  * @async
- * @param {string} uniqueIdentifier - The unique link or identifier for the devotional.
- * @param {string} title - The title of the lesson to create if missing.
- * @param {string} date - The publication date of the lesson if missing.
- * @returns {Promise<Devotional>} A promise that resolves to the retrieved or newly created devotional object.
- * @throws Will throw an error if any database query or mutation fails.
+ * @param {string} uniqueIdentifier
+ * @param {string} title
+ * @param {string} date
+ * @param {?string} [userId]
+ * @returns {Promise<{
+ *   lessonId: number;
+ *   isCompleted: boolean;
+ * }>}
  */
 export async function findDevotional(
   uniqueIdentifier: string,
   title: string,
   date: string,
-): Promise<number> {
-  // console.log("checking whether the devotional exists");
+  userId?: string,
+): Promise<{
+  lessonId: number;
+  isCompleted: boolean;
+}> {
+  if (!userId) {
+    console.log(
+      "Warning: userId is not provided. Completion status will default to false.",
+    );
+  }
+
+  let isCompleted = false;
 
   const { data: devotional, error: devotionalError } = await supabase
     .from("devotion_lessons")
@@ -36,8 +57,13 @@ export async function findDevotional(
   }
 
   // Already exists
-  if (devotional) {
-    return devotional.id;
+  if (devotional && devotional.lesson_id) {
+    if (userId) isCompleted = await getCompletion(devotional.lesson_id, userId);
+
+    return {
+      lessonId: devotional.lesson_id,
+      isCompleted: isCompleted ?? false,
+    };
   }
 
   try {
@@ -61,7 +87,13 @@ export async function findDevotional(
       throw newDevotionalError;
     }
 
-    return newDevotional.lesson_id;
+    if (userId)
+      isCompleted = await getCompletion(newDevotional.lesson_id, userId);
+
+    return {
+      lessonId: newDevotional.lesson_id,
+      isCompleted: isCompleted ?? false,
+    };
   } catch (error) {
     console.error("Error creating devotional:", error);
     throw error;

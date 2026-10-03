@@ -1,4 +1,5 @@
 import Input from "@/components/miscellaneous/Input";
+import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
@@ -31,6 +32,10 @@ export default function Lessons() {
       setRefreshing(false);
     }
   };
+
+  const routeToLessons = (page: string) => {};
+
+  const routeToSermons = (page: string) => {};
 
   return (
     <ScrollView
@@ -72,6 +77,33 @@ export default function Lessons() {
           placeholderTextColor={theme.iconSecondary}
           onChangeText={(text) => setSearchQuery(text)}
         />
+        <View style={styles.lessonCategoriesContainer}>
+          <LessonCategoryCard
+            color={theme.sundayService}
+            titleHeading={"Sunday Service"}
+            onPress={() => routeToSermons("sundayService")}
+          />
+          <LessonCategoryCard
+            color={theme.prayerService}
+            titleHeading={"Prayer Service"}
+            onPress={() => routeToSermons("prayerService")}
+          />
+          <LessonCategoryCard
+            color={theme.blue}
+            titleHeading={"Consolidation"}
+            onPress={() => routeToLessons("consolidation")}
+          />
+          <LessonCategoryCard
+            color={theme.green}
+            titleHeading={"Life Class"}
+            onPress={() => routeToLessons("lifeClass")}
+          />
+          <LessonCategoryCard
+            color={theme.purple}
+            titleHeading={"Destiny Training"}
+            onPress={() => routeToLessons("destinyTraining")}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -85,5 +117,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
     paddingBottom: 12,
+  },
+  lessonCategoriesContainer: {
+    gap: 16,
+    // paddingRight: 24,
   },
 });

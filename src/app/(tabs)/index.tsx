@@ -180,6 +180,7 @@ export default function Home() {
             size="big"
             colorName="yellow"
             imageLink={todaysDevotional.imageUrl}
+            lessonId={todaysDevotional.lessonId}
             onLessonPress={() => handleDevotionalPress(todaysDevotional)}
           />
         )}

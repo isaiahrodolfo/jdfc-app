@@ -11,9 +11,13 @@ export default async function upsertDevotional(
   const { user } = useAuthContext();
   // Find the devotional's link
   try {
-    const devotional = await findDevotional(uniqueIdentifier, title, date);
+    const devotionLessonId = await findDevotional(
+      uniqueIdentifier,
+      title,
+      date,
+    );
 
-    if (!devotional.lesson_id) {
+    if (!devotionLessonId) {
       console.error("Devotional has no lesson ID");
       return;
     }
@@ -24,7 +28,7 @@ export default async function upsertDevotional(
         .upsert(
           {
             user_id: user.id,
-            lesson_id: devotional.lesson_id,
+            lesson_id: devotionLessonId,
             notes: text,
           },
           {

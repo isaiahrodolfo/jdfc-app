@@ -40,6 +40,7 @@ export default function Devotion() {
         />
       }
     >
+      {/* <ProgressTrackerCard colorName="yellow" progressTrackerData={} /> */}
       <View style={styles.container}>
         {devotionals &&
           devotionals
@@ -77,6 +78,7 @@ export default function Devotion() {
                   size={size}
                   colorName="yellow"
                   imageLink={devotional.imageUrl}
+                  lessonId={devotional.lessonId}
                   onLessonPress={() => handleDevotionalPress(devotional)}
                 />
               );

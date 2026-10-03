@@ -2,11 +2,15 @@ import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
+import { toggleCompleted } from "@/api/supabase/lessons/toggleCompleted";
+import { useAuthContext } from "@/hooks/use-auth-context";
+import { useState } from "react";
 import ChevronCompact from "../../../assets/icons/ChevronCompactIndigo5.svg";
 import DividingLine from "../miscellaneous/DividingLine";
 import Checkbox from "../progress_tracker/Checkbox";
 
 type LessonCardProps = {
+  lessonId: number;
   isCompleted: boolean;
   colorName: AccentColor;
   size: "big" | "medium" | "small";
@@ -19,6 +23,7 @@ type LessonCardProps = {
 };
 
 export default function LessonCard({
+  lessonId,
   isCompleted,
   colorName,
   size,
@@ -29,11 +34,25 @@ export default function LessonCard({
   imageLink,
   onLessonPress,
 }: LessonCardProps) {
+  const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
+
+  const [isChecked, setIsChecked] = useState(isCompleted);
 
   const hasDescription = !!descriptionSubheading || !!descriptionHeading;
 
   const hasTitle = !!titleSubheading || !!titleHeading;
+
+  const handleCheckboxPress = async () => {
+    const newIsChecked = !isChecked;
+
+    try {
+      await toggleCompleted(user.id, lessonId, newIsChecked);
+      setIsChecked(newIsChecked);
+    } catch (error) {
+      console.error("Error updating completion:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -68,8 +87,9 @@ export default function LessonCard({
           <Checkbox
             colorName={colorName}
             type="Secondary"
-            isChecked={isCompleted}
+            isChecked={isChecked}
             isCurrent={false}
+            onCheckboxPress={handleCheckboxPress}
           />
         </View>
 

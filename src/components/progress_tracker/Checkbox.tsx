@@ -8,6 +8,7 @@ type CheckboxProps = {
   colorName: AccentColor;
   type: "Primary" | "Secondary";
   isCurrent: boolean;
+  onCheckboxPress: () => void;
 };
 
 export default function Checkbox({
@@ -15,6 +16,7 @@ export default function Checkbox({
   colorName,
   type,
   isCurrent = false,
+  onCheckboxPress,
 }: CheckboxProps) {
   const { theme } = useTheme();
 
@@ -29,8 +31,8 @@ export default function Checkbox({
 
   return (
     // Pass the evaluated themeKey variable inside brackets
-    <View style={styles.container}>
-      <Pressable
+    <Pressable style={styles.container} onPress={onCheckboxPress}>
+      <View
         style={[
           styles.circleContainer,
           {
@@ -41,8 +43,8 @@ export default function Checkbox({
         ]}
       >
         <View>{isChecked ? <CheckmarkIndigo1 /> : <View></View>}</View>
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 }
 

@@ -18,14 +18,36 @@ import {
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
-import { Devotional } from "@/api/supabase/our_daily_bread/odb_api";
+
+export type DevotionLesson = {
+  lessonId: number;
+  dateKey: string;
+  title: string;
+  author: string;
+  content: string;
+  excerpt: string;
+  insights: string;
+  response: string;
+  thought: string;
+  verse: string;
+  passageReference: string;
+  passageUrl: string;
+  bibleInYear: string;
+  bibleInYearUrl: string;
+  imageUrl: string;
+  audioUrl: string;
+  categories: string;
+  slug: string;
+  language: string;
+  odbUrl: string;
+};
 
 type TabsContextType = {
   announcements: Announcement[];
   liveEvents: LiveEvent[];
   upcomingEvents: UpcomingEvent[];
-  devotionals: Devotional[];
-  todaysDevotional: Devotional | null;
+  devotionals: DevotionLesson[];
+  todaysDevotional: DevotionLesson | null;
   todaysDateKey: string;
   refreshPage: () => Promise<void>;
 };
@@ -44,10 +66,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
-  const [devotionals, setDevotionals] = useState<Devotional[]>([]);
-  const [todaysDevotional, setTodaysDevotional] = useState<Devotional | null>(
-    null,
-  );
+  const [devotionals, setDevotionals] = useState<DevotionLesson[]>([]);
+  const [todaysDevotional, setTodaysDevotional] =
+    useState<DevotionLesson | null>(null);
   const [todaysDateKey, setTodaysDateKey] = useState<string>(() => {
     const today = new Date();
     return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
@@ -72,24 +93,26 @@ export function TabsProvider({ children }: { children: ReactNode }) {
 
     const devotionalsData = await getDevotionals();
     // Make sure the devotionals can be found within Supabase
-    devotionalsData.forEach((devotional) => {
-      findDevotional(
-        devotional.odbUrl,
-        devotional.title,
-        devotional.dateKey,
-      ).catch((error) => {
-        console.error(
-          `Error upserting devotional with link ${devotional.odbUrl}:`,
-          error,
+    const devotionalsWithIds = await Promise.all(
+      devotionalsData.map(async (devotional) => {
+        const devotionLessonId = await findDevotional(
+          devotional.odbUrl,
+          devotional.title,
+          devotional.dateKey,
         );
-      });
-    });
-    setDevotionals(devotionalsData);
+
+        return {
+          ...devotional,
+          lessonId: devotionLessonId,
+        };
+      }),
+    );
+    setDevotionals(devotionalsWithIds);
 
     const todaysDateKey = getTodaysDateKey();
     setTodaysDateKey(todaysDateKey);
     setTodaysDevotional(
-      devotionalsData.find(
+      devotionalsWithIds.find(
         (devotional) => devotional.dateKey === todaysDateKey,
       ) ?? null,
     );

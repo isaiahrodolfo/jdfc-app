@@ -22,7 +22,7 @@ export async function findDevotional(
   uniqueIdentifier: string,
   title: string,
   date: string,
-): Promise<Devotional> {
+): Promise<number> {
   // console.log("checking whether the devotional exists");
 
   const { data: devotional, error: devotionalError } = await supabase
@@ -37,7 +37,7 @@ export async function findDevotional(
 
   // Already exists
   if (devotional) {
-    return devotional;
+    return devotional.id;
   }
 
   try {
@@ -57,11 +57,11 @@ export async function findDevotional(
       .select()
       .single();
 
-    if (newDevotionalError) {
+    if (!newDevotional || !newDevotional.lesson_id || newDevotionalError) {
       throw newDevotionalError;
     }
 
-    return newDevotional;
+    return newDevotional.lesson_id;
   } catch (error) {
     console.error("Error creating devotional:", error);
     throw error;

@@ -2,7 +2,7 @@ import {
   ChurchLesson,
   getChurchLessons,
 } from "@/api/supabase/lessons/getChurchLessons";
-import LessonCard from "@/components/cards/LessonCard";
+import SermonCard from "@/components/cards/SermonCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -38,18 +38,13 @@ export default function Index() {
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
       <View style={styles.sermonsListContainer}>
         {sermons.map((sermon) => (
-          <LessonCard
-            showCheckbox={false}
-            isCompleted={false}
-            colorName={"blue"}
+          <SermonCard
+            color={"blue"}
             size={"big"}
             descriptionHeading={""}
             titleHeading={sermon.title ?? ""}
-            onCheckboxPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            onLessonPress={function (): void {
-              throw new Error("Function not implemented.");
+            onLessonPress={() => {
+              routeToLessonPage(sermon.id);
             }}
           />
         ))}

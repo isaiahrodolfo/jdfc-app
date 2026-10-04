@@ -1,37 +1,38 @@
-import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ColorValue,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { useAuthContext } from "@/hooks/use-auth-context";
 import ChevronCompact from "../../../assets/icons/ChevronCompactIndigo5.svg";
 import DividingLine from "../miscellaneous/DividingLine";
-import Checkbox from "../progress_tracker/Checkbox";
 
-type LessonCardProps = {
-  isCompleted: boolean;
-  colorName: AccentColor;
+type SermonCardProps = {
+  color: ColorValue;
   size: "big" | "medium" | "small";
   descriptionHeading: string;
   descriptionSubheading?: string;
   titleHeading: string;
   titleSubheading?: string;
   imageLink?: string;
-  onCheckboxPress: () => void;
   onLessonPress: () => void;
 };
 
-export default function LessonCard({
-  isCompleted,
-  colorName,
+export default function SermonCard({
+  color,
   size,
   descriptionHeading,
   descriptionSubheading,
   titleHeading,
   titleSubheading,
   imageLink,
-  onCheckboxPress,
   onLessonPress,
-}: LessonCardProps) {
+}: SermonCardProps) {
   const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
 
@@ -55,7 +56,7 @@ export default function LessonCard({
             style={[
               styles.topAccentShape,
               {
-                backgroundColor: theme[colorName],
+                backgroundColor: color,
                 height: size === "medium" ? 96 : 196,
               },
             ]}
@@ -63,21 +64,6 @@ export default function LessonCard({
         ))}
 
       <View style={styles.bottomHalf}>
-        <View
-          style={[
-            styles.checkboxContainer,
-            { backgroundColor: theme[`${colorName}Shadow`] },
-          ]}
-        >
-          <Checkbox
-            colorName={colorName}
-            type="Secondary"
-            isChecked={isCompleted}
-            isCurrent={false}
-            onCheckboxPress={onCheckboxPress}
-          />
-        </View>
-
         <View style={styles.contentContainer}>
           {hasDescription && (
             <View

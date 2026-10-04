@@ -6,28 +6,23 @@ import { useEffect, useState } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 
 export default function Index() {
-  const { trackNumber, color } = useLocalSearchParams();
+  const { trackId, color } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
   const [seriesList, setSeriesList] = useState<Series[]>([]);
 
-  console.log(trackNumber, color);
+  console.log(trackId, color);
 
   useEffect(() => {
     async function fetchSeries() {
-      const seriesData = await getSeries(Number(trackNumber));
+      const seriesData = await getSeries(Number(trackId));
       setSeriesList(seriesData);
     }
 
     fetchSeries();
-  }, [trackNumber]);
+  }, [trackId]);
 
-  const routeToLessonsPage = (
-    seriesId: number,
-    seriesNumber: number | null,
-  ) => {
-    if (!seriesNumber) return;
-
+  const routeToLessonsPage = (seriesId: number) => {
     router.push({
       pathname: "/sermonTrack/sermonSeries",
       params: {
@@ -43,7 +38,10 @@ export default function Index() {
           <LessonCategoryCard
             color={color as ColorValue}
             titleHeading={series.name ?? ""}
-            onPress={() => routeToLessonsPage(series.id, series.series_number)}
+            onPress={() => {
+              console.log(series.series_number);
+              routeToLessonsPage(series.id);
+            }}
           />
         ))}
       </View>

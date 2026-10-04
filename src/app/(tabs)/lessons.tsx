@@ -40,12 +40,12 @@ export default function Lessons() {
 
   const routeToSermons = (
     track: "sundayService" | "prayerService",
-    trackNumber: number,
+    trackId: number,
   ) => {
     router.push({
       pathname: "/sermonTrack",
       params: {
-        trackNumber: trackNumber,
+        trackId,
         color: theme[track],
       },
     });

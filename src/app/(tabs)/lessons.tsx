@@ -1,3 +1,4 @@
+import EventCardBig from "@/components/cards/EventCardBig";
 import Input from "@/components/miscellaneous/Input";
 import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTabs } from "@/contexts/TabsContext";
@@ -15,7 +16,7 @@ import {
 export default function Lessons() {
   const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
-  const { refreshPage } = useTabs();
+  const { recentLiveEventLessons, refreshPage } = useTabs();
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -77,6 +78,28 @@ export default function Lessons() {
           placeholderTextColor={theme.iconSecondary}
           onChangeText={(text) => setSearchQuery(text)}
         />
+        {/* Recent */}
+        <Text
+          style={[
+            styles.h2,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+              color: theme.textH2,
+            },
+          ]}
+        >
+          Recent
+        </Text>
+        <View style={styles.recentLiveEventLessonContainer}>
+          {recentLiveEventLessons.map((recentLiveEventLesson) => (
+            <EventCardBig
+              title={recentLiveEventLesson.title}
+              subtitle={""}
+              livestreamLink={recentLiveEventLesson.livestream_link}
+            />
+          ))}
+        </View>
         {/* Categories */}
         <Text
           style={[
@@ -135,6 +158,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
     paddingTop: 12,
+  },
+  recentLiveEventLessonContainer: {
+    gap: 16,
   },
   lessonCategoriesContainer: {
     gap: 16,

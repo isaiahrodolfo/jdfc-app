@@ -15,6 +15,10 @@ import { findDevotional } from "@/api/supabase/devotion/findDevotional";
 import getDevotionalsProgress from "@/api/supabase/devotion/getDevotionalsProgress";
 import { LiveEvent, getLiveEvents } from "@/api/supabase/events/getLiveEvents";
 import {
+  RecentLiveEventLesson,
+  getRecentLiveEventLessons,
+} from "@/api/supabase/events/getRecentLiveEventLessons";
+import {
   UpcomingEvent,
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
@@ -50,6 +54,7 @@ export type DevotionLesson = {
 type TabsContextType = {
   announcements: Announcement[];
   liveEvents: LiveEvent[];
+  recentLiveEventLessons: RecentLiveEventLesson[];
   upcomingEvents: UpcomingEvent[];
   devotionals: DevotionLesson[];
   setDevotionals: React.Dispatch<React.SetStateAction<DevotionLesson[]>>;
@@ -73,6 +78,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuthContext();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
+  const [recentLiveEventLessons, setRecentLiveEventLessons] = useState<
+    RecentLiveEventLesson[]
+  >([]);
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
   const [devotionals, setDevotionals] = useState<DevotionLesson[]>([]);
   const [todaysDevotional, setTodaysDevotional] =
@@ -119,9 +127,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       let hasChanges = false;
       const next = prev.map((progress) => {
         const dateKey = progressDateKeys.get(progress.date);
-        const devotional = dateKey
-          ? devotionalsByDate.get(dateKey)
-          : undefined;
+        const devotional = dateKey ? devotionalsByDate.get(dateKey) : undefined;
 
         if (!devotional || progress.isChecked === devotional.isCompleted) {
           return progress;
@@ -138,6 +144,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const refreshPage = async () => {
     const liveEventsData = await getLiveEvents();
     setLiveEvents(liveEventsData);
+
+    const recentLiveEventLessonsData = await getRecentLiveEventLessons();
+    setRecentLiveEventLessons(recentLiveEventLessonsData);
 
     const announcementsData = await getAnnouncements();
     setAnnouncements(announcementsData);
@@ -165,7 +174,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     );
     setDevotionals(devotionalsWithIds);
     devotionalsWithIds.map((devotion) => {
-      console.log(devotion.lessonId, devotion.isCompleted);
+      // console.log(devotion.lessonId, devotion.isCompleted);
     });
 
     const devotionalsProgressData = await getDevotionalsProgress();
@@ -189,6 +198,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       value={{
         announcements,
         liveEvents,
+        recentLiveEventLessons,
         upcomingEvents,
         devotionals,
         setDevotionals,

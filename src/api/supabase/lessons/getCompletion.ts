@@ -12,7 +12,7 @@ export default async function getCompletion(lessonId: number, userId: string) {
     throw userLessonError;
   }
 
-  console.log("user lesson completion:", userLesson?.is_completed);
+  // console.log("user lesson completion:", userLesson?.is_completed);
 
   return userLesson?.is_completed ?? false;
 }

@@ -1,4 +1,6 @@
 import { createSeedClient } from "@snaplet/seed";
+import { seedLessonsEventsLinks } from "./supabase/seed/lessonsEventsLinks";
+import { seedSermonsEventLessons } from "./supabase/seed/sermonsEventLessons";
 
 async function main() {
   const seed = await createSeedClient();
@@ -50,18 +52,6 @@ async function main() {
       series_number: 1,
       track_id: 5,
     },
-    {
-      id: 68,
-      name: "Sunday Service Sermon Series",
-      series_number: null,
-      track_id: 1,
-    },
-    {
-      id: 124,
-      name: "Prayer Service Sermon Series",
-      series_number: null,
-      track_id: 2,
-    },
   ]);
 
   await seed.life_group_roles([
@@ -111,52 +101,8 @@ async function main() {
     },
   ]);
 
-  // Seeding a (live) Sunday Service
-  await seed.lessons([
-    {
-      id: 1,
-      title: "Sunday Sermon Title",
-    },
-  ]);
-
-  await seed.events([
-    {
-      id: 1,
-      title: "Sunday Service",
-      timestamp: new Date("2026-10-25T10:00:00-07:00"), // October 25, 2026 10:00 am Local Time
-      location: "Jesus' Disciples Family Church",
-      information: "Weekly church service",
-    },
-  ]);
-
-  await seed.lessons_events([
-    {
-      id: 1,
-      lesson_id: 1,
-      event_id: 1,
-    },
-  ]);
-
-  await seed.lessons_events_link([
-    {
-      id: 1,
-      livestream_link: "youtube.com", // testing
-      is_live: true,
-      lessons_events_id: 1,
-    },
-  ]);
-
-  // Seeding an upcoming Prayer Service
-  await seed.events([
-    {
-      id: 2,
-      title: "Prayer Service",
-      timestamp: new Date("2026-10-28T19:00:00-07:00"), // October 28, 2026 7:00 pm Local Time
-      location: "Jesus' Disciples Family Church",
-      information: "Weekly prayer service",
-      repeat_every_days: 7,
-    },
-  ]);
+  await seedSermonsEventLessons(seed);
+  await seedLessonsEventsLinks(seed);
 
   console.log("Database seeded!");
 }

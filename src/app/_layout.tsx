@@ -57,7 +57,7 @@ export default function RootLayout() {
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               {/* Individual screens outside the tab structure */}
               <Stack.Screen
-                name="sermons/[lessonId]"
+                name="sermonTracks"
                 options={{ headerShown: true }}
               />
               <Stack.Screen

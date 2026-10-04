@@ -8,6 +8,7 @@ import DividingLine from "../miscellaneous/DividingLine";
 import Checkbox from "../progress_tracker/Checkbox";
 
 type LessonCardProps = {
+  showCheckbox?: boolean;
   isCompleted: boolean;
   colorName: AccentColor;
   size: "big" | "medium" | "small";
@@ -21,6 +22,7 @@ type LessonCardProps = {
 };
 
 export default function LessonCard({
+  showCheckbox = true,
   isCompleted,
   colorName,
   size,
@@ -63,20 +65,22 @@ export default function LessonCard({
         ))}
 
       <View style={styles.bottomHalf}>
-        <View
-          style={[
-            styles.checkboxContainer,
-            { backgroundColor: theme[`${colorName}Shadow`] },
-          ]}
-        >
-          <Checkbox
-            colorName={colorName}
-            type="Secondary"
-            isChecked={isCompleted}
-            isCurrent={false}
-            onCheckboxPress={onCheckboxPress}
-          />
-        </View>
+        {showCheckbox && (
+          <View
+            style={[
+              styles.checkboxContainer,
+              { backgroundColor: theme[`${colorName}Shadow`] },
+            ]}
+          >
+            <Checkbox
+              colorName={colorName}
+              type="Secondary"
+              isChecked={isCompleted}
+              isCurrent={false}
+              onCheckboxPress={onCheckboxPress}
+            />
+          </View>
+        )}
 
         <View style={styles.contentContainer}>
           {hasDescription && (

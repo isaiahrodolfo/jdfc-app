@@ -43,7 +43,7 @@ export default function Lessons() {
     trackNumber: number,
   ) => {
     router.push({
-      pathname: "/sermons",
+      pathname: "/sermonTrack",
       params: {
         trackNumber: trackNumber,
         color: theme[track],

@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { Database } from "../../../../../database.types";
+import { Database } from "../../../../database.types";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
 export type Series = Database["public"]["Tables"]["series"]["Row"];

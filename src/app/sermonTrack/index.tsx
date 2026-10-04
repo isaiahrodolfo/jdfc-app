@@ -1,7 +1,7 @@
-import { getSeries, Series } from "@/api/supabase/lessons/series/getSeries";
+import { getSeries, Series } from "@/api/supabase/lessons/getSeries";
 import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 
@@ -27,6 +27,13 @@ export default function Index() {
     seriesNumber: number | null,
   ) => {
     if (!seriesNumber) return;
+
+    router.push({
+      pathname: "/sermonTrack/sermonSeries",
+      params: {
+        seriesId,
+      },
+    });
   };
 
   return (

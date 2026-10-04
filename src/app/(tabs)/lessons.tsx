@@ -1,4 +1,5 @@
 import EventCardBig from "@/components/cards/EventCardBig";
+import { dateFormatter } from "@/components/helpers/dateFormatter";
 import Input from "@/components/miscellaneous/Input";
 import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTabs } from "@/contexts/TabsContext";
@@ -92,13 +93,16 @@ export default function Lessons() {
           Recent
         </Text>
         <View style={styles.recentLiveEventLessonContainer}>
-          {recentLiveEventLessons.map((recentLiveEventLesson) => (
-            <EventCardBig
-              title={recentLiveEventLesson.title}
-              subtitle={""}
-              livestreamLink={recentLiveEventLesson.livestream_link}
-            />
-          ))}
+          {recentLiveEventLessons.map((recentLiveEventLesson) => {
+            const date = new Date(recentLiveEventLesson.timestamp);
+            return (
+              <EventCardBig
+                title={recentLiveEventLesson.title}
+                subtitle={dateFormatter("date").format(date)}
+                livestreamLink={recentLiveEventLesson.livestream_link}
+              />
+            );
+          })}
         </View>
         {/* Categories */}
         <Text
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   recentLiveEventLessonContainer: {
-    gap: 16,
+    gap: 28,
   },
   lessonCategoriesContainer: {
     gap: 16,

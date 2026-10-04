@@ -1,7 +1,7 @@
 import { getSeries, Series } from "@/api/supabase/lessons/getSeries";
 import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTheme } from "@/contexts/ThemeContext";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 
@@ -33,6 +33,14 @@ export default function Index() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
+      <Stack.Screen
+        options={{
+          headerTitle: "",
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal", // Circle back button
+          headerTransparent: true,
+        }}
+      />
       <View style={styles.sermonsListContainer}>
         {seriesList.map((series) => (
           <LessonCategoryCard

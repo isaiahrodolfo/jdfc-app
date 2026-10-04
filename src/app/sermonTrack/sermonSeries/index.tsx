@@ -4,7 +4,7 @@ import {
 } from "@/api/supabase/lessons/getChurchLessons";
 import SermonCard from "@/components/cards/SermonCard";
 import { useTheme } from "@/contexts/ThemeContext";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -34,6 +34,14 @@ export default function Index() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.primary }]}>
+      <Stack.Screen
+        options={{
+          headerTitle: "",
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal", // Circle back button
+          headerTransparent: true,
+        }}
+      />
       <View style={styles.sermonsListContainer}>
         {sermons.map((sermon) => (
           <SermonCard

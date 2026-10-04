@@ -6,7 +6,7 @@ import SermonCard from "@/components/cards/SermonCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Index() {
   const { seriesId } = useLocalSearchParams();
@@ -33,29 +33,40 @@ export default function Index() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.primary }]}>
-      <Stack.Screen
-        options={{
-          headerTitle: "",
-          headerShown: true,
-          headerBackButtonDisplayMode: "minimal", // Circle back button
-          headerTransparent: true,
-        }}
-      />
-      <View style={styles.sermonsListContainer}>
-        {sermons.map((sermon) => (
-          <SermonCard
-            color={"blue"}
-            size={"big"}
-            descriptionHeading={""}
-            titleHeading={sermon.title ?? ""}
-            onLessonPress={() => {
-              routeToLessonPage(sermon.lessonId);
-            }}
-          />
-        ))}
+    <ScrollView
+      style={{ flex: 1, backgroundColor: theme.primary }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingTop: 96,
+        paddingBottom: 96,
+        paddingHorizontal: 40,
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={[styles.container, { backgroundColor: theme.primary }]}>
+        <Stack.Screen
+          options={{
+            headerTitle: "",
+            headerShown: true,
+            headerBackButtonDisplayMode: "minimal", // Circle back button
+            headerTransparent: true,
+          }}
+        />
+        <View style={styles.sermonsListContainer}>
+          {sermons.map((sermon) => (
+            <SermonCard
+              color={"blue"}
+              size={"big"}
+              descriptionHeading={""}
+              titleHeading={sermon.title ?? ""}
+              onLessonPress={() => {
+                routeToLessonPage(sermon.lessonId);
+              }}
+            />
+          ))}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

@@ -5,6 +5,7 @@ import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   RefreshControl,
@@ -35,9 +36,20 @@ export default function Lessons() {
     }
   };
 
-  const routeToLessons = (page: string) => {};
+  const routeToLessons = (track: string) => {};
 
-  const routeToSermons = (page: string) => {};
+  const routeToSermons = (
+    track: "sundayService" | "prayerService",
+    trackNumber: number,
+  ) => {
+    router.push({
+      pathname: "/sermons",
+      params: {
+        trackNumber: trackNumber,
+        color: theme[track],
+      },
+    });
+  };
 
   return (
     <ScrollView
@@ -121,12 +133,12 @@ export default function Lessons() {
           <LessonCategoryCard
             color={theme.sundayService}
             titleHeading={"Sunday Service"}
-            onPress={() => routeToSermons("sundayService")}
+            onPress={() => routeToSermons("sundayService", 1)}
           />
           <LessonCategoryCard
             color={theme.prayerService}
             titleHeading={"Prayer Service"}
-            onPress={() => routeToSermons("prayerService")}
+            onPress={() => routeToSermons("prayerService", 2)}
           />
           <LessonCategoryCard
             color={theme.blue}

@@ -14,8 +14,6 @@ export default function Index() {
 
   const [sermons, setSermons] = useState<ChurchLesson[]>([]);
 
-  console.log(seriesId);
-
   useEffect(() => {
     async function fetchSeries() {
       const sermonsData = await getChurchLessons(Number(seriesId));

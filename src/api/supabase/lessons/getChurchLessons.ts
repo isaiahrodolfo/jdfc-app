@@ -1,7 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { Json } from "../../../../database.types";
 
-// Define explicit TypeScript types extracted from the Supabase Schema
 export type ChurchLesson = {
   id: number;
   lesson_number: number | null;
@@ -23,29 +22,25 @@ export async function getChurchLessons(
     .from("church_lessons")
     .select(
       `
-        id, 
-        lesson_number, 
+        id,
+        lesson_number,
         lessons!inner (
           title,
           tags
-        ) `,
+        )
+      `,
     )
     .eq("series_id", seriesId);
 
   if (error || !data) {
-    console.log("Church lesson not found", error);
+    console.log("Church lessons not found", error);
     return [];
   }
 
-  return data.map((lesson) => {
-    const title = lesson.lessons.title;
-    const tags = lesson.lessons.tags;
-
-    return {
-      title: title,
-      tags: tags,
-      id: lesson.id,
-      lesson_number: lesson.lesson_number,
-    };
-  });
+  return data.map((churchLesson) => ({
+    id: churchLesson.id,
+    lesson_number: churchLesson.lesson_number,
+    title: churchLesson.lessons.title,
+    tags: churchLesson.lessons.tags,
+  }));
 }

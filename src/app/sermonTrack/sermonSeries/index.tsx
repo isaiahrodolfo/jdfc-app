@@ -25,7 +25,7 @@ export default function Index() {
 
   const routeToLessonPage = (lessonId: number) => {
     router.push({
-      pathname: "/sermonTrack/sermonSeries",
+      pathname: "/lesson/[lessonId]",
       params: {
         lessonId,
       },
@@ -42,7 +42,7 @@ export default function Index() {
             descriptionHeading={""}
             titleHeading={sermon.title ?? ""}
             onLessonPress={() => {
-              routeToLessonPage(sermon.id);
+              routeToLessonPage(sermon.lessonId);
             }}
           />
         ))}

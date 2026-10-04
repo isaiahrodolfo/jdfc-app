@@ -3,7 +3,8 @@ import { Json } from "../../../../database.types";
 
 export type ChurchLesson = {
   id: number;
-  lesson_number: number | null;
+  lessonId: number;
+  lessonNumber: number | null;
   title: string | null;
   tags: Json;
 };
@@ -25,6 +26,7 @@ export async function getChurchLessons(
         id,
         lesson_number,
         lessons!inner (
+          id,
           title,
           tags
         )
@@ -39,7 +41,8 @@ export async function getChurchLessons(
 
   return data.map((churchLesson) => ({
     id: churchLesson.id,
-    lesson_number: churchLesson.lesson_number,
+    lessonId: churchLesson.lessons.id,
+    lessonNumber: churchLesson.lesson_number,
     title: churchLesson.lessons.title,
     tags: churchLesson.lessons.tags,
   }));

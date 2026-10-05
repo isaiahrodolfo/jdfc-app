@@ -105,6 +105,16 @@ export default function Index() {
             const isValidDate =
               lessonDate !== null && !Number.isNaN(lessonDate.getTime());
 
+            const lessonDateString = isValidDate
+              ? dateFormatter("date").format(
+                  new Date(
+                    lessonDate.getUTCFullYear(),
+                    lessonDate.getUTCMonth(),
+                    lessonDate.getUTCDate(),
+                  ),
+                )
+              : "";
+
             return (
               <LessonCard
                 key={lesson.lessonId}
@@ -112,15 +122,11 @@ export default function Index() {
                 colorName={colorName?.toString() as AccentColor}
                 size={size}
                 descriptionSubheading={
-                  isValidDate
-                    ? dateFormatter("date").format(
-                        new Date(
-                          lessonDate.getUTCFullYear(),
-                          lessonDate.getUTCMonth(),
-                          lessonDate.getUTCDate(),
-                        ),
-                      )
-                    : ""
+                  isToday
+                    ? "Today"
+                    : isYesterday
+                      ? "Yesterday"
+                      : lessonDateString
                 }
                 titleHeading={lesson.title ?? ""}
                 onCheckboxPress={() => {

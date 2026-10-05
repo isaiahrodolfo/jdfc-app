@@ -49,7 +49,9 @@ export default function DropdownSmall({
                 >
                   {selection}
                 </Text>
-                <View style={{ transform: [{ rotate: "180deg" }] }}>
+                <View
+                  style={[styles.arrow, { transform: [{ rotate: "180deg" }] }]}
+                >
                   <ChevronDown />
                 </View>
               </View>
@@ -65,6 +67,7 @@ export default function DropdownSmall({
                       fontFamily: fonts.family,
                       fontSize: fonts.sizes.h6,
                       color: theme.text,
+                      paddingRight: 36,
                     },
                   ]}
                 >
@@ -88,7 +91,9 @@ export default function DropdownSmall({
           >
             {selections[indexSelected]}
           </Text>
-          <ChevronDown />
+          <View style={styles.arrow}>
+            <ChevronDown />
+          </View>
         </Pressable>
       )}
     </View>
@@ -105,8 +110,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingRight: 36,
   },
   item: {
     paddingVertical: 5,
+  },
+  arrow: {
+    position: "absolute",
+    right: 8,
   },
 });

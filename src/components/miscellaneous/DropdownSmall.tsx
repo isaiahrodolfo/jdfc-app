@@ -49,7 +49,9 @@ export default function DropdownSmall({
                 >
                   {selection}
                 </Text>
-                <ChevronDown />
+                <View style={{ transform: [{ rotate: "180deg" }] }}>
+                  <ChevronDown />
+                </View>
               </View>
             ) : (
               <View>

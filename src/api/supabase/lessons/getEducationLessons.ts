@@ -22,24 +22,27 @@ export type EducationLesson = {
   tags: Json;
   timestamp?: string | null;
   speakers?: string[];
+  isCompleted?: boolean;
 };
 
 /**
  * Gets all education lessons for a track, categorized by series.
  *
  * @param trackId The ID of the education track.
+ * @param userId Optional user ID used to retrieve that user's completion status.
  * @returns All lessons for the track grouped by series.
  */
 export async function getEducationLessons(
   trackId: number,
+  userId?: string,
 ): Promise<EducationTrack> {
-  const { data, error } = await supabase
+  let query = supabase
     .from("church_lessons")
     .select(
       `
         id,
         lesson_number,
-        series (
+        series!inner (
           id,
           name,
           series_number,
@@ -65,11 +68,22 @@ export async function getEducationLessons(
             lessons_events_speakers (
               user_id
             )
+          ),
+          users_lessons_completions!left (
+            user_id,
+            is_completed
           )
         )
       `,
     )
     .eq("series.tracks.id", trackId);
+
+  // Only filter the embedded completion rows when a user ID was provided.
+  if (userId) {
+    query = query.eq("lessons.users_lessons_completions.user_id", userId);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw error;
@@ -113,6 +127,8 @@ export async function getEducationLessons(
 
     const lessonEvent = item.lessons.lessons_events?.[0];
 
+    const completion = item.lessons.users_lessons_completions?.[0];
+
     series.lessons.push({
       churchLessonId: item.id,
       lessonId: item.lessons.id,
@@ -124,17 +140,16 @@ export async function getEducationLessons(
         lessonEvent?.lessons_events_speakers
           ?.map((speaker) => speaker.user_id)
           .filter((id): id is string => id !== null) ?? [],
+      isCompleted: completion?.is_completed ?? false,
     });
   }
 
   const seriesLessons = Array.from(seriesMap.values())
     .sort((a, b) => {
-      // Numbered series first, ascending
       if (a.seriesNumber !== null && b.seriesNumber !== null) {
         return a.seriesNumber - b.seriesNumber;
       }
 
-      // Numbered series before unnumbered
       if (a.seriesNumber !== null) {
         return -1;
       }
@@ -143,7 +158,6 @@ export async function getEducationLessons(
         return 1;
       }
 
-      // Both unnumbered: newest first
       return b.createdAt.localeCompare(a.createdAt);
     })
     .map(({ createdAt, ...series }) => series);

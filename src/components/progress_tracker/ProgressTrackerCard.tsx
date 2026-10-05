@@ -4,7 +4,7 @@ import DividingLine from "../miscellaneous/DividingLine";
 import { CheckboxData } from "./CheckboxesContainer";
 import ProgressTracker from "./ProgressTracker";
 
-type ProgressTrackerData = {
+export type ProgressTrackerData = {
   checkboxesData: CheckboxData[];
   subtitles: string[];
 };

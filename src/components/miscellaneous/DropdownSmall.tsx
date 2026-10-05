@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import ChevronDown from "@/assets/icons/ChevronDownWhite.svg";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -8,12 +8,16 @@ type DropdownSmallProps = {
   selections: string[];
   isOpen: boolean;
   indexSelected: number;
+  onOpenPress: () => void;
+  onClosePress: (selectedIndex: number) => void;
 };
 
 export default function DropdownSmall({
   selections,
   isOpen,
   indexSelected,
+  onOpenPress,
+  onClosePress,
 }: DropdownSmallProps) {
   const { theme, fonts } = useTheme();
 
@@ -30,7 +34,7 @@ export default function DropdownSmall({
     >
       {isOpen ? (
         selections.map((selection, index) => (
-          <View key={index}>
+          <Pressable onPress={() => onClosePress(index)} key={index}>
             {index === 0 ? (
               <View style={styles.firstItemContainer}>
                 <Text
@@ -66,10 +70,10 @@ export default function DropdownSmall({
                 </Text>
               </View>
             )}
-          </View>
+          </Pressable>
         ))
       ) : (
-        <View style={styles.firstItemContainer}>
+        <Pressable onPress={onOpenPress} style={styles.firstItemContainer}>
           <Text
             style={{
               fontFamily: fonts.family,
@@ -80,7 +84,7 @@ export default function DropdownSmall({
             {selections[indexSelected]}
           </Text>
           <ChevronDown />
-        </View>
+        </Pressable>
       )}
     </View>
   );

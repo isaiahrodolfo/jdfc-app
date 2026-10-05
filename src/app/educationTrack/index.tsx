@@ -5,6 +5,7 @@ import {
 } from "@/api/supabase/lessons/getEducationLessons";
 import LessonCard from "@/components/cards/LessonCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
+import DropdownSmall from "@/components/miscellaneous/DropdownSmall";
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
@@ -17,6 +18,7 @@ export default function Index() {
 
   const [educationTrack, setEducationTrack] = useState<EducationTrack>();
   const [selectedSeries, setSelectedSeries] = useState<SeriesLessons>();
+  const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 
   console.log(trackId, colorName);
 
@@ -42,6 +44,16 @@ export default function Index() {
         lessonId,
       },
     });
+  };
+
+  const handleClosePress = (selectedIndex: number) => {
+    // Get the series whose series_number matches selectedId
+    setSelectedSeries(
+      educationTrack?.seriesLessons.find(
+        (series) => series.seriesNumber === selectedIndex + 1,
+      ),
+    );
+    setDropdownIsOpen(false);
   };
 
   return (
@@ -77,6 +89,16 @@ export default function Index() {
           {educationTrack?.trackName}
           {selectedSeries?.seriesNumber}
         </Text>
+        <DropdownSmall
+          selections={
+            educationTrack?.seriesLessons.map((series) => series.name ?? "") ||
+            []
+          }
+          isOpen={dropdownIsOpen}
+          indexSelected={0}
+          onOpenPress={() => setDropdownIsOpen(true)}
+          onClosePress={(selectedIndex) => handleClosePress(selectedIndex)}
+        />
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => {
             const lessonDate = lesson.timestamp

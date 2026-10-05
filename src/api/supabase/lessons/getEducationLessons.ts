@@ -8,6 +8,7 @@ export type EducationTrack = {
 };
 
 export type SeriesLessons = {
+  name: string | null;
   seriesId: number;
   seriesNumber: number | null;
   lessons: EducationLesson[];
@@ -74,11 +75,6 @@ export async function getEducationLessons(
     throw error;
   }
 
-  /*
-   * Find the track from the first row that has a matching series/track.
-   *
-   * The nested relationships are optional, so series/tracks may be null.
-   */
   const track = data.find((item) => item.series?.tracks?.id === trackId)?.series
     ?.tracks;
 
@@ -90,10 +86,6 @@ export async function getEducationLessons(
     };
   }
 
-  /*
-   * Keep createdAt internally so unnumbered series can be sorted
-   * newest → oldest. It is removed before returning the result.
-   */
   const seriesMap = new Map<number, SeriesLessons & { createdAt: string }>();
 
   for (const item of data) {
@@ -105,6 +97,7 @@ export async function getEducationLessons(
 
     if (!seriesMap.has(seriesId)) {
       seriesMap.set(seriesId, {
+        name: item.series.name,
         seriesId,
         seriesNumber: item.series.series_number,
         createdAt: item.series.created_at,
@@ -118,12 +111,6 @@ export async function getEducationLessons(
       continue;
     }
 
-    /*
-     * A lesson may not have any lessons_events.
-     *
-     * If it does not, lessonsEvents[0] is undefined, so every
-     * property accessed from it must use optional chaining.
-     */
     const lessonEvent = item.lessons.lessons_events?.[0];
 
     series.lessons.push({
@@ -132,11 +119,7 @@ export async function getEducationLessons(
       lessonNumber: item.lesson_number,
       title: item.lessons.title,
       tags: item.lessons.tags,
-
-      // No event = no timestamp.
       timestamp: lessonEvent?.events?.timestamp ?? null,
-
-      // No event/speakers = empty speaker list.
       speakers:
         lessonEvent?.lessons_events_speakers
           ?.map((speaker) => speaker.user_id)
@@ -144,20 +127,14 @@ export async function getEducationLessons(
     });
   }
 
-  /*
-   * Sort series:
-   *
-   * 1. Numbered series first.
-   * 2. Numbered series ascending.
-   * 3. Unnumbered series afterward.
-   * 4. Unnumbered series newest → oldest.
-   */
   const seriesLessons = Array.from(seriesMap.values())
     .sort((a, b) => {
+      // Numbered series first, ascending
       if (a.seriesNumber !== null && b.seriesNumber !== null) {
         return a.seriesNumber - b.seriesNumber;
       }
 
+      // Numbered series before unnumbered
       if (a.seriesNumber !== null) {
         return -1;
       }
@@ -166,6 +143,7 @@ export async function getEducationLessons(
         return 1;
       }
 
+      // Both unnumbered: newest first
       return b.createdAt.localeCompare(a.createdAt);
     })
     .map(({ createdAt, ...series }) => series);

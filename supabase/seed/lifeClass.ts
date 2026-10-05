@@ -98,6 +98,7 @@ export async function seedLifeClass(
 
     {
       title: "A New Day",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -115,6 +116,7 @@ export async function seedLifeClass(
 
     {
       title: "An Opportunity For An Encounter",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -132,6 +134,7 @@ export async function seedLifeClass(
 
     {
       title: "Is It Too Late For Reconciliation?",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -149,6 +152,7 @@ export async function seedLifeClass(
 
     {
       title: "An Opportunity For Restoration",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -166,6 +170,7 @@ export async function seedLifeClass(
 
     {
       title: "An Opportunity For Provision",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -183,6 +188,7 @@ export async function seedLifeClass(
 
     {
       title: "Who Is Jesus?",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -200,6 +206,7 @@ export async function seedLifeClass(
 
     {
       title: "Four Opportunities",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -217,6 +224,7 @@ export async function seedLifeClass(
 
     {
       title: "Learning From Our Mistakes (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -247,6 +255,7 @@ export async function seedLifeClass(
 
     {
       title: "The Best Deal Of Your Life",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -264,6 +273,7 @@ export async function seedLifeClass(
 
     {
       title: "Jesus Took Our Place",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -281,6 +291,7 @@ export async function seedLifeClass(
 
     {
       title: "The Miracle Of Exchange",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -298,6 +309,7 @@ export async function seedLifeClass(
 
     {
       title: "Freedom At The Foot Of The Cross",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -315,6 +327,7 @@ export async function seedLifeClass(
 
     {
       title: "Every Last Drop Of Blood",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -332,6 +345,7 @@ export async function seedLifeClass(
 
     {
       title: "The Incomparable Price Jesus Paid For Me",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -349,6 +363,7 @@ export async function seedLifeClass(
 
     {
       title: "Contemplating The Cross",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -366,6 +381,7 @@ export async function seedLifeClass(
 
     {
       title: "The Best Deal Of Your Life (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -396,6 +412,7 @@ export async function seedLifeClass(
 
     {
       title: "The Best Experience",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -413,6 +430,7 @@ export async function seedLifeClass(
 
     {
       title: "Recovering Our Sight",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -430,6 +448,7 @@ export async function seedLifeClass(
 
     {
       title: "Created To Grow",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -447,6 +466,7 @@ export async function seedLifeClass(
 
     {
       title: "A New Heart",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -464,6 +484,7 @@ export async function seedLifeClass(
 
     {
       title: "Born Into Holiness",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -481,6 +502,7 @@ export async function seedLifeClass(
 
     {
       title: "Born Of The Spirit",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -498,6 +520,7 @@ export async function seedLifeClass(
 
     {
       title: "A Life Of Faith",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -515,6 +538,7 @@ export async function seedLifeClass(
 
     {
       title: "The Best Experience Of Your Life (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -545,6 +569,7 @@ export async function seedLifeClass(
 
     {
       title: "The Enemy",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -562,6 +587,7 @@ export async function seedLifeClass(
 
     {
       title: "A Life Of Conquest",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -579,6 +605,7 @@ export async function seedLifeClass(
 
     {
       title: "Our Secret Weapon",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -596,6 +623,7 @@ export async function seedLifeClass(
 
     {
       title: "All My Sins Are Forgiven",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -613,6 +641,7 @@ export async function seedLifeClass(
 
     {
       title: "Whiter Than Snow",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -630,6 +659,7 @@ export async function seedLifeClass(
 
     {
       title: "As If I Had Never Sinned",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -647,6 +677,7 @@ export async function seedLifeClass(
 
     {
       title: "Set Apart For God",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -664,6 +695,7 @@ export async function seedLifeClass(
 
     {
       title: "Life Is A Battle (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -693,6 +725,7 @@ export async function seedLifeClass(
 
     {
       title: "After The Encounter",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -710,6 +743,7 @@ export async function seedLifeClass(
 
     {
       title: "180 Degrees",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -727,6 +761,7 @@ export async function seedLifeClass(
 
     {
       title: "Take Hold Of What Is Yours",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -744,6 +779,7 @@ export async function seedLifeClass(
 
     {
       title: "The Best Medicine",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -761,6 +797,7 @@ export async function seedLifeClass(
 
     {
       title: "Protect Your Freedom",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -778,6 +815,7 @@ export async function seedLifeClass(
 
     {
       title: "Change Your Nation, Twelve People At A Time",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -795,6 +833,7 @@ export async function seedLifeClass(
 
     {
       title: "Holy Spirit, I Need You!",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -812,6 +851,7 @@ export async function seedLifeClass(
 
     {
       title: "Encounter (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -841,6 +881,7 @@ export async function seedLifeClass(
 
     {
       title: "We Need To Relate To God Personally",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -858,6 +899,7 @@ export async function seedLifeClass(
 
     {
       title: "Hearing God (I)",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -875,6 +917,7 @@ export async function seedLifeClass(
 
     {
       title: "Hearing God (II)",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -892,6 +935,7 @@ export async function seedLifeClass(
 
     {
       title: "Speaking To God (I)",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -909,6 +953,7 @@ export async function seedLifeClass(
 
     {
       title: "Speaking To God (II)",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -926,6 +971,7 @@ export async function seedLifeClass(
 
     {
       title: "Devotional",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -943,6 +989,7 @@ export async function seedLifeClass(
 
     {
       title: "Book Of Dreams",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -960,6 +1007,7 @@ export async function seedLifeClass(
 
     {
       title: "Discover The Secret That Will Transform Your Life (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -990,6 +1038,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Serve Jesus With All Your Heart",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -1007,6 +1056,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Stand Firm When Under Attack",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -1024,6 +1074,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Stand Firm Against Yourself",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -1041,6 +1092,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Depend Completely On God",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -1058,6 +1110,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Be A Mighty Warrior",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -1075,6 +1128,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Obtain Victory",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -1092,6 +1146,7 @@ export async function seedLifeClass(
 
     {
       title: "Decide To Serve Others",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -1109,6 +1164,7 @@ export async function seedLifeClass(
 
     {
       title: "Your Decisions Define You (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -1139,6 +1195,7 @@ export async function seedLifeClass(
 
     {
       title: "I Am A Son Or Daughter",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -1156,6 +1213,7 @@ export async function seedLifeClass(
 
     {
       title: "The Best Inheritance",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -1173,6 +1231,7 @@ export async function seedLifeClass(
 
     {
       title: "The Will Of God",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -1190,6 +1249,7 @@ export async function seedLifeClass(
 
     {
       title: "Accepting God's Thoughts",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -1207,6 +1267,7 @@ export async function seedLifeClass(
 
     {
       title: "God Is My Strength",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -1224,6 +1285,7 @@ export async function seedLifeClass(
 
     {
       title: "A Renewed Mind",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -1241,6 +1303,7 @@ export async function seedLifeClass(
 
     {
       title: "I Am An Overcomer",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -1258,6 +1321,7 @@ export async function seedLifeClass(
 
     {
       title: "Nothing Less Than God's Best (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,
@@ -1288,6 +1352,7 @@ export async function seedLifeClass(
 
     {
       title: "Starting Over",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 1,
@@ -1305,6 +1370,7 @@ export async function seedLifeClass(
 
     {
       title: "Who Has This Opportunity?",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 2,
@@ -1322,6 +1388,7 @@ export async function seedLifeClass(
 
     {
       title: "Can I Do It Now?",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 3,
@@ -1339,6 +1406,7 @@ export async function seedLifeClass(
 
     {
       title: "Jesus' Example",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 4,
@@ -1356,6 +1424,7 @@ export async function seedLifeClass(
 
     {
       title: "What That Means For Me",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 5,
@@ -1373,6 +1442,7 @@ export async function seedLifeClass(
 
     {
       title: "You Decide!",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 6,
@@ -1390,6 +1460,7 @@ export async function seedLifeClass(
 
     {
       title: "New Life",
+      is_user_completable: true,
       church_lessons: [
         {
           lesson_number: 7,
@@ -1407,6 +1478,7 @@ export async function seedLifeClass(
 
     {
       title: "A New Beginning (Recap)",
+      is_user_completable: false,
       church_lessons: [
         {
           lesson_number: 8,

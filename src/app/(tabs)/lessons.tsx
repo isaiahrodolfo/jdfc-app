@@ -117,12 +117,16 @@ export default function Lessons() {
         </Text>
         <View style={styles.recentLiveEventLessonContainer}>
           {recentLiveEventLessons.map((recentLiveEventLesson) => {
+            console.log("recent live event lesson:", recentLiveEventLesson);
+
             const date = new Date(recentLiveEventLesson.timestamp);
+
             return (
               <EventCardBig
-                title={recentLiveEventLesson.title}
+                key={recentLiveEventLesson.lessonId}
+                title={recentLiveEventLesson.title ?? ""}
                 subtitle={dateFormatter("date").format(date)}
-                livestreamLink={recentLiveEventLesson.livestream_link}
+                livestreamLink={recentLiveEventLesson.livestream_link ?? ""}
               />
             );
           })}

@@ -2786,6 +2786,20 @@
           "maxLength": null
         },
         {
+          "id": "public.lessons.is_user_completable",
+          "name": "is_user_completable",
+          "columnName": "is_user_completable",
+          "type": "bool",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "church_lessons",
           "type": "church_lessons",
           "isRequired": false,
@@ -2908,7 +2922,7 @@
           "name": "lesson_id",
           "columnName": "lesson_id",
           "type": "int8",
-          "isRequired": false,
+          "isRequired": true,
           "kind": "scalar",
           "isList": false,
           "isGenerated": false,
@@ -2922,7 +2936,7 @@
           "name": "event_id",
           "columnName": "event_id",
           "type": "int8",
-          "isRequired": false,
+          "isRequired": true,
           "kind": "scalar",
           "isList": false,
           "isGenerated": false,
@@ -2934,7 +2948,7 @@
         {
           "name": "events",
           "type": "events",
-          "isRequired": false,
+          "isRequired": true,
           "kind": "object",
           "relationName": "lessons_eventsToevents",
           "relationFromFields": [
@@ -2952,7 +2966,7 @@
         {
           "name": "lessons",
           "type": "lessons",
-          "isRequired": false,
+          "isRequired": true,
           "kind": "object",
           "relationName": "lessons_eventsTolessons",
           "relationFromFields": [

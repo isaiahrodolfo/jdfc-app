@@ -63,7 +63,7 @@ export default function Index() {
 
   const progressTrackerData: ProgressTrackerData[] = [
     seriesProgress,
-    trackProgress,
+    // trackProgress,
   ];
 
   console.log(progressTrackerData);

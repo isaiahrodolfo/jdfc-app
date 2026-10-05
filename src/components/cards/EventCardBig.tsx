@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     backgroundColor: "#DB3737", // TODO: dynamically set color based on theme
-    borderRadius: "50%",
+    borderRadius: 8,
   },
   bottomHalf: {
     padding: 16,

@@ -108,26 +108,26 @@ isOneToOne: false
                   ]
                 },"lessons": {
                   Row: {
-                    "created_at": string,"id": number,"tags": Json | null,"title": string | null
+                    "created_at": string,"id": number,"is_user_completable": boolean,"tags": Json | null,"title": string | null
                   }
                   Insert: {
-                    "created_at"?: string,"id"?: number,"tags"?: Json | null,"title"?: string | null
+                    "created_at"?: string,"id"?: number,"is_user_completable"?: boolean,"tags"?: Json | null,"title"?: string | null
                   }
                   Update: {
-                    "created_at"?: string,"id"?: number,"tags"?: Json | null,"title"?: string | null
+                    "created_at"?: string,"id"?: number,"is_user_completable"?: boolean,"tags"?: Json | null,"title"?: string | null
                   }
                   Relationships: [
                     
                   ]
                 },"lessons_events": {
                   Row: {
-                    "created_at": string,"event_id": number | null,"id": number,"lesson_id": number | null
+                    "created_at": string,"event_id": number,"id": number,"lesson_id": number
                   }
                   Insert: {
-                    "created_at"?: string,"event_id"?: number | null,"id"?: number,"lesson_id"?: number | null
+                    "created_at"?: string,"event_id": number,"id"?: number,"lesson_id": number
                   }
                   Update: {
-                    "created_at"?: string,"event_id"?: number | null,"id"?: number,"lesson_id"?: number | null
+                    "created_at"?: string,"event_id"?: number,"id"?: number,"lesson_id"?: number
                   }
                   Relationships: [
                     {

@@ -36,6 +36,7 @@ export async function seedSermonsEventLessons(
     {
       id: 1,
       title: "Sunday Sermon Title",
+      is_user_completable: false,
     },
   ]);
 
@@ -43,7 +44,7 @@ export async function seedSermonsEventLessons(
     {
       id: 1,
       title: "Sunday Service",
-      timestamp: new Date("2026-10-25T10:00:00-07:00"), // October 25, 2026 10:00 am Local Time
+      timestamp: new Date("2026-10-25T10:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
       information: "Weekly church service",
     },
@@ -71,6 +72,7 @@ export async function seedSermonsEventLessons(
     {
       id: 2,
       title: "Prayer Service Sermon Title",
+      is_user_completable: false,
     },
   ]);
 
@@ -78,7 +80,7 @@ export async function seedSermonsEventLessons(
     {
       id: 2,
       title: "Prayer Service",
-      timestamp: new Date("2026-10-28T19:00:00-07:00"), // October 28, 2026 7:00 pm Local Time
+      timestamp: new Date("2026-10-28T19:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
       information: "Weekly prayer service",
       repeat_every_days: 7,
@@ -102,27 +104,28 @@ export async function seedSermonsEventLessons(
     },
   ]);
 
-  // Seeding a previous Sunday and Prayer Service (Event and Lesson)
-  // Testing getrecentLiveEventLessons. Should return lessons 3 & 4, not 5
+  // Seeding previous Sunday and Prayer Service events
+  // Testing getRecentLiveEventLessons.
+  // Should return lessons 3 & 4, not 5.
   await seed.events([
     {
       id: 3,
       title: "Sunday Service",
-      timestamp: new Date("2026-09-27T10:00:00-07:00"), // September 27, 2026 10:00 am Local Time
+      timestamp: new Date("2026-09-27T10:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
       information: "Weekly church service",
     },
     {
       id: 4,
       title: "Prayer Service",
-      timestamp: new Date("2026-09-30T19:00:00-07:00"), // September 30, 2026 7:00 pm Local Time
+      timestamp: new Date("2026-09-30T19:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
       information: "Weekly prayer service",
     },
     {
       id: 5,
       title: "Prayer Service",
-      timestamp: new Date("2026-09-02T19:00:00-07:00"), // September 2, 2026 7:00 pm Local Time
+      timestamp: new Date("2026-09-02T19:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
       information: "Weekly prayer service",
     },
@@ -132,14 +135,17 @@ export async function seedSermonsEventLessons(
     {
       id: 3,
       title: "Previous Sermon Service Sermon Title",
+      is_user_completable: false,
     },
     {
       id: 4,
       title: "Previous Prayer Service Sermon Title",
+      is_user_completable: false,
     },
     {
       id: 5,
       title: "Old Prayer Service Sermon Title",
+      is_user_completable: false,
     },
   ]);
 

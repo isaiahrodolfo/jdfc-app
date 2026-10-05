@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
-    borderBottomLeftRadius: 8,
   },
 
   contentContainer: {
@@ -204,6 +203,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 48,
     paddingVertical: 16,
+    borderBottomLeftRadius: 8,
     gap: 2,
   },
 

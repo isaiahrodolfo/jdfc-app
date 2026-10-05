@@ -6,10 +6,10 @@ import SermonCard from "@/components/cards/SermonCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  const { seriesId } = useLocalSearchParams();
+  const { seriesId, seriesName } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
   const [sermons, setSermons] = useState<ChurchLesson[]>([]);
@@ -52,6 +52,18 @@ export default function Index() {
             headerTransparent: true,
           }}
         />
+        <Text
+          style={[
+            styles.h1,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h1,
+              color: "blue", // testing
+            },
+          ]}
+        >
+          {seriesName}
+        </Text>
         <View style={styles.sermonsListContainer}>
           {sermons.map((sermon) => (
             <SermonCard
@@ -71,6 +83,11 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  sermonsListContainer: {},
+  container: { top: 64, gap: 48 },
+  sermonsListContainer: { gap: 20, paddingRight: 8 },
+  h1: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    paddingBottom: 4,
+  },
 });

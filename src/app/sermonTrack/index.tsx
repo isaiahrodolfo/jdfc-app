@@ -1,5 +1,5 @@
 import { getSeries, Series } from "@/api/supabase/lessons/getSeries";
-import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
+import SermonCard from "@/components/cards/SermonCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -22,11 +22,12 @@ export default function Index() {
     fetchSeries();
   }, [trackId]);
 
-  const routeToLessonsPage = (seriesId: number) => {
+  const routeToLessonsPage = (seriesId: number, seriesName: string) => {
     router.push({
       pathname: "/sermonTrack/sermonSeries",
       params: {
         seriesId,
+        seriesName,
       },
     });
   };
@@ -68,12 +69,13 @@ export default function Index() {
         </Text>
         <View style={styles.sermonsListContainer}>
           {seriesList.map((series) => (
-            <LessonCategoryCard
+            <SermonCard
               color={color as ColorValue}
+              size={"big"}
+              descriptionHeading={""}
               titleHeading={series.name ?? ""}
-              onPress={() => {
-                console.log(series.series_number);
-                routeToLessonsPage(series.id);
+              onLessonPress={() => {
+                routeToLessonsPage(series.id, series.name ?? "");
               }}
             />
           ))}
@@ -85,7 +87,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: { top: 64, gap: 36 },
-  sermonsListContainer: { gap: 20, paddingRight: 8 },
+  sermonsListContainer: { gap: 28, paddingRight: 8 },
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",

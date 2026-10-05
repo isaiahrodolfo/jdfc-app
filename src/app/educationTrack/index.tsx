@@ -3,20 +3,21 @@ import {
   getEducationLessons,
   SeriesLessons,
 } from "@/api/supabase/lessons/getEducationLessons";
-import SermonCard from "@/components/cards/SermonCard";
+import LessonCard from "@/components/cards/LessonCard";
+import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ColorValue, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  const { trackId, color } = useLocalSearchParams();
+  const { trackId, colorName } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
   const [educationTrack, setEducationTrack] = useState<EducationTrack>();
   const [selectedSeries, setSelectedSeries] = useState<SeriesLessons>();
 
-  console.log(trackId, color);
+  console.log(trackId, colorName);
 
   useEffect(() => {
     async function fetchEducationTrack() {
@@ -68,21 +69,26 @@ export default function Index() {
             {
               fontFamily: fonts.family,
               fontSize: fonts.sizes.h1,
-              color: color as ColorValue,
+              color: theme[colorName?.toString() as AccentColor],
             },
           ]}
         >
           {educationTrack?.trackName}
+          {selectedSeries?.seriesNumber}
         </Text>
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => (
-            <SermonCard
-              color={color as ColorValue}
-              size={"big"}
+            <LessonCard
+              isCompleted={false}
+              colorName={colorName?.toString() as AccentColor}
+              size={"small"}
               descriptionHeading={""}
               titleHeading={lesson.title ?? ""}
-              onLessonPress={() => {
-                routeToLessonsPage(lesson.lessonId);
+              onCheckboxPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              onLessonPress={function (): void {
+                throw new Error("Function not implemented.");
               }}
             />
           ))}

@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
 
   titleColumn: {
     width: "100%",
+    flexGrow: 1,
     justifyContent: "center",
     paddingLeft: 16,
     paddingRight: 48,

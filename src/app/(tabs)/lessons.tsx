@@ -36,7 +36,7 @@ export default function Lessons() {
     }
   };
 
-  const routeToLessons = (
+  const routeToEducationLessons = (
     trackColorName: "blue" | "green" | "purple",
     trackId: number,
   ) => {
@@ -44,7 +44,7 @@ export default function Lessons() {
       pathname: "/educationTrack",
       params: {
         trackId,
-        color: theme[trackColorName],
+        colorName: trackColorName,
       },
     });
   };
@@ -154,17 +154,17 @@ export default function Lessons() {
           <LessonCategoryCard
             color={theme.blue}
             titleHeading={"Consolidation"}
-            onPress={() => routeToLessons("blue", 3)}
+            onPress={() => routeToEducationLessons("blue", 3)}
           />
           <LessonCategoryCard
             color={theme.green}
             titleHeading={"Life Class"}
-            onPress={() => routeToLessons("green", 4)}
+            onPress={() => routeToEducationLessons("green", 4)}
           />
           <LessonCategoryCard
             color={theme.purple}
             titleHeading={"Destiny Training"}
-            onPress={() => routeToLessons("purple", 5)}
+            onPress={() => routeToEducationLessons("purple", 5)}
           />
         </View>
       </View>

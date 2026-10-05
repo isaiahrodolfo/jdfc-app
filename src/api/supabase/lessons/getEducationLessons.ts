@@ -44,7 +44,7 @@ export async function getEducationLessons(
           name,
           series_number,
           created_at,
-          tracks (
+          tracks!inner (
             id,
             name,
             heading

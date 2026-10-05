@@ -7,16 +7,18 @@ import { dateFormatter } from "@/components/helpers/dateFormatter";
 import DropdownSmall from "@/components/miscellaneous/DropdownSmall";
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuthContext } from "@/hooks/use-auth-context";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
+  const { user } = useAuthContext();
   const { trackId, colorName } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
   const [educationTrack, setEducationTrack] = useState<EducationTrack>();
-  const [selectedSeriesId, setSelectedSeriesId] = useState<number>(0); // 0 should not show any valid series
+  const [selectedSeriesId, setSelectedSeriesId] = useState<number>(1);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 
   const selectedSeries = educationTrack?.seriesLessons.find(
@@ -40,7 +42,7 @@ export default function Index() {
     }
 
     fetchEducationTrack();
-  }, [trackId]);
+  }, [user.id, trackId]);
 
   const routeToLessonsPage = (lessonId: number) => {
     router.push({

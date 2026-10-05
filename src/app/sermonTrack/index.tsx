@@ -3,7 +3,7 @@ import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ColorValue, ScrollView, StyleSheet, View } from "react-native";
+import { ColorValue, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   const { trackId, color } = useLocalSearchParams();
@@ -51,6 +51,21 @@ export default function Index() {
             headerTransparent: true,
           }}
         />
+        <Text
+          style={[
+            styles.h1,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h1,
+              color:
+                Number(trackId) === 1
+                  ? theme.sundayService
+                  : theme.prayerService,
+            },
+          ]}
+        >
+          {Number(trackId) === 1 ? "Sunday Sermons" : "Prayer Service Sermons"}
+        </Text>
         <View style={styles.sermonsListContainer}>
           {seriesList.map((series) => (
             <LessonCategoryCard
@@ -69,6 +84,11 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  sermonsListContainer: {},
+  container: { top: 64, gap: 36 },
+  sermonsListContainer: { gap: 20, paddingRight: 8 },
+  h1: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    paddingBottom: 4,
+  },
 });

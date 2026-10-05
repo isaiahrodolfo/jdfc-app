@@ -12,6 +12,7 @@ export default function Index() {
 
   useEffect(() => {
     async function fetchSeries() {
+      console.log(lessonId);
       const lessonData = await getLesson(Number(lessonId));
       setLesson(lessonData);
     }

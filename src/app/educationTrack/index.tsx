@@ -4,6 +4,7 @@ import {
   SeriesLessons,
 } from "@/api/supabase/lessons/getEducationLessons";
 import LessonCard from "@/components/cards/LessonCard";
+import { dateFormatter } from "@/components/helpers/dateFormatter";
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
@@ -77,21 +78,24 @@ export default function Index() {
           {selectedSeries?.seriesNumber}
         </Text>
         <View style={styles.lessonsListContainer}>
-          {selectedSeries?.lessons.map((lesson) => (
-            <LessonCard
-              isCompleted={false}
-              colorName={colorName?.toString() as AccentColor}
-              size={"small"}
-              descriptionHeading={""}
-              titleHeading={lesson.title ?? ""}
-              onCheckboxPress={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-              onLessonPress={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-          ))}
+          {selectedSeries?.lessons.map((lesson) => {
+            const date = lesson.timestamp ? new Date(lesson.timestamp) : null;
+            return (
+              <LessonCard
+                isCompleted={false}
+                colorName={colorName?.toString() as AccentColor}
+                size={"small"}
+                descriptionSubheading={
+                  date ? dateFormatter("date").format(date) : ""
+                }
+                titleHeading={lesson.title ?? ""}
+                onCheckboxPress={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
+                onLessonPress={() => routeToLessonsPage(lesson.lessonId)}
+              />
+            );
+          })}
         </View>
       </View>
     </ScrollView>

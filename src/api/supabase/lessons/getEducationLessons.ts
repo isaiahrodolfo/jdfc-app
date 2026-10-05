@@ -24,11 +24,10 @@ export type EducationLesson = {
 };
 
 /**
- * Gets all education lessons for a track, categorized by series
+ * Gets all education lessons for a track, categorized by series.
  *
- * @export
- * @async
- * @returns {Promise<EducationTrack>}
+ * @param trackId The ID of the education track.
+ * @returns All lessons for the track grouped by series.
  */
 export async function getEducationLessons(
   trackId: number,
@@ -75,6 +74,11 @@ export async function getEducationLessons(
     throw error;
   }
 
+  /*
+   * Find the track from the first row that has a matching series/track.
+   *
+   * The nested relationships are optional, so series/tracks may be null.
+   */
   const track = data.find((item) => item.series?.tracks?.id === trackId)?.series
     ?.tracks;
 
@@ -86,11 +90,15 @@ export async function getEducationLessons(
     };
   }
 
+  /*
+   * Keep createdAt internally so unnumbered series can be sorted
+   * newest → oldest. It is removed before returning the result.
+   */
   const seriesMap = new Map<number, SeriesLessons & { createdAt: string }>();
 
-  data.forEach((item) => {
+  for (const item of data) {
     if (!item.series || !item.lessons) {
-      return;
+      continue;
     }
 
     const seriesId = item.series.id;
@@ -104,28 +112,52 @@ export async function getEducationLessons(
       });
     }
 
-    seriesMap.get(seriesId)!.lessons.push({
+    const series = seriesMap.get(seriesId);
+
+    if (!series) {
+      continue;
+    }
+
+    /*
+     * A lesson may not have any lessons_events.
+     *
+     * If it does not, lessonsEvents[0] is undefined, so every
+     * property accessed from it must use optional chaining.
+     */
+    const lessonEvent = item.lessons.lessons_events?.[0];
+
+    series.lessons.push({
       churchLessonId: item.id,
       lessonId: item.lessons.id,
       lessonNumber: item.lesson_number,
       title: item.lessons.title,
       tags: item.lessons.tags,
-      timestamp: item.lessons.lessons_events[0].events?.timestamp ?? "",
+
+      // No event = no timestamp.
+      timestamp: lessonEvent?.events?.timestamp ?? null,
+
+      // No event/speakers = empty speaker list.
       speakers:
-        item.lessons.lessons_events[0]?.lessons_events_speakers
+        lessonEvent?.lessons_events_speakers
           ?.map((speaker) => speaker.user_id)
           .filter((id): id is string => id !== null) ?? [],
     });
-  });
+  }
 
+  /*
+   * Sort series:
+   *
+   * 1. Numbered series first.
+   * 2. Numbered series ascending.
+   * 3. Unnumbered series afterward.
+   * 4. Unnumbered series newest → oldest.
+   */
   const seriesLessons = Array.from(seriesMap.values())
     .sort((a, b) => {
-      // Numbered series first, ascending
       if (a.seriesNumber !== null && b.seriesNumber !== null) {
         return a.seriesNumber - b.seriesNumber;
       }
 
-      // Numbered series before unnumbered
       if (a.seriesNumber !== null) {
         return -1;
       }
@@ -134,12 +166,9 @@ export async function getEducationLessons(
         return 1;
       }
 
-      // Both unnumbered: newest first
       return b.createdAt.localeCompare(a.createdAt);
     })
     .map(({ createdAt, ...series }) => series);
-
-  console.log(track.name, track.heading, seriesLessons);
 
   return {
     trackName: track.name ?? "",

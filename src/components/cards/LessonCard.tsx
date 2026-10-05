@@ -11,7 +11,7 @@ type LessonCardProps = {
   isCompleted: boolean;
   colorName: AccentColor;
   size: "big" | "medium" | "small";
-  descriptionHeading: string;
+  descriptionHeading?: string;
   descriptionSubheading?: string;
   titleHeading: string;
   titleSubheading?: string;
@@ -88,6 +88,11 @@ export default function LessonCard({
                 styles.descriptionColumn,
                 {
                   backgroundColor: theme.secondary,
+                  borderTopRightRadius:
+                    (size === "small" && descriptionSubheading) ||
+                    descriptionHeading
+                      ? 8
+                      : 0,
                 },
               ]}
             >
@@ -136,7 +141,12 @@ export default function LessonCard({
                 styles.titleColumn,
                 {
                   backgroundColor: theme.secondary,
-                  borderTopRightRadius: size === "small" ? 8 : 0,
+                  borderTopRightRadius:
+                    size === "small" &&
+                    !descriptionSubheading &&
+                    !descriptionHeading
+                      ? 8
+                      : 0,
                 },
                 { opacity: pressed ? 0.7 : 1 },
               ]}

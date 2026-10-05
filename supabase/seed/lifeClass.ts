@@ -65,6 +65,12 @@ export async function seedLifeClass(
               user_id: speakerId,
             },
           ],
+          events: {
+            timestamp: new Date("2026-10-25T13:00:00-07:00"), // October 25, 2026 1:00 pm Local Time
+            location: "Jesus' Disciples Family Church",
+            information:
+              "Life Class Module 1 Week 1 Recap: Learning From Our Mistakes",
+          },
         },
       ],
     },

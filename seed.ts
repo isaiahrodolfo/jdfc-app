@@ -2,7 +2,7 @@ import { createSeedClient } from "@snaplet/seed";
 import { seedLifeClass } from "./supabase/seed/lifeClass";
 
 async function main() {
-  const dummyUser1 = "730f56c1-e416-4cce-b927-febd8471c8a9";
+  const dummyUser1 = "bb222d2c-5124-4782-852f-2b92142ed391";
 
   const seed = await createSeedClient();
 

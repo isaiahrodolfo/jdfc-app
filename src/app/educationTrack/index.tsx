@@ -1,7 +1,6 @@
 import {
   EducationTrack,
   getEducationLessons,
-  SeriesLessons,
 } from "@/api/supabase/lessons/getEducationLessons";
 import LessonCard from "@/components/cards/LessonCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
@@ -17,8 +16,12 @@ export default function Index() {
   const { theme, fonts } = useTheme();
 
   const [educationTrack, setEducationTrack] = useState<EducationTrack>();
-  const [selectedSeries, setSelectedSeries] = useState<SeriesLessons>();
+  const [selectedSeriesId, setSelectedSeriesId] = useState<number>(0); // 0 should not show any valid series
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+
+  const selectedSeries = educationTrack?.seriesLessons.find(
+    (series) => series.seriesNumber === selectedSeriesId + 1,
+  );
 
   console.log(trackId, colorName);
 
@@ -31,7 +34,9 @@ export default function Index() {
         "educationTrack?.seriesLessons[0]",
         educationTrack?.seriesLessons[0],
       );
-      setSelectedSeries(educationTrackData?.seriesLessons[0]);
+      setSelectedSeriesId(
+        educationTrackData?.seriesLessons[0].seriesNumber ?? 0,
+      ); // TODO, what happens when there is no number?
     }
 
     fetchEducationTrack();
@@ -48,11 +53,7 @@ export default function Index() {
 
   const handleClosePress = (selectedIndex: number) => {
     // Get the series whose series_number matches selectedId
-    setSelectedSeries(
-      educationTrack?.seriesLessons.find(
-        (series) => series.seriesNumber === selectedIndex + 1,
-      ),
-    );
+    setSelectedSeriesId(selectedIndex);
     setDropdownIsOpen(false);
   };
 
@@ -95,9 +96,9 @@ export default function Index() {
             []
           }
           isOpen={dropdownIsOpen}
-          indexSelected={0}
+          indexSelected={selectedSeriesId}
           onOpenPress={() => setDropdownIsOpen(true)}
-          onClosePress={(selectedIndex) => handleClosePress(selectedIndex)}
+          onClosePress={handleClosePress}
         />
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => {

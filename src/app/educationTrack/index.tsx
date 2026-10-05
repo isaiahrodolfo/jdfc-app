@@ -92,8 +92,10 @@ export default function Index() {
         </Text>
         <DropdownSmall
           selections={
-            educationTrack?.seriesLessons.map((series) => series.name ?? "") ||
-            []
+            educationTrack?.seriesLessons.map(
+              (series) =>
+                `${educationTrack.heading} ${series.seriesNumber}: ${series.name}`,
+            ) || []
           }
           isOpen={dropdownIsOpen}
           indexSelected={selectedSeriesId}

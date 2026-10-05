@@ -1,108 +1,20 @@
 import { createSeedClient } from "@snaplet/seed";
-import { seedLessonsEventsLinks } from "./supabase/seed/lessonsEventsLinks";
-import { seedSermonsEventLessons } from "./supabase/seed/sermonsEventLessons";
+import { seedLifeClass } from "./supabase/seed/lifeClass";
 
 async function main() {
+  const dummyUser1 = "730f56c1-e416-4cce-b927-febd8471c8a9";
+
   const seed = await createSeedClient();
 
-  await seed.tracks([
-    {
-      id: 1,
-      name: "Sunday Service",
-      heading: null,
-    },
-    {
-      id: 2,
-      name: "Prayer Service",
-      heading: null,
-    },
-    {
-      id: 3,
-      name: "Consolidation",
-      heading: null,
-    },
-    {
-      id: 4,
-      name: "Life Class",
-      heading: "Week",
-    },
-    {
-      id: 5,
-      name: "Destiny Training",
-      heading: "Module",
-    },
-  ]);
+  // Step 1: Seed initial data
+  // await seedInitialData(seed);
+  // await seedSermonsEventLessons(seed);
+  // await seedLessonsEventsLinks(seed);
 
-  await seed.series([
-    {
-      id: 1,
-      name: "Consolidation",
-      series_number: null,
-      track_id: 3,
-    },
-    {
-      id: 2,
-      name: "Learning From Our Mistakes",
-      series_number: 1,
-      track_id: 4,
-    },
-    {
-      id: 11,
-      name: "DT Example Title",
-      series_number: 1,
-      track_id: 5,
-    },
-  ]);
+  // Step 2: Create a user
 
-  await seed.life_group_roles([
-    {
-      id: 1,
-      name: "Leader",
-    },
-    {
-      id: 2,
-      name: "Co-leader",
-    },
-  ]);
-
-  await seed.event_availabilities([
-    {
-      id: 1,
-      name: "Going",
-    },
-    {
-      id: 2,
-      name: "Maybe",
-    },
-    {
-      id: 3,
-      name: "Not Going",
-    },
-  ]);
-
-  await seed.announcements([
-    {
-      id: 1,
-      name: "Welcome to the JDFC App!",
-      category: "JDFC App",
-      announcement_end: new Date("January 1, 2027"),
-      color: "accent",
-      information:
-        "Hi! Welcome to the JDFC App! This is a sample announcement. You can edit or delete this announcement in the Supabase dashboard.",
-    },
-    {
-      id: 2,
-      name: "Financial Announcement",
-      category: "Financial",
-      announcement_end: new Date("January 1, 2027"),
-      color: "accentAlt",
-      information:
-        "This is a sample financial announcement. You can edit or delete this announcement in the Supabase dashboard.",
-    },
-  ]);
-
-  await seedSermonsEventLessons(seed);
-  await seedLessonsEventsLinks(seed);
+  // Step 3: Seed the data with the existing user
+  await seedLifeClass(seed, dummyUser1);
 
   console.log("Database seeded!");
 }

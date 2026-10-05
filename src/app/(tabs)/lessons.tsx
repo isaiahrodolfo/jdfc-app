@@ -36,17 +36,28 @@ export default function Lessons() {
     }
   };
 
-  const routeToLessons = (track: string) => {};
+  const routeToLessons = (
+    trackColorName: "blue" | "green" | "purple",
+    trackId: number,
+  ) => {
+    router.push({
+      pathname: "/educationTrack",
+      params: {
+        trackId,
+        color: theme[trackColorName],
+      },
+    });
+  };
 
   const routeToSermons = (
-    track: "sundayService" | "prayerService",
+    trackColorName: "sundayService" | "prayerService",
     trackId: number,
   ) => {
     router.push({
       pathname: "/sermonTrack",
       params: {
         trackId,
-        color: theme[track],
+        color: theme[trackColorName],
       },
     });
   };
@@ -143,17 +154,17 @@ export default function Lessons() {
           <LessonCategoryCard
             color={theme.blue}
             titleHeading={"Consolidation"}
-            onPress={() => routeToLessons("consolidation")}
+            onPress={() => routeToLessons("blue", 3)}
           />
           <LessonCategoryCard
             color={theme.green}
             titleHeading={"Life Class"}
-            onPress={() => routeToLessons("lifeClass")}
+            onPress={() => routeToLessons("green", 4)}
           />
           <LessonCategoryCard
             color={theme.purple}
             titleHeading={"Destiny Training"}
-            onPress={() => routeToLessons("destinyTraining")}
+            onPress={() => routeToLessons("purple", 5)}
           />
         </View>
       </View>

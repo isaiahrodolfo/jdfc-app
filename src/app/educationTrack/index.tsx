@@ -1,29 +1,39 @@
 import {
-  ChurchLesson,
-  getChurchLessons,
-} from "@/api/supabase/lessons/getChurchLessons";
+  EducationTrack,
+  getEducationLessons,
+  SeriesLessons,
+} from "@/api/supabase/lessons/getEducationLessons";
 import SermonCard from "@/components/cards/SermonCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ColorValue, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  const { seriesId, seriesName } = useLocalSearchParams();
+  const { trackId, color } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
-  const [sermons, setSermons] = useState<ChurchLesson[]>([]);
+  const [educationTrack, setEducationTrack] = useState<EducationTrack>();
+  const [selectedSeries, setSelectedSeries] = useState<SeriesLessons>();
+
+  console.log(trackId, color);
 
   useEffect(() => {
-    async function fetchSeries() {
-      const sermonsData = await getChurchLessons(Number(seriesId));
-      setSermons(sermonsData);
+    async function fetchEducationTrack() {
+      const educationTrackData = await getEducationLessons(Number(trackId));
+      console.log("educationTrackData", educationTrackData);
+      setEducationTrack(educationTrackData);
+      console.log(
+        "educationTrack?.seriesLessons[0]",
+        educationTrack?.seriesLessons[0],
+      );
+      setSelectedSeries(educationTrackData?.seriesLessons[0]);
     }
 
-    fetchSeries();
-  }, [seriesId]);
+    fetchEducationTrack();
+  }, [trackId]);
 
-  const routeToLessonPage = (lessonId: number) => {
+  const routeToLessonsPage = (lessonId: number) => {
     router.push({
       pathname: "/lesson/[lessonId]",
       params: {
@@ -43,7 +53,7 @@ export default function Index() {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[styles.container, { backgroundColor: theme.primary }]}>
+      <View style={styles.container}>
         <Stack.Screen
           options={{
             headerTitle: "",
@@ -58,21 +68,21 @@ export default function Index() {
             {
               fontFamily: fonts.family,
               fontSize: fonts.sizes.h1,
-              color: "blue", // testing
+              color: color as ColorValue,
             },
           ]}
         >
-          {seriesName}
+          {educationTrack?.trackName}
         </Text>
-        <View style={styles.sermonsListContainer}>
-          {sermons.map((sermon) => (
+        <View style={styles.lessonsListContainer}>
+          {selectedSeries?.lessons.map((lesson) => (
             <SermonCard
-              color={"blue"}
+              color={color as ColorValue}
               size={"big"}
               descriptionHeading={""}
-              titleHeading={sermon.title ?? ""}
+              titleHeading={lesson.title ?? ""}
               onLessonPress={() => {
-                routeToLessonPage(sermon.lessonId);
+                routeToLessonsPage(lesson.lessonId);
               }}
             />
           ))}
@@ -84,7 +94,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: { top: 64, gap: 36 },
-  sermonsListContainer: { gap: 28, paddingRight: 8 },
+  lessonsListContainer: { gap: 28, paddingRight: 8 },
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",

@@ -12,9 +12,4 @@ JOIN information_schema.constraint_column_usage ccu
     ON tc.constraint_name = ccu.constraint_name
     AND tc.constraint_schema = ccu.constraint_schema
 WHERE tc.constraint_type = 'FOREIGN KEY'
-  AND tc.table_schema = 'public'
-  AND (
-      tc.table_name LIKE 'lessons_events%'
-      OR tc.table_name = 'lessons_events'
-  )
-ORDER BY tc.table_name, tc.constraint_name;
+  AND tc.table_name = 'church_lessons';

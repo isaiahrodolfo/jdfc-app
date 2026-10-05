@@ -43,7 +43,7 @@ export default function Index() {
         })),
       ) ?? [],
 
-    subtitles: ["% completed"],
+    // subtitles: [""],
     // educationTrack?.seriesLessons.flatMap((series) =>
     //   series.lessons.map((lesson) => lesson.title ?? ""),
     // ) ?? [],
@@ -57,7 +57,7 @@ export default function Index() {
         isCurrent: false,
       })) ?? [],
 
-    subtitles: ["% completed"],
+    // subtitles: [""],
     // selectedSeries?.lessons.map((lesson) => lesson.title ?? "") ?? [],
   };
 
@@ -283,6 +283,7 @@ export default function Index() {
             return (
               <LessonCard
                 key={lesson.lessonId}
+                isUserCompletable={lesson.isUserCompletable ?? false}
                 isCompleted={lesson.isCompleted ?? false}
                 colorName={accentColor}
                 size={size}

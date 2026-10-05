@@ -9,6 +9,7 @@ import Checkbox from "../progress_tracker/Checkbox";
 
 type LessonCardProps = {
   isCompleted: boolean;
+  isUserCompletable: boolean;
   colorName: AccentColor;
   size: "big" | "medium" | "small";
   descriptionHeading?: string;
@@ -22,6 +23,7 @@ type LessonCardProps = {
 
 export default function LessonCard({
   isCompleted,
+  isUserCompletable,
   colorName,
   size,
   descriptionHeading,
@@ -77,7 +79,8 @@ export default function LessonCard({
             type="Secondary"
             isChecked={isCompleted}
             isCurrent={false}
-            onCheckboxPress={onCheckboxPress}
+            onCheckboxPress={isUserCompletable ? onCheckboxPress : () => {}}
+            // TODO: Have a person raising their hand for the attendance marker, and change the color/icon to show that it cannot be user modified.
           />
         </View>
 

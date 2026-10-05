@@ -6,7 +6,7 @@ import ProgressTracker from "./ProgressTracker";
 
 export type ProgressTrackerData = {
   checkboxesData: CheckboxData[];
-  subtitles: string[];
+  subtitles?: string[];
 };
 
 type ProgressTrackerCardProps = {

@@ -23,6 +23,7 @@ export type EducationLesson = {
   timestamp?: string | null;
   speakers?: string[];
   isCompleted?: boolean;
+  isUserCompletable?: boolean;
 };
 
 /**
@@ -57,6 +58,7 @@ export async function getEducationLessons(
           id,
           title,
           tags,
+          is_user_completable,
           lessons_events (
             id,
             events (
@@ -141,6 +143,7 @@ export async function getEducationLessons(
           ?.map((speaker) => speaker.user_id)
           .filter((id): id is string => id !== null) ?? [],
       isCompleted: completion?.is_completed ?? false,
+      isUserCompletable: item.lessons.is_user_completable,
     });
   }
 

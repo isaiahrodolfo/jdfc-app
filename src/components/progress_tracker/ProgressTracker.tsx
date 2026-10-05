@@ -6,7 +6,7 @@ import CheckboxesContainer, { CheckboxData } from "./CheckboxesContainer";
 type ProgressTrackerProps = {
   colorName: AccentColor;
   checkboxesData: CheckboxData[];
-  subtitles: string[];
+  subtitles?: string[];
 };
 
 export default function ProgressTracker({
@@ -22,21 +22,23 @@ export default function ProgressTracker({
         colorName={colorName}
         checkboxesData={checkboxesData}
       />
-      <View style={styles.textContainer}>
-        {subtitles.map((subtitle, index) => (
-          <Text
-            key={index}
-            style={{
-              color: theme.textAlt,
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h6,
-              fontWeight: "regular",
-            }}
-          >
-            {subtitle}
-          </Text>
-        ))}
-      </View>
+      {subtitles && (
+        <View style={styles.textContainer}>
+          {subtitles.map((subtitle, index) => (
+            <Text
+              key={index}
+              style={{
+                color: theme.textAlt,
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h6,
+                fontWeight: "regular",
+              }}
+            >
+              {subtitle}
+            </Text>
+          ))}
+        </View>
+      )}
     </View>
   );
 }

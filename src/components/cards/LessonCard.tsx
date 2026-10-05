@@ -66,7 +66,10 @@ export default function LessonCard({
         <View
           style={[
             styles.checkboxContainer,
-            { backgroundColor: theme[`${colorName}Shadow`] },
+            {
+              borderTopLeftRadius: size === "small" ? 8 : 0,
+              backgroundColor: theme[`${colorName}Shadow`],
+            },
           ]}
         >
           <Checkbox
@@ -83,7 +86,9 @@ export default function LessonCard({
             <View
               style={[
                 styles.descriptionColumn,
-                { backgroundColor: theme.secondary },
+                {
+                  backgroundColor: theme.secondary,
+                },
               ]}
             >
               <View style={styles.columnContent}>
@@ -129,7 +134,10 @@ export default function LessonCard({
             <Pressable
               style={({ pressed }) => [
                 styles.titleColumn,
-                { backgroundColor: theme.secondary },
+                {
+                  backgroundColor: theme.secondary,
+                  borderTopRightRadius: size === "small" ? 8 : 0,
+                },
                 { opacity: pressed ? 0.7 : 1 },
               ]}
               onPress={onLessonPress}

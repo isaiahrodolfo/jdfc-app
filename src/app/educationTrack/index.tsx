@@ -122,11 +122,10 @@ export default function Index() {
                 colorName={colorName?.toString() as AccentColor}
                 size={size}
                 descriptionSubheading={
-                  isToday
-                    ? "Today"
-                    : isYesterday
-                      ? "Yesterday"
-                      : lessonDateString
+                  isToday ? "" : isYesterday ? "" : lessonDateString
+                }
+                descriptionHeading={
+                  isToday ? "Today" : isYesterday ? "Yesterday" : ""
                 }
                 titleHeading={lesson.title ?? ""}
                 onCheckboxPress={() => {

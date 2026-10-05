@@ -1,6 +1,5 @@
 import { supabase } from "@/lib/supabase";
 
-// Define explicit TypeScript types extracted from the Supabase Schema
 export type UpcomingEvent = {
   title: string;
   information: string;
@@ -9,15 +8,7 @@ export type UpcomingEvent = {
   repeatEveryDays: number | null;
 };
 
-/**
- * Gets all live events
- *
- * @export
- * @async
- * @returns {Promise<UpcomingEvent[]>}
- */
 export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
-  // Get all upcoming events which do not have an expired announcement_end date and are not live
   const { data, error } = await supabase
     .from("events")
     .select(
@@ -26,23 +17,30 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
       information,
       timestamp,
       location,
-      repeat_every_days
+      repeat_every_days,
+      lessons_events!inner (
+        lessons!inner (
+          is_user_completable
+        )
+      )
     `,
     )
+    .eq("lessons_events.lessons.is_user_completable", false)
     .gte("timestamp", new Date().toISOString());
 
-  if (error || !data) {
+  if (error) {
     console.log("Upcoming events not found", error);
     return [];
   }
+  console.log(
+    data.map((event) => event.lessons_events[0].lessons.is_user_completable),
+  );
 
-  return data.map((event) => {
-    return {
-      title: event.title ?? "",
-      information: event.information ?? "",
-      date: event.timestamp ? new Date(event.timestamp) : new Date(),
-      location: event.location ?? "",
-      repeatEveryDays: event.repeat_every_days ?? null,
-    };
-  });
+  return (data ?? []).map((event) => ({
+    title: event.title ?? "",
+    information: event.information ?? "",
+    date: event.timestamp ? new Date(event.timestamp) : new Date(),
+    location: event.location ?? "",
+    repeatEveryDays: event.repeat_every_days ?? null,
+  }));
 }

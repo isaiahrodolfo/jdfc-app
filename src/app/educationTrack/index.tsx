@@ -37,7 +37,7 @@ export default function Index() {
     checkboxesData:
       educationTrack?.seriesLessons.flatMap((series) =>
         series.lessons.map((lesson) => ({
-          date: lesson.lessonNumber ?? 0,
+          date: (series.seriesNumber ?? 0) * 10000 + (lesson.lessonNumber ?? 0),
           isChecked: lesson.isCompleted ?? false,
           isCurrent: false,
         })),
@@ -65,6 +65,8 @@ export default function Index() {
     seriesProgress,
     trackProgress,
   ];
+
+  console.log(progressTrackerData);
 
   useEffect(() => {
     const userId = user?.id;

@@ -280,6 +280,17 @@ export default function Index() {
                 )
               : "";
 
+            const descriptionSubheadingDate =
+              isToday || isYesterday ? "" : lessonDateString;
+
+            const descriptionSubheadingDateAndTime = lesson.timestamp
+              ? dateFormatter("full").format(new Date(lesson.timestamp))
+              : "";
+
+            const descriptionSubheading = lesson.location
+              ? `${descriptionSubheadingDateAndTime}\n${lesson.location}`
+              : descriptionSubheadingDate;
+
             return (
               <LessonCard
                 key={lesson.lessonId}
@@ -287,9 +298,7 @@ export default function Index() {
                 isCompleted={lesson.isCompleted ?? false}
                 colorName={accentColor}
                 size={size}
-                descriptionSubheading={
-                  isToday || isYesterday ? "" : lessonDateString
-                }
+                descriptionSubheading={descriptionSubheading}
                 descriptionHeading={
                   isToday ? "Today" : isYesterday ? "Yesterday" : ""
                 }

@@ -145,6 +145,7 @@ export default function Devotion() {
             return (
               <LessonCard
                 key={devotional.dateKey}
+                isUserCompletable={true}
                 isCompleted={devotional.isCompleted}
                 titleHeading={devotional.title || "No Devotional Today"}
                 descriptionHeading="Daily Devotion"

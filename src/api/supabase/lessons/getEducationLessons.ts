@@ -21,6 +21,7 @@ export type EducationLesson = {
   title: string | null;
   tags: Json;
   timestamp?: string | null;
+  location?: string | null;
   speakers?: string[];
   isCompleted?: boolean;
   isUserCompletable?: boolean;
@@ -138,6 +139,7 @@ export async function getEducationLessons(
       title: item.lessons.title,
       tags: item.lessons.tags,
       timestamp: lessonEvent?.events?.timestamp ?? null,
+      location: lessonEvent?.events?.location ?? null,
       speakers:
         lessonEvent?.lessons_events_speakers
           ?.map((speaker) => speaker.user_id)

@@ -232,6 +232,7 @@ export default function Home() {
 
         {todaysDevotional && (
           <LessonCard
+            isUserCompletable={true}
             isCompleted={todaysDevotional.isCompleted}
             titleHeading={todaysDevotional?.title || "No Devotional Today"}
             descriptionHeading={"Daily Devotion"}

@@ -11,6 +11,7 @@ import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
 import LessonCard from "@/components/cards/LessonCard";
+import { dateKeyToLocalDate } from "@/components/helpers/dateKeyToLocalDate";
 import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -27,13 +28,14 @@ export default function Home() {
     upcomingEvents,
     devotionals,
     setDevotionals,
-    todaysDateKey,
+    todaysDate,
     refreshPage,
   } = useTabs();
 
   const todaysDevotional =
-    devotionals.find((devotional) => devotional.dateKey === todaysDateKey) ??
-    null;
+    devotionals.find(
+      (devotional) => dateKeyToLocalDate(devotional.dateKey) === todaysDate,
+    ) ?? null;
 
   const [refreshing, setRefreshing] = useState(false);
 

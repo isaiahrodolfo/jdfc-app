@@ -75,11 +75,14 @@ export default function DropdownSmall({
       ) : (
         <Pressable onPress={onOpenPress} style={styles.firstItemContainer}>
           <Text
-            style={{
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.p,
-              color: theme.text,
-            }}
+            style={[
+              styles.item,
+              {
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.p,
+                color: theme.text,
+              },
+            ]}
           >
             {selections[indexSelected]}
           </Text>

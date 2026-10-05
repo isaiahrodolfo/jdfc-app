@@ -133,16 +133,10 @@ export default function Devotion() {
           .map((devotional) => {
             const devotionalDate = dateKeyToLocalDate(devotional.dateKey);
 
-            const today = new Date(
-              todaysDate.getFullYear(),
-              todaysDate.getMonth(),
-              todaysDate.getDate(),
-            );
-
-            const yesterday = new Date(today);
+            const yesterday = new Date(todaysDate);
             yesterday.setDate(yesterday.getDate() - 1);
 
-            const isToday = devotionalDate.getTime() === today.getTime();
+            const isToday = devotionalDate.getTime() === todaysDate.getTime();
             const isYesterday =
               devotionalDate.getTime() === yesterday.getTime();
 

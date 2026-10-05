@@ -79,28 +79,48 @@ export default function Index() {
         </Text>
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => {
-            const timestamp = lesson.timestamp
+            const lessonDate = lesson.timestamp
               ? new Date(lesson.timestamp)
               : null;
 
-            const date = timestamp
-              ? new Date(
-                  timestamp.getUTCFullYear(),
-                  timestamp.getUTCMonth(),
-                  timestamp.getUTCDate(),
-                )
-              : null;
+            const today = new Date();
 
-            const isValidDate = date && !Number.isNaN(date.getTime());
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            const isToday =
+              lessonDate !== null &&
+              lessonDate.getUTCFullYear() === today.getFullYear() &&
+              lessonDate.getUTCMonth() === today.getMonth() &&
+              lessonDate.getUTCDate() === today.getDate();
+
+            const isYesterday =
+              lessonDate !== null &&
+              lessonDate.getUTCFullYear() === yesterday.getFullYear() &&
+              lessonDate.getUTCMonth() === yesterday.getMonth() &&
+              lessonDate.getUTCDate() === yesterday.getDate();
+
+            const size = isToday || isYesterday ? "medium" : "small";
+
+            const isValidDate =
+              lessonDate !== null && !Number.isNaN(lessonDate.getTime());
 
             return (
               <LessonCard
                 key={lesson.lessonId}
                 isCompleted={false}
                 colorName={colorName?.toString() as AccentColor}
-                size="small"
+                size={size}
                 descriptionSubheading={
-                  isValidDate ? dateFormatter("date").format(date) : ""
+                  isValidDate
+                    ? dateFormatter("date").format(
+                        new Date(
+                          lessonDate.getUTCFullYear(),
+                          lessonDate.getUTCMonth(),
+                          lessonDate.getUTCDate(),
+                        ),
+                      )
+                    : ""
                 }
                 titleHeading={lesson.title ?? ""}
                 onCheckboxPress={() => {
@@ -109,7 +129,7 @@ export default function Index() {
                 onLessonPress={() => routeToLessonsPage(lesson.lessonId)}
               />
             );
-          })}{" "}
+          })}
         </View>
       </View>
     </ScrollView>

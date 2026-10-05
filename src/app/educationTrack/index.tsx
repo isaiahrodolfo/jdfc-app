@@ -79,23 +79,37 @@ export default function Index() {
         </Text>
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => {
-            const date = lesson.timestamp ? new Date(lesson.timestamp) : null;
+            const timestamp = lesson.timestamp
+              ? new Date(lesson.timestamp)
+              : null;
+
+            const date = timestamp
+              ? new Date(
+                  timestamp.getUTCFullYear(),
+                  timestamp.getUTCMonth(),
+                  timestamp.getUTCDate(),
+                )
+              : null;
+
+            const isValidDate = date && !Number.isNaN(date.getTime());
+
             return (
               <LessonCard
+                key={lesson.lessonId}
                 isCompleted={false}
                 colorName={colorName?.toString() as AccentColor}
-                size={"small"}
+                size="small"
                 descriptionSubheading={
-                  date ? dateFormatter("date").format(date) : ""
+                  isValidDate ? dateFormatter("date").format(date) : ""
                 }
                 titleHeading={lesson.title ?? ""}
-                onCheckboxPress={function (): void {
+                onCheckboxPress={() => {
                   throw new Error("Function not implemented.");
                 }}
                 onLessonPress={() => routeToLessonsPage(lesson.lessonId)}
               />
             );
-          })}
+          })}{" "}
         </View>
       </View>
     </ScrollView>

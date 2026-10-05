@@ -1,6 +1,7 @@
 import { toggleCompleted } from "@/api/supabase/lessons/toggleCompleted";
 import LessonCard from "@/components/cards/LessonCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
+import { dateKeyToLocalDate } from "@/components/helpers/dateKeyToLocalDate";
 import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
 import ProgressTrackerCard from "@/components/progress_tracker/ProgressTrackerCard";
 import { useTabs } from "@/contexts/TabsContext";
@@ -22,7 +23,7 @@ export default function Devotion() {
     devotionals,
     setDevotionals,
     devotionalsProgress,
-    todaysDateKey,
+    todaysDate,
     refreshPage,
   } = useTabs();
 
@@ -122,49 +123,52 @@ export default function Devotion() {
             },
           ]}
         />
-        {devotionals &&
-          devotionals
-            .filter((devotional) => devotional.dateKey <= todaysDateKey)
-            .toReversed()
-            .map((devotional) => {
-              const yesterdayDate = new Date(todaysDateKey);
-              yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+        {devotionals
+          .filter((devotional) => {
+            const devotionalDate = dateKeyToLocalDate(devotional.dateKey);
 
-              const date = new Date(devotional.dateKey);
+            return devotionalDate <= todaysDate;
+          })
+          .toReversed()
+          .map((devotional) => {
+            const devotionalDate = dateKeyToLocalDate(devotional.dateKey);
 
-              const yesterdayDateKey = yesterdayDate
-                .toISOString()
-                .split("T")[0];
+            const today = new Date(
+              todaysDate.getFullYear(),
+              todaysDate.getMonth(),
+              todaysDate.getDate(),
+            );
 
-              const size =
-                devotional.dateKey === todaysDateKey ||
-                devotional.dateKey === yesterdayDateKey
-                  ? "big"
-                  : "medium";
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
 
-              return (
-                <LessonCard
-                  key={devotional.dateKey}
-                  isCompleted={devotional.isCompleted}
-                  titleHeading={devotional.title || "No Devotional Today"}
-                  descriptionHeading="Daily Devotion"
-                  descriptionSubheading={
-                    devotional.dateKey === todaysDateKey
-                      ? "Today"
-                      : devotional.dateKey === yesterdayDateKey
-                        ? "Yesterday"
-                        : dateFormatter("date").format(date)
-                  }
-                  size={size}
-                  colorName="yellow"
-                  imageLink={devotional.imageUrl}
-                  onCheckboxPress={() =>
-                    handleCheckboxPress(devotional.lessonId)
-                  }
-                  onLessonPress={() => handleDevotionalPress(devotional)}
-                />
-              );
-            })}
+            const isToday = devotionalDate.getTime() === today.getTime();
+            const isYesterday =
+              devotionalDate.getTime() === yesterday.getTime();
+
+            const size = isToday || isYesterday ? "big" : "medium";
+
+            return (
+              <LessonCard
+                key={devotional.dateKey}
+                isCompleted={devotional.isCompleted}
+                titleHeading={devotional.title || "No Devotional Today"}
+                descriptionHeading="Daily Devotion"
+                descriptionSubheading={
+                  isToday
+                    ? "Today"
+                    : isYesterday
+                      ? "Yesterday"
+                      : dateFormatter("date").format(devotionalDate)
+                }
+                size={size}
+                colorName="yellow"
+                imageLink={devotional.imageUrl}
+                onCheckboxPress={() => handleCheckboxPress(devotional.lessonId)}
+                onLessonPress={() => handleDevotionalPress(devotional)}
+              />
+            );
+          })}
       </View>
     </ScrollView>
   );

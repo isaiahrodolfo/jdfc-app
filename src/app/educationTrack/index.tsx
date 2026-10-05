@@ -88,7 +88,6 @@ export default function Index() {
           ]}
         >
           {educationTrack?.trackName}
-          {selectedSeries?.seriesNumber}
         </Text>
         <DropdownSmall
           selections={

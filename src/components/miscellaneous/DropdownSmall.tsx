@@ -42,7 +42,7 @@ export default function DropdownSmall({
                     styles.item,
                     {
                       fontFamily: fonts.family,
-                      fontSize: fonts.sizes.p,
+                      fontSize: fonts.sizes.h6,
                       color: theme.text,
                     },
                   ]}
@@ -63,7 +63,7 @@ export default function DropdownSmall({
                     styles.item,
                     {
                       fontFamily: fonts.family,
-                      fontSize: fonts.sizes.p,
+                      fontSize: fonts.sizes.h6,
                       color: theme.text,
                     },
                   ]}
@@ -81,7 +81,7 @@ export default function DropdownSmall({
               styles.item,
               {
                 fontFamily: fonts.family,
-                fontSize: fonts.sizes.p,
+                fontSize: fonts.sizes.h6,
                 color: theme.text,
               },
             ]}

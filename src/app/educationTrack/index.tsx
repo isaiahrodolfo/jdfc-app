@@ -100,7 +100,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: { top: 64, gap: 36 },
-  lessonsListContainer: { gap: 28, paddingRight: 8 },
+  lessonsListContainer: { gap: 20, paddingRight: 8 },
   h1: {
     fontWeight: "bold",
     textTransform: "uppercase",

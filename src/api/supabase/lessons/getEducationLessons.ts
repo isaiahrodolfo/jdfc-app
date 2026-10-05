@@ -19,6 +19,8 @@ export type EducationLesson = {
   lessonNumber: number | null;
   title: string | null;
   tags: Json;
+  timestamp?: string | null;
+  speakers?: string[];
 };
 
 /**
@@ -51,7 +53,19 @@ export async function getEducationLessons(
         lessons (
           id,
           title,
-          tags
+          tags,
+          lessons_events (
+            id,
+            events (
+              id,
+              title,
+              timestamp,
+              location
+            ),
+            lessons_events_speakers (
+              user_id
+            )
+          )
         )
       `,
     )
@@ -96,6 +110,11 @@ export async function getEducationLessons(
       lessonNumber: item.lesson_number,
       title: item.lessons.title,
       tags: item.lessons.tags,
+      timestamp: item.lessons.lessons_events[0].events?.timestamp ?? "",
+      speakers:
+        item.lessons.lessons_events[0]?.lessons_events_speakers
+          ?.map((speaker) => speaker.user_id)
+          .filter((id): id is string => id !== null) ?? [],
     });
   });
 

@@ -117,8 +117,6 @@ export default function Lessons() {
         </Text>
         <View style={styles.recentLiveEventLessonContainer}>
           {recentLiveEventLessons.map((recentLiveEventLesson) => {
-            console.log("recent live event lesson:", recentLiveEventLesson);
-
             const date = new Date(recentLiveEventLesson.timestamp);
 
             return (

@@ -52,8 +52,6 @@ export async function getRecentLiveEventLessons(): Promise<
     console.log("No lesson associated with this live event lesson");
   }
 
-  console.log(data);
-
   return data.map((event) => {
     const link = event.lessons_events[0]?.lessons_events_link[0];
 

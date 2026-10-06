@@ -1498,6 +1498,20 @@
           "maxLength": null
         },
         {
+          "id": "public.events.announcement_start",
+          "name": "announcement_start",
+          "columnName": "announcement_start",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "lessons_events",
           "type": "lessons_events",
           "isRequired": false,

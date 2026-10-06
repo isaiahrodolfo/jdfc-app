@@ -15,9 +15,9 @@ export default function TabLayout() {
         })}
         backgroundColor={theme.primary}
       >
-        <NativeTabs.Trigger name="education">
-          <NativeTabs.Trigger.Label>Education</NativeTabs.Trigger.Label>
-          <NativeTabs.Trigger.Icon sf="graduationcap" md="school" />
+        <NativeTabs.Trigger name="lifeGroup">
+          <NativeTabs.Trigger.Label>Life Group</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon sf="person.3" md="group" />
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="lessons">
           <NativeTabs.Trigger.Label>Lessons</NativeTabs.Trigger.Label>

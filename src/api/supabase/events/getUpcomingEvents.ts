@@ -32,9 +32,6 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
     console.log("Upcoming events not found", error);
     return [];
   }
-  console.log(
-    data.map((event) => event.lessons_events[0].lessons.is_user_completable),
-  );
 
   return (data ?? []).map((event) => ({
     title: event.title ?? "",

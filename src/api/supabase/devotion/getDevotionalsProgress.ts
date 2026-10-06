@@ -81,6 +81,7 @@ export default async function getDevotionalsProgress(): Promise<
 
     progress.push({
       date: date.getDate(),
+      dateKey,
       isChecked:
         devotional?.lesson_id == null
           ? false

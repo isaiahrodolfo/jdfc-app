@@ -7,7 +7,7 @@ import ProgressTrackerCard from "@/components/progress_tracker/ProgressTrackerCa
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   RefreshControl,
   ScrollView,
@@ -29,7 +29,12 @@ export default function Devotion() {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const [isUpdating, setIsUpdating] = useState(false);
+  const pendingCompletionUpdates = useRef(
+    new Map<
+      number,
+      { desired: boolean; persisted: boolean; revision: number }
+    >(),
+  );
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -42,8 +47,6 @@ export default function Devotion() {
   };
 
   const handleCheckboxPress = async (lessonId: number) => {
-    if (isUpdating) return;
-
     // Get the devotion to toggle its completion
     const devotional = devotionals.find(
       (devotional) => devotional.lessonId === lessonId,
@@ -51,7 +54,19 @@ export default function Devotion() {
 
     if (!devotional) return;
 
-    const newIsChecked = !devotional.isCompleted;
+    const pendingUpdate = pendingCompletionUpdates.current.get(lessonId);
+    const newIsChecked = !(pendingUpdate?.desired ?? devotional.isCompleted);
+    const update =
+      pendingUpdate ??
+      {
+        desired: newIsChecked,
+        persisted: devotional.isCompleted,
+        revision: 0,
+      };
+
+    update.desired = newIsChecked;
+    update.revision += 1;
+    pendingCompletionUpdates.current.set(lessonId, update);
 
     // Set the devotionals object right away
     setDevotionals((prev) =>
@@ -62,24 +77,33 @@ export default function Devotion() {
       ),
     );
 
-    setIsUpdating(true);
+    if (pendingUpdate) return;
 
     try {
-      // Set the toggle remotely
-      await toggleCompleted(user.id, lessonId, newIsChecked);
-    } catch (error) {
-      console.error("Error updating completion:", error);
+      while (update.desired !== update.persisted) {
+        const valueToPersist = update.desired;
+        const revisionToPersist = update.revision;
 
-      // Revert the devotionals object if the isCompleted was not saved remotely
-      setDevotionals((prev) =>
-        prev.map((devotional) =>
-          devotional.lessonId === lessonId
-            ? { ...devotional, isCompleted: !newIsChecked }
-            : devotional,
-        ),
-      );
+        try {
+          await toggleCompleted(user.id, lessonId, valueToPersist);
+          update.persisted = valueToPersist;
+        } catch (error) {
+          console.error("Error updating completion:", error);
+
+          if (update.revision === revisionToPersist) {
+            setDevotionals((prev) =>
+              prev.map((devotional) =>
+                devotional.lessonId === lessonId
+                  ? { ...devotional, isCompleted: update.persisted }
+                  : devotional,
+              ),
+            );
+            break;
+          }
+        }
+      }
     } finally {
-      setIsUpdating(false);
+      pendingCompletionUpdates.current.delete(lessonId);
     }
   };
 

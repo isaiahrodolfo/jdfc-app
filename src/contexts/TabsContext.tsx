@@ -23,7 +23,6 @@ import {
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
-import { getDevotionalsProgressStartDate } from "@/components/helpers/getDevotionalsProgressStartDate";
 import { CheckboxData } from "@/components/progress_tracker/CheckboxesContainer";
 import { useAuthContext } from "@/hooks/use-auth-context";
 
@@ -83,66 +82,43 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   const [devotionals, setDevotionals] = useState<DevotionLesson[]>([]);
   const [todaysDevotional, setTodaysDevotional] =
     useState<DevotionLesson | null>(null);
-  const [devotionalsProgress, setDevotionalsProgress] = useState<
+  const [devotionalsProgressData, setDevotionalsProgressData] = useState<
     CheckboxData[]
   >([]);
   const [todaysDate, setTodaysDate] = useState<Date>(getTodaysDate());
 
-  useEffect(() => {
-    const today = new Date(`${todaysDate}T00:00:00`);
-    const startDate = getDevotionalsProgressStartDate(today);
-    const progressDates = new Map<number, string>();
+  const devotionalsByDate = new Map(
+    devotionals.map((devotional) => [devotional.dateKey, devotional]),
+  );
+  const devotionalsProgress = devotionalsProgressData.map((progress) => {
+    const devotional = progress.dateKey
+      ? devotionalsByDate.get(progress.dateKey)
+      : undefined;
 
-    for (
-      const date = new Date(startDate);
-      date <= today;
-      date.setDate(date.getDate() + 1)
-    ) {
-      progressDates.set(
-        date.getDate(),
-        `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-          2,
-          "0",
-        )}-${String(date.getDate()).padStart(2, "0")}`,
-      );
-    }
-
-    const devotionalsByDate = new Map(
-      devotionals.map((devotional) => [devotional.dateKey, devotional]),
-    );
-
-    setDevotionalsProgress((prev) => {
-      let hasChanges = false;
-      const next = prev.map((progress) => {
-        const Date = progressDates.get(progress.date);
-        const devotional = Date ? devotionalsByDate.get(Date) : undefined;
-
-        if (!devotional || progress.isChecked === devotional.isCompleted) {
-          return progress;
-        }
-
-        hasChanges = true;
-        return { ...progress, isChecked: devotional.isCompleted };
-      });
-
-      return hasChanges ? next : prev;
-    });
-  }, [devotionals, todaysDate]);
+    return devotional
+      ? { ...progress, isChecked: devotional.isCompleted }
+      : progress;
+  });
 
   const refreshPage = async () => {
-    const liveEventsData = await getLiveEvents();
+    const [
+      liveEventsData,
+      recentLiveEventLessonsData,
+      announcementsData,
+      upcomingEventsData,
+      devotionalsData,
+    ] = await Promise.all([
+      getLiveEvents(),
+      getRecentLiveEventLessons(),
+      getAnnouncements(),
+      getUpcomingEvents(),
+      getDevotionals(),
+    ]);
     setLiveEvents(liveEventsData);
-
-    const recentLiveEventLessonsData = await getRecentLiveEventLessons();
     setRecentLiveEventLessons(recentLiveEventLessonsData);
-
-    const announcementsData = await getAnnouncements();
     setAnnouncements(announcementsData);
-
-    const upcomingEventsData = await getUpcomingEvents();
     setUpcomingEvents(upcomingEventsData);
 
-    const devotionalsData = await getDevotionals();
     // Make sure the devotionals can be found within Supabase
     const devotionalsWithIds = await Promise.all(
       devotionalsData.map(async (devotional) => {
@@ -161,12 +137,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       }),
     );
     setDevotionals(devotionalsWithIds);
-    devotionalsWithIds.map((devotion) => {
-      // console.log(devotion.lessonId, devotion.isCompleted);
-    });
 
     const devotionalsProgressData = await getDevotionalsProgress();
-    setDevotionalsProgress(devotionalsProgressData);
+    setDevotionalsProgressData(devotionalsProgressData);
 
     const todaysDate = getTodaysDate();
     setTodaysDate(todaysDate);

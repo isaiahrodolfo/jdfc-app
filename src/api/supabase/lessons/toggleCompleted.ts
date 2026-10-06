@@ -5,27 +5,18 @@ export async function toggleCompleted(
   lessonId: number,
   toggleTo: boolean,
 ) {
-  console.log("toggleCompleted() was triggered with", {
-    userId,
-    lessonId,
-  });
+  const { error } = await supabase.from("users_lessons_completions").upsert(
+    {
+      user_id: userId,
+      lesson_id: lessonId,
+      is_completed: toggleTo,
+    },
+    {
+      onConflict: "user_id,lesson_id",
+    },
+  );
 
-  try {
-    const { error } = await supabase
-      .from("users_lessons_completions")
-      .upsert(
-        {
-          user_id: userId,
-          lesson_id: lessonId,
-          is_completed: toggleTo,
-        },
-        {
-          onConflict: "user_id,lesson_id",
-        },
-      )
-      .select()
-      .single();
-  } catch (error) {
-    console.error("Error toggling completed:", error);
+  if (error) {
+    throw error;
   }
 }

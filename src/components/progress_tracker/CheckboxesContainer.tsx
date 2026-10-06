@@ -4,6 +4,7 @@ import Checkbox from "./Checkbox";
 
 export type CheckboxData = {
   date: number;
+  dateKey?: string;
   isChecked: boolean;
   isCurrent: boolean;
 };
@@ -20,7 +21,10 @@ export default function CheckboxesContainer({
   return (
     <View style={styles.container}>
       {checkboxesData.map((checkbox) => (
-        <View key={checkbox.date} style={styles.gridItem}>
+        <View
+          key={checkbox.dateKey ?? checkbox.date}
+          style={styles.gridItem}
+        >
           <Checkbox
             isChecked={checkbox.isChecked}
             colorName={colorName}

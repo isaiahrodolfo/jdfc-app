@@ -86,6 +86,9 @@ export default function LifeGroup() {
     });
   };
 
+  const getRole = (roleId: number): string =>
+    roleId === 1 ? "Leader" : roleId === 2 ? "Co-leader" : "";
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.primary }}
@@ -174,6 +177,7 @@ export default function LifeGroup() {
                 key={lifeGroupMember.id}
                 isUser={true}
                 name={lifeGroupMember.full_name ?? ""}
+                role={getRole(lifeGroupMember.life_group_role_id ?? 0)}
                 onProfilePress={() => routeToProfilePage(lifeGroupMember.id)}
               />
             ) : (
@@ -181,6 +185,7 @@ export default function LifeGroup() {
                 key={lifeGroupMember.id}
                 isUser={false}
                 name={lifeGroupMember.full_name ?? ""}
+                role={getRole(lifeGroupMember.life_group_role_id ?? 0)}
                 onProfilePress={() => {}}
               />
             ),

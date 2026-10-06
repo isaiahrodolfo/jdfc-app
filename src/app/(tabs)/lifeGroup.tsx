@@ -39,6 +39,7 @@ export default function LifeGroup() {
   };
 
   const handleInfoPress = ({
+    eventTypeId,
     title,
     subtitle,
     category,
@@ -46,6 +47,7 @@ export default function LifeGroup() {
     location,
     information,
   }: {
+    eventTypeId: number;
     title: string;
     subtitle?: string;
     category?: string;
@@ -57,6 +59,7 @@ export default function LifeGroup() {
     router.push({
       pathname: "/info/[link]",
       params: {
+        eventTypeId: eventTypeId ?? -1,
         link: title.toLowerCase().replace(/\s+/g, "-"), // Example: convert title to a URL-friendly format
         title: title,
         subtitle: subtitle,
@@ -144,6 +147,7 @@ export default function LifeGroup() {
             location={upcomingEvent.location}
             onInfoPress={() =>
               handleInfoPress({
+                eventTypeId: upcomingEvent.eventTypeId ?? -1,
                 title: upcomingEvent.title,
                 timestamp: upcomingEvent.date,
                 location: upcomingEvent.location,

@@ -98,6 +98,7 @@ export default function Home() {
   };
 
   const handleInfoPress = ({
+    eventTypeId,
     title,
     subtitle,
     category,
@@ -105,6 +106,7 @@ export default function Home() {
     location,
     information,
   }: {
+    eventTypeId: number;
     title: string;
     subtitle?: string;
     category?: string;
@@ -116,6 +118,7 @@ export default function Home() {
     router.push({
       pathname: "/info/[link]",
       params: {
+        eventTypeId: eventTypeId,
         link: title.toLowerCase().replace(/\s+/g, "-"), // Example: convert title to a URL-friendly format
         title: title,
         subtitle: subtitle,
@@ -207,6 +210,7 @@ export default function Home() {
             colorName={"accent"}
             onIconPress={() =>
               handleInfoPress({
+                eventTypeId: -1,
                 title: announcement.name || "No Title",
                 category: "Announcement",
                 subtitle: announcement.category || "No Category",
@@ -280,6 +284,7 @@ export default function Home() {
               date={upcomingEvent.date}
               onInfoPress={() =>
                 handleInfoPress({
+                  eventTypeId: upcomingEvent.eventTypeId ?? -1,
                   title: upcomingEvent.title,
                   timestamp: upcomingEvent.date,
                   location: upcomingEvent.location,

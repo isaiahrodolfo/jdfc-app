@@ -4,8 +4,15 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 
 export default function InfoPageWrapper() {
-  const { title, subtitle, category, timestamp, location, information } =
-    useLocalSearchParams();
+  const {
+    eventTypeId,
+    title,
+    subtitle,
+    category,
+    timestamp,
+    location,
+    information,
+  } = useLocalSearchParams();
   const { theme } = useTheme();
 
   return (
@@ -25,6 +32,7 @@ export default function InfoPageWrapper() {
           }}
         />
         <InfoPage
+          eventTypeId={Number(eventTypeId.toString())}
           title={title.toString()}
           subtitle={subtitle ? subtitle.toString() : undefined}
           category={category ? category.toString() : undefined}

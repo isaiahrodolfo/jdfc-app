@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import PreviewTitleCard from "../cards/PreviewTitleCard";
 
 type InfoPageProps = {
+  eventTypeId: number;
   title: string;
   subtitle?: string;
   category?: string;
@@ -14,6 +15,7 @@ type InfoPageProps = {
 };
 
 export default function InfoPage({
+  eventTypeId,
   title,
   subtitle,
   category,
@@ -26,6 +28,7 @@ export default function InfoPage({
   return (
     <View style={{ height: "100%" }}>
       <PreviewTitleCard
+        eventTypeId={eventTypeId}
         title={title}
         subtitle={subtitle}
         category={category}

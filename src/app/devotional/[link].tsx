@@ -138,6 +138,7 @@ export default function DevotionPage() {
         </View>
 
         <PreviewTitleCard
+          eventTypeId={-1}
           title={devotional.title.toString() || "No Title"}
           category={dateFormatter("date").format(date)}
           subtitle={devotional.author.toString() || "No Author"}

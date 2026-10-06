@@ -1,3 +1,4 @@
+import ButtonBig from "@/components/buttons/ButtonBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -15,6 +16,7 @@ export default function LifeGroup() {
   const { theme, fonts } = useTheme();
   const { profile, upcomingEvents, refreshPage } = useTabs();
 
+  // Filter only the user's life group's events
   const upcomingLifeGroupEvents = upcomingEvents
     .filter((upcomingEvent) => upcomingEvent.title === "Life Group")
     .filter(
@@ -59,6 +61,15 @@ export default function LifeGroup() {
         timestamp: timestamp?.toISOString(),
         location: location,
         information: information,
+      },
+    });
+  };
+
+  const routeToScheduleEventPage = () => {
+    router.push({
+      pathname: "/scheduleEvent",
+      params: {
+        name: "Life Group",
       },
     });
   };
@@ -124,6 +135,12 @@ export default function LifeGroup() {
             }
           />
         ))}
+        <ButtonBig
+          text="Schedule Event"
+          textColor={theme.iconAccent}
+          backgroundColor={theme.iconPrimary}
+          onButtonPress={routeToScheduleEventPage}
+        />
       </View>
     </ScrollView>
   );

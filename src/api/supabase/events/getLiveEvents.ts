@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
 export type LiveEvent = {
+  id: number;
   title: string;
   information: string;
   timestamp: string;
@@ -22,6 +23,7 @@ export async function getLiveEvents(): Promise<LiveEvent[]> {
     .from("events")
     .select(
       `
+      id,
       title,
       information,
       timestamp,
@@ -45,6 +47,7 @@ export async function getLiveEvents(): Promise<LiveEvent[]> {
     const link = event.lessons_events[0]?.lessons_events_link[0];
 
     return {
+      id: event.id,
       title: event.title ?? "",
       information: event.information ?? "",
       timestamp: event.timestamp ?? "",

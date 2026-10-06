@@ -95,16 +95,22 @@ isOneToOne: false
                   ]
                 },"events": {
                   Row: {
-                    "announcement_end": string | null,"announcement_start": string | null,"created_at": string,"id": number,"information": string | null,"location": string | null,"repeat_every_days": number | null,"timestamp": string | null,"title": string | null
+                    "announcement_end": string | null,"announcement_start": string | null,"created_at": string,"id": number,"information": string | null,"life_group_id": number | null,"location": string | null,"repeat_every_days": number | null,"timestamp": string | null,"title": string | null
                   }
                   Insert: {
-                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
+                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
                   }
                   Update: {
-                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
+                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
                   }
                   Relationships: [
-                    
+                    {
+      foreignKeyName: "events_life_group_id_fkey"
+      columns: ["life_group_id"]
+isOneToOne: false
+      referencedRelation: "life_groups"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"lessons": {
                   Row: {
@@ -198,31 +204,6 @@ isOneToOne: false
       columns: ["lessons_events_id"]
 isOneToOne: false
       referencedRelation: "lessons_events"
-      referencedColumns: ["id"]
-    }
-                  ]
-                },"life_group_events": {
-                  Row: {
-                    "created_at": string,"event_id": number,"id": number,"life_group_id": number
-                  }
-                  Insert: {
-                    "created_at"?: string,"event_id": number,"id"?: number,"life_group_id": number
-                  }
-                  Update: {
-                    "created_at"?: string,"event_id"?: number,"id"?: number,"life_group_id"?: number
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "life_group_events_event_id_fkey"
-      columns: ["event_id"]
-isOneToOne: false
-      referencedRelation: "events"
-      referencedColumns: ["id"]
-    },{
-      foreignKeyName: "life_group_events_life_group_id_fkey"
-      columns: ["life_group_id"]
-isOneToOne: false
-      referencedRelation: "life_groups"
       referencedColumns: ["id"]
     }
                   ]

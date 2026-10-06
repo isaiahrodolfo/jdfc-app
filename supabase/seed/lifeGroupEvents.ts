@@ -40,33 +40,29 @@ export async function seedLifeGroupEvents(
     [2, life_groups[1].id, dummyUserId2],
   );
 
-  const { life_group_events } = await seed.life_group_events([
+  const { events } = await seed.events([
     {
       life_group_id: life_groups[0].id,
-      events: {
-        title: "Life Group",
-        location: "House 1",
-        timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
-      },
+      title: "Life Group",
+      location: "House 1",
+      timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
     },
     {
       life_group_id: life_groups[1].id,
-      events: {
-        title: "Life Group",
-        location: "House 2",
-        timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
-      },
+      title: "Life Group",
+      location: "House 2",
+      timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
     },
   ]);
 
   await seed.life_group_events_members([
     {
-      event_id: life_group_events[0].event_id,
+      event_id: events[0].id,
       user_id: dummyUserId1,
       event_availability_id: 1,
     },
     {
-      event_id: life_group_events[1].event_id,
+      event_id: events[1].id,
       user_id: dummyUserId2,
       event_availability_id: 2,
     },

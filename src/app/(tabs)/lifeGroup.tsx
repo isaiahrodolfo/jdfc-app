@@ -15,9 +15,9 @@ export default function LifeGroup() {
   const { theme, fonts } = useTheme();
   const { upcomingEvents, refreshPage } = useTabs();
 
-  const upcomingLifeGroupEvents = upcomingEvents.filter(
-    (upcomingEvent) => upcomingEvent.title === "Life Group",
-  );
+  const upcomingLifeGroupEvents = upcomingEvents
+    .filter((upcomingEvent) => upcomingEvent.title === "Life Group")
+    .filter((lifeGroupEvent) => lifeGroupEvent.lifeGroupId);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -107,6 +107,7 @@ export default function LifeGroup() {
         </Text>
         {upcomingLifeGroupEvents?.map((upcomingEvent) => (
           <EventCardSmall
+            key={upcomingEvent.id}
             title={"Life Group"}
             date={upcomingEvent.date}
             location={upcomingEvent.location}

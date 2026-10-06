@@ -1512,25 +1512,43 @@
           "maxLength": null
         },
         {
-          "name": "lessons_events",
-          "type": "lessons_events",
+          "id": "public.events.life_group_id",
+          "name": "life_group_id",
+          "columnName": "life_group_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "life_groups",
+          "type": "life_groups",
           "isRequired": false,
           "kind": "object",
-          "relationName": "lessons_eventsToevents",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isList": true,
+          "relationName": "eventsTolife_groups",
+          "relationFromFields": [
+            "life_group_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
           "isId": false,
           "isGenerated": false,
           "sequence": false,
           "hasDefaultValue": false
         },
         {
-          "name": "life_group_events",
-          "type": "life_group_events",
+          "name": "lessons_events",
+          "type": "lessons_events",
           "isRequired": false,
           "kind": "object",
-          "relationName": "life_group_eventsToevents",
+          "relationName": "lessons_eventsToevents",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
@@ -3392,126 +3410,6 @@
         }
       ]
     },
-    "life_group_events": {
-      "id": "public.life_group_events",
-      "schemaName": "public",
-      "tableName": "life_group_events",
-      "fields": [
-        {
-          "id": "public.life_group_events.id",
-          "name": "id",
-          "columnName": "id",
-          "type": "int8",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": {
-            "identifier": "\"public\".\"life_group_events_id_seq\"",
-            "increment": 1,
-            "start": 1
-          },
-          "hasDefaultValue": false,
-          "isId": true,
-          "maxLength": null
-        },
-        {
-          "id": "public.life_group_events.created_at",
-          "name": "created_at",
-          "columnName": "created_at",
-          "type": "timestamptz",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": true,
-          "isId": false,
-          "maxLength": null
-        },
-        {
-          "id": "public.life_group_events.event_id",
-          "name": "event_id",
-          "columnName": "event_id",
-          "type": "int8",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
-          "id": "public.life_group_events.life_group_id",
-          "name": "life_group_id",
-          "columnName": "life_group_id",
-          "type": "int8",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
-          "name": "events",
-          "type": "events",
-          "isRequired": true,
-          "kind": "object",
-          "relationName": "life_group_eventsToevents",
-          "relationFromFields": [
-            "event_id"
-          ],
-          "relationToFields": [
-            "id"
-          ],
-          "isList": false,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
-        },
-        {
-          "name": "life_groups",
-          "type": "life_groups",
-          "isRequired": true,
-          "kind": "object",
-          "relationName": "life_group_eventsTolife_groups",
-          "relationFromFields": [
-            "life_group_id"
-          ],
-          "relationToFields": [
-            "id"
-          ],
-          "isList": false,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
-        }
-      ],
-      "uniqueConstraints": [
-        {
-          "name": "life_group_events_pkey",
-          "fields": [
-            "id"
-          ],
-          "nullNotDistinct": false
-        },
-        {
-          "name": "idx_life_group_events_event_id_life_group_id",
-          "fields": [
-            "event_id",
-            "life_group_id"
-          ],
-          "nullNotDistinct": false
-        }
-      ]
-    },
     "life_group_events_members": {
       "id": "public.life_group_events_members",
       "schemaName": "public",
@@ -3793,11 +3691,11 @@
           "maxLength": null
         },
         {
-          "name": "life_group_events",
-          "type": "life_group_events",
+          "name": "events",
+          "type": "events",
           "isRequired": false,
           "kind": "object",
-          "relationName": "life_group_eventsTolife_groups",
+          "relationName": "eventsTolife_groups",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,

@@ -90,6 +90,15 @@ export default function RootLayout() {
                   headerTransparent: true,
                 }}
               />
+              <Stack.Screen
+                name="scheduleEvent"
+                options={{
+                  headerTitle: "",
+                  headerShown: true,
+                  headerBackButtonDisplayMode: "minimal", // Circle back button
+                  headerTransparent: true,
+                }}
+              />
             </Stack>
           ) : (
             <Auth />

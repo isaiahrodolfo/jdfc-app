@@ -104,6 +104,18 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   });
 
   const refreshPage = async () => {
+    const start = performance.now();
+
+    const timed = async <T,>(name: string, promise: Promise<T>): Promise<T> => {
+      const start = performance.now();
+
+      const result = await promise;
+
+      console.log(`${name}: ${(performance.now() - start).toFixed(0)}ms`);
+
+      return result;
+    };
+
     const [
       liveEventsData,
       recentLiveEventLessonsData,
@@ -112,27 +124,39 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       devotionalsData,
       profileData,
     ] = await Promise.all([
-      getLiveEvents(),
-      getRecentLiveEventLessons(),
-      getAnnouncements(),
-      getUpcomingEvents(),
-      getDevotionals(),
-      getProfile(user.id),
+      timed("getLiveEvents", getLiveEvents()),
+      timed("getRecentLiveEventLessons", getRecentLiveEventLessons()),
+      timed("getAnnouncements", getAnnouncements()),
+      timed("getUpcomingEvents", getUpcomingEvents()),
+      timed("getDevotionals", getDevotionals()),
+      timed("getProfile", getProfile(user.id)),
     ]);
+
+    console.log(
+      `Initial Promise.all: ${(performance.now() - start).toFixed(0)}ms`,
+    );
+
     setLiveEvents(liveEventsData);
     setRecentLiveEventLessons(recentLiveEventLessonsData);
     setAnnouncements(announcementsData);
     setUpcomingEvents(upcomingEventsData);
     setProfile(profileData[0] ?? null);
 
-    // Make sure the devotionals can be found within Supabase
+    const devotionalsStart = performance.now();
+
     const devotionalsWithIds = await Promise.all(
       devotionalsData.map(async (devotional) => {
+        const start = performance.now();
+
         const { lessonId, isCompleted } = await findDevotional(
           devotional.odbUrl,
           devotional.title,
           devotional.dateKey,
           user.id,
+        );
+
+        console.log(
+          `findDevotional ${devotional.dateKey}: ${(performance.now() - start).toFixed(0)}ms`,
         );
 
         return {
@@ -142,17 +166,34 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         };
       }),
     );
+
+    console.log(
+      `All findDevotional calls: ${(performance.now() - devotionalsStart).toFixed(0)}ms`,
+    );
+
     setDevotionals(devotionalsWithIds);
 
+    const progressStart = performance.now();
+
     const devotionalsProgressData = await getDevotionalsProgress();
+
+    console.log(
+      `getDevotionalsProgress: ${(performance.now() - progressStart).toFixed(0)}ms`,
+    );
+
     setDevotionalsProgressData(devotionalsProgressData);
 
     const todaysDate = getTodaysDate();
     setTodaysDate(todaysDate);
+
     setTodaysDevotional(
       devotionalsWithIds.find(
         (devotional) => new Date(devotional.dateKey) === todaysDate,
       ) ?? null,
+    );
+
+    console.log(
+      `TOTAL refreshPage: ${(performance.now() - start).toFixed(0)}ms`,
     );
   };
 

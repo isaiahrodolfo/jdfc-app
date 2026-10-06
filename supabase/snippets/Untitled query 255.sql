@@ -1,3 +1,6 @@
--- Life group events: event_id and life_group_id must be unique.
-CREATE UNIQUE INDEX idx_life_group_events_event_id_life_group_id
-ON life_group_events (event_id, life_group_id);
+SELECT
+  id,
+  event_id,
+  lesson_id
+FROM public.lessons_events
+WHERE event_id IN (6, 7);

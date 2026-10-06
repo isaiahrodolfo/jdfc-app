@@ -21,15 +21,10 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
       timestamp,
       location,
       repeat_every_days,
-      life_group_id,
-      lessons_events (
-        lessons (
-          is_user_completable
-        )
-      )
+      life_group_id
     `,
     )
-    .eq("lessons_events.lessons.is_user_completable", false)
+    .not("location", "is", null)
     .gte("timestamp", new Date().toISOString());
 
   if (error) {
@@ -37,13 +32,15 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
     return [];
   }
 
-  return (data ?? []).map((event) => ({
-    id: event.id,
-    title: event.title ?? "",
-    information: event.information ?? "",
-    date: event.timestamp ? new Date(event.timestamp) : new Date(),
-    location: event.location ?? "",
-    repeatEveryDays: event.repeat_every_days ?? null,
-    lifeGroupId: event.life_group_id,
-  }));
+  return (data ?? []).map((event) => {
+    return {
+      id: event.id,
+      title: event.title ?? "",
+      information: event.information ?? "",
+      date: event.timestamp ? new Date(event.timestamp) : new Date(),
+      location: event.location ?? "",
+      repeatEveryDays: event.repeat_every_days ?? null,
+      lifeGroupId: event.life_group_id,
+    };
+  });
 }

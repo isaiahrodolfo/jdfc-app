@@ -74,7 +74,7 @@ export default function LifeGroup() {
       params: {
         title: "Life Group",
         eventId: "",
-        eventTypeIndex: 5,
+        eventTypeIndex: 6,
       },
     });
   };
@@ -138,6 +138,7 @@ export default function LifeGroup() {
         {upcomingLifeGroupEvents?.map((upcomingEvent) => (
           <EventCardSmall
             key={upcomingEvent.id}
+            eventTypeId={upcomingEvent.event_type_id ?? -1}
             title={"Life Group"}
             date={upcomingEvent.date}
             location={upcomingEvent.location}

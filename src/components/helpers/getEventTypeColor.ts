@@ -1,23 +1,27 @@
 import { AccentColor } from "@/constants/theme";
 
-export type Category =
-  | "Sunday Service"
-  | "Prayer Service"
-  | "Life Group"
-  | string;
 export type CategoryColor =
   | "sundayService"
   | "prayerService"
+  | "blue"
+  | "green"
+  | "purple"
   | "lifeGroup"
   | AccentColor;
 
-export default function getCategoryColor(category: Category): CategoryColor {
-  switch (category) {
-    case "Sunday Service":
+export default function getEventTypeColor(eventTypeId: number): CategoryColor {
+  switch (eventTypeId) {
+    case 1:
       return "sundayService";
-    case "Prayer Service":
+    case 2:
       return "prayerService";
-    case "Life Group":
+    case 3:
+      return "blue";
+    case 4:
+      return "green";
+    case 5:
+      return "purple";
+    case 6:
       return "lifeGroup";
     default:
       return "yellow";

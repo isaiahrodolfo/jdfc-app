@@ -34,7 +34,7 @@ export default function ScheduleEventPage() {
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
   const [selectedEventTypeIndex, setSelectedEventTypeIndex] = useState(
-    Number(eventTypeIndex.toString()),
+    Number(eventTypeIndex.toString()) - 1, // eventTypeIndex is 0-indexed, while eventTypeId is 1-indexed
   );
 
   console.log("eventTypeIndex", eventTypeIndex);

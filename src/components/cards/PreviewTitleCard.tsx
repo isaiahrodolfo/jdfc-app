@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { useWindowDimensions } from "react-native";
 import { dateFormatter } from "../helpers/dateFormatter";
-import getCategoryColor from "../helpers/getCategoryColor";
+import getEventTypeColor from "../helpers/getEventTypeColor";
 
 type PreviewTitleCardProps = {
+  eventTypeId: number;
   title: string;
   subtitle?: string;
   category?: string;
@@ -16,6 +17,7 @@ type PreviewTitleCardProps = {
 };
 
 export default function PreviewTitleCard({
+  eventTypeId,
   title,
   subtitle,
   category,
@@ -27,7 +29,7 @@ export default function PreviewTitleCard({
   const { theme, fonts } = useTheme();
   const { height } = useWindowDimensions();
 
-  const colorName = getCategoryColor(title);
+  const colorName = getEventTypeColor(eventTypeId);
 
   return (
     <View style={styles.container}>

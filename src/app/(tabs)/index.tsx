@@ -274,6 +274,7 @@ export default function Home() {
           .map((upcomingEvent) => (
             <EventCardSmall
               key={upcomingEvent.id}
+              eventTypeId={upcomingEvent.event_type_id ?? -1}
               title={upcomingEvent.title}
               location={upcomingEvent.location}
               date={upcomingEvent.date}

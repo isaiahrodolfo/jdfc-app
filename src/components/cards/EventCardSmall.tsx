@@ -2,9 +2,10 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import InfoIcon from "../../../assets/icons/InfoIndigo5.svg";
 import { dateFormatter } from "../helpers/dateFormatter";
-import getCategoryColor from "../helpers/getCategoryColor";
+import getEventTypeColor from "../helpers/getEventTypeColor";
 
 type EventCardSmallProps = {
+  eventTypeId: number;
   title: string;
   date: Date;
   location: string;
@@ -12,6 +13,7 @@ type EventCardSmallProps = {
 };
 
 export default function EventCardSmall({
+  eventTypeId,
   title,
   date,
   location,
@@ -19,7 +21,7 @@ export default function EventCardSmall({
 }: EventCardSmallProps) {
   const { theme, fonts } = useTheme();
 
-  const colorName = getCategoryColor(title);
+  const colorName = getEventTypeColor(eventTypeId);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>

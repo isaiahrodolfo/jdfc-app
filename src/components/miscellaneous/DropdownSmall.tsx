@@ -90,7 +90,7 @@ export default function DropdownSmall({
       ) : (
         <Pressable
           onPress={() => {
-            if (isEditable) onOpenPress;
+            if (isEditable) onOpenPress();
           }}
           style={styles.firstItemContainer}
         >

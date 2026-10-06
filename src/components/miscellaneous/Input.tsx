@@ -26,7 +26,7 @@ export default function Input({
   placeholderTextColor,
   borderColor,
   backgroundColor,
-  isEditable,
+  isEditable = true,
   onChangeText,
 }: InputProps) {
   return (

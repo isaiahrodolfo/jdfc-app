@@ -43,6 +43,7 @@ export default function ScheduleEventPage(title: string, eventId: string) {
           </Text>
           <Input
             value={"Life Group"}
+            isEditable={false}
             placeholderText="Birthday"
             autoComplete="off"
             textColor={theme.text}

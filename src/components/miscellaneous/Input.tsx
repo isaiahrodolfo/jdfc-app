@@ -14,6 +14,7 @@ type InputProps = {
   placeholderTextColor: ColorValue;
   borderColor: ColorValue;
   backgroundColor?: ColorValue;
+  isEditable?: boolean;
   onChangeText?: (text: string) => void;
 };
 
@@ -25,6 +26,7 @@ export default function Input({
   placeholderTextColor,
   borderColor,
   backgroundColor,
+  isEditable,
   onChangeText,
 }: InputProps) {
   return (
@@ -34,6 +36,7 @@ export default function Input({
           styles.input,
           { color: textColor, borderWidth: 1, borderColor: borderColor },
         ]}
+        editable={isEditable}
         autoComplete={autoComplete}
         placeholder={placeholderText}
         placeholderTextColor={placeholderTextColor}

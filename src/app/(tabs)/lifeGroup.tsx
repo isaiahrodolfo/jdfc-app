@@ -147,29 +147,45 @@ export default function LifeGroup() {
             }
           />
         ))}
+        {/* Schedule Event */}
         <ButtonBig
           text="Schedule Event"
           textColor={theme.iconAccent}
           backgroundColor={theme.iconPrimary}
           onButtonPress={routeToScheduleEventPage}
         />
-        {lifeGroupMembers?.map((lifeGroupMember) =>
-          lifeGroupMember.id === user.id ? (
-            <PersonListItem
-              key={lifeGroupMember.id}
-              isUser={true}
-              name={lifeGroupMember.full_name ?? ""}
-              onProfilePress={() => routeToProfilePage(lifeGroupMember.id)}
-            />
-          ) : (
-            <PersonListItem
-              key={lifeGroupMember.id}
-              isUser={false}
-              name={lifeGroupMember.full_name ?? ""}
-              onProfilePress={() => {}}
-            />
-          ),
-        )}
+        {/* Life Group Members */}
+        <Text
+          style={[
+            styles.h2,
+            {
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+              color: theme.textH2,
+            },
+          ]}
+        >
+          Members
+        </Text>
+        <View style={styles.lifeGroupMembersContainer}>
+          {lifeGroupMembers?.map((lifeGroupMember) =>
+            lifeGroupMember.id === user.id ? (
+              <PersonListItem
+                key={lifeGroupMember.id}
+                isUser={true}
+                name={lifeGroupMember.full_name ?? ""}
+                onProfilePress={() => routeToProfilePage(lifeGroupMember.id)}
+              />
+            ) : (
+              <PersonListItem
+                key={lifeGroupMember.id}
+                isUser={false}
+                name={lifeGroupMember.full_name ?? ""}
+                onProfilePress={() => {}}
+              />
+            ),
+          )}
+        </View>
       </View>
     </ScrollView>
   );
@@ -195,5 +211,8 @@ const styles = StyleSheet.create({
   lessonCategoriesContainer: {
     gap: 16,
     paddingRight: 96,
+  },
+  lifeGroupMembersContainer: {
+    gap: 0,
   },
 });

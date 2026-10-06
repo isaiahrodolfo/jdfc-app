@@ -7,7 +7,7 @@ export type UpcomingEvent = {
   date: Date;
   location: string;
   repeatEveryDays: number | null;
-  event_type_id: number | null;
+  eventTypeId: number | null;
   lifeGroupId: number | null;
 };
 
@@ -42,7 +42,7 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
       date: event.timestamp ? new Date(event.timestamp) : new Date(),
       location: event.location ?? "",
       repeatEveryDays: event.repeat_every_days ?? null,
-      event_type_id: event.event_type_id,
+      eventTypeId: event.event_type_id,
       lifeGroupId: event.life_group_id,
     };
   });

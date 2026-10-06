@@ -138,7 +138,7 @@ export default function LifeGroup() {
         {upcomingLifeGroupEvents?.map((upcomingEvent) => (
           <EventCardSmall
             key={upcomingEvent.id}
-            eventTypeId={upcomingEvent.event_type_id ?? -1}
+            eventTypeId={upcomingEvent.eventTypeId ?? -1}
             title={"Life Group"}
             date={upcomingEvent.date}
             location={upcomingEvent.location}

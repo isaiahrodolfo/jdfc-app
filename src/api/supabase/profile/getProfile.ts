@@ -2,22 +2,26 @@ import { supabase } from "@/lib/supabase";
 import { Database } from "../../../../database.types";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 /**
- * Gets today's devotional
+ * Gets the user's profile
  *
  * @export
  * @async
- * @returns {Promise<Profile[]>}
+ * @returns {Promise<Profile | null>}
  */
-export async function getProfile(userId: string): Promise<Profile[]> {
+export async function getProfile(userId: string): Promise<Profile | null> {
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
-    .eq("id", userId);
+    .eq("id", userId)
+    .single();
 
-  if (error) throw Error;
+  if (error) {
+    console.log("Profile not found", error);
+    return null;
+  }
 
   return data;
 }

@@ -1,22 +1,27 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type PersonListItemProps = {
   imageUrl?: string;
   name: string;
   role?: string;
+  isUser: boolean;
   isChecked?: boolean;
+  onProfilePress: () => void;
 };
 
 export default function PersonListItem({
   imageUrl,
   name,
   role,
+  isUser,
   isChecked,
+  onProfilePress,
 }: PersonListItemProps) {
   const { theme, fonts } = useTheme();
+
   return (
-    <View
+    <Pressable
       style={[
         styles.container,
         {
@@ -24,19 +29,34 @@ export default function PersonListItem({
           borderBottomWidth: 1,
         },
       ]}
+      onPress={onProfilePress}
     >
       <View style={styles.leftSideContainer}>
         <View style={styles.image}>{/* TODO: Image goes here */}</View>
-        <Text
-          style={{
-            fontFamily: fonts.family,
-            fontSize: fonts.sizes.h5,
-            fontWeight: "bold",
-            color: theme.text,
-          }}
-        >
-          {name}
-        </Text>
+        <View style={styles.nameAndYouContainer}>
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h5,
+              fontWeight: "bold",
+              color: theme.text,
+            }}
+          >
+            {name}
+          </Text>
+          {isUser && (
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h5,
+                fontStyle: "italic",
+                color: theme.text,
+              }}
+            >
+              (YOU)
+            </Text>
+          )}
+        </View>
       </View>
       {role !== undefined && (
         <Text
@@ -61,7 +81,7 @@ export default function PersonListItem({
           }}
         ></View>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -85,5 +105,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 16,
+  },
+  nameAndYouContainer: {
+    flexDirection: "row",
+    gap: 8,
   },
 });

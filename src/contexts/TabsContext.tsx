@@ -22,10 +22,14 @@ import {
   UpcomingEvent,
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
+import { getLifeGroupMembers } from "@/api/supabase/lifeGroup/getLifeGroupMembers";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
-import { Profile, getProfile } from "@/api/supabase/profile/getProfile";
+import { getProfile } from "@/api/supabase/profile/getProfile";
 import { CheckboxData } from "@/components/progress_tracker/CheckboxesContainer";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import { Database } from "../../database.types";
+
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 export type DevotionLesson = {
   lessonId: number;
@@ -62,6 +66,7 @@ type TabsContextType = {
   devotionalsProgress: CheckboxData[];
   todaysDate: Date;
   profile: Profile | null;
+  lifeGroupMembers: Profile[] | null;
   refreshPage: () => Promise<void>;
 };
 
@@ -89,6 +94,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   >([]);
   const [todaysDate, setTodaysDate] = useState<Date>(getTodaysDate());
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [lifeGroupMembers, setLifeGroupMembers] = useState<Profile[] | null>(
+    null,
+  );
 
   const devotionalsByDate = new Map(
     devotionals.map((devotional) => [devotional.dateKey, devotional]),
@@ -116,20 +124,27 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       return result;
     };
 
+    const profileData = await timed("getProfile", getProfile(user.id));
+
     const [
       liveEventsData,
       recentLiveEventLessonsData,
       announcementsData,
       upcomingEventsData,
       devotionalsData,
-      profileData,
+      lifeGroupMembersData,
     ] = await Promise.all([
       timed("getLiveEvents", getLiveEvents()),
       timed("getRecentLiveEventLessons", getRecentLiveEventLessons()),
       timed("getAnnouncements", getAnnouncements()),
       timed("getUpcomingEvents", getUpcomingEvents()),
       timed("getDevotionals", getDevotionals()),
-      timed("getProfile", getProfile(user.id)),
+      timed(
+        "getLifeGroupMembers",
+        profileData?.life_group_id != null
+          ? getLifeGroupMembers(profileData.life_group_id)
+          : Promise.resolve([]),
+      ),
     ]);
 
     console.log(
@@ -140,7 +155,8 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     setRecentLiveEventLessons(recentLiveEventLessonsData);
     setAnnouncements(announcementsData);
     setUpcomingEvents(upcomingEventsData);
-    setProfile(profileData[0] ?? null);
+    setProfile(profileData ?? null);
+    setLifeGroupMembers(lifeGroupMembersData);
 
     const devotionalsStart = performance.now();
 
@@ -214,6 +230,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         devotionalsProgress,
         todaysDate,
         profile,
+        lifeGroupMembers,
         refreshPage,
       }}
     >

@@ -2,10 +2,10 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 
 type PersonInfoCardProps = {
-  phoneNumber: string;
-  birthday: string;
-  facebookLink: string;
-  instagramLink: string;
+  phoneNumber?: string;
+  birthday?: string;
+  facebookLink?: string;
+  instagramLink?: string;
 };
 
 type TextContainerProps = {
@@ -54,18 +54,37 @@ export default function PersonInfoCard({
   return (
     <View style={[styles.container, { backgroundColor: theme.primaryAlt }]}>
       <View style={styles.textColumns}>
-        <TextContainer icon="ph" fieldName="Phone" fieldContent={phoneNumber} />
-        <TextContainer icon="bc" fieldName="Birthday" fieldContent={birthday} />
-        <TextContainer
-          icon="fb"
-          fieldName="Facebook Link"
-          fieldContent={facebookLink}
-        />
-        <TextContainer
-          icon="in"
-          fieldName="Instagram Link"
-          fieldContent={instagramLink}
-        />
+        {phoneNumber && (
+          <TextContainer
+            icon="ph"
+            fieldName="Phone"
+            fieldContent={phoneNumber}
+          />
+        )}
+
+        {birthday && (
+          <TextContainer
+            icon="bc"
+            fieldName="Birthday"
+            fieldContent={birthday}
+          />
+        )}
+
+        {facebookLink && (
+          <TextContainer
+            icon="fb"
+            fieldName="Facebook Link"
+            fieldContent={facebookLink}
+          />
+        )}
+
+        {instagramLink && (
+          <TextContainer
+            icon="in"
+            fieldName="Instagram Link"
+            fieldContent={instagramLink}
+          />
+        )}
       </View>
     </View>
   );

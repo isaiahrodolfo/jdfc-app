@@ -20,24 +20,48 @@ export async function seedLifeGroupEvents(
     `
     UPDATE public.profiles
     SET
+      birthday = $1,
+      avatar_link = $2,
+      facebook_link = $3,
+      instagram_link = $4,
       is_life_group_admin = true,
-      life_group_role_id = $1,
-      life_group_id = $2
-    WHERE id = $3
+      life_group_role_id = $5,
+      life_group_id = $6
+    WHERE id = $7
   `,
-    [1, life_groups[0].id, dummyUserId1],
+    [
+      "2004-05-15",
+      "https://example.com/abc-avatar.jpg",
+      "https://facebook.com/abc",
+      "https://instagram.com/abc",
+      1,
+      life_groups[0].id,
+      dummyUserId1,
+    ],
   );
 
   await client.query(
     `
     UPDATE public.profiles
     SET
+      birthday = $1,
+      avatar_link = $2,
+      facebook_link = $3,
+      instagram_link = $4,
       is_life_group_admin = true,
-      life_group_role_id = $1,
-      life_group_id = $2
-    WHERE id = $3
+      life_group_role_id = $5,
+      life_group_id = $6
+    WHERE id = $7
   `,
-    [2, life_groups[1].id, dummyUserId2],
+    [
+      "2003-11-22",
+      "https://example.com/def-avatar.jpg",
+      "https://facebook.com/def",
+      "https://instagram.com/def",
+      2,
+      life_groups[1].id,
+      dummyUserId2,
+    ],
   );
 
   const { events } = await seed.events([

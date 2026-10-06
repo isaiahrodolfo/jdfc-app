@@ -1,7 +1,9 @@
 import ButtonBig from "@/components/buttons/ButtonBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
+import PersonListItem from "@/components/miscellaneous/PersonListItem";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuthContext } from "@/hooks/use-auth-context";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -13,8 +15,9 @@ import {
 } from "react-native";
 
 export default function LifeGroup() {
+  const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
-  const { profile, upcomingEvents, refreshPage } = useTabs();
+  const { profile, lifeGroupMembers, upcomingEvents, refreshPage } = useTabs();
 
   // Filter only the user's life group's events
   const upcomingLifeGroupEvents = upcomingEvents
@@ -70,6 +73,15 @@ export default function LifeGroup() {
       pathname: "/scheduleEvent",
       params: {
         name: "Life Group",
+      },
+    });
+  };
+
+  const routeToProfilePage = (userId: string) => {
+    router.push({
+      pathname: "/profile/[userId]",
+      params: {
+        userId,
       },
     });
   };
@@ -141,6 +153,23 @@ export default function LifeGroup() {
           backgroundColor={theme.iconPrimary}
           onButtonPress={routeToScheduleEventPage}
         />
+        {lifeGroupMembers?.map((lifeGroupMember) =>
+          lifeGroupMember.id === user.id ? (
+            <PersonListItem
+              key={lifeGroupMember.id}
+              isUser={true}
+              name={lifeGroupMember.full_name ?? ""}
+              onProfilePress={() => routeToProfilePage(lifeGroupMember.id)}
+            />
+          ) : (
+            <PersonListItem
+              key={lifeGroupMember.id}
+              isUser={false}
+              name={lifeGroupMember.full_name ?? ""}
+              onProfilePress={() => {}}
+            />
+          ),
+        )}
       </View>
     </ScrollView>
   );

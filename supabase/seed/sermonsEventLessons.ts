@@ -46,6 +46,7 @@ export async function seedSermonsEventLessons(
       title: "Sunday Service",
       timestamp: new Date("2026-10-25T10:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
+      event_type_id: 1,
       information: "Weekly church service",
     },
   ]);
@@ -82,6 +83,7 @@ export async function seedSermonsEventLessons(
       title: "Prayer Service",
       timestamp: new Date("2026-10-28T19:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
+      event_type_id: 2,
       information: "Weekly prayer service",
       repeat_every_days: 7,
     },
@@ -113,6 +115,7 @@ export async function seedSermonsEventLessons(
       title: "Sunday Service",
       timestamp: new Date("2026-09-27T10:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
+      event_type_id: 1,
       information: "Weekly church service",
     },
     {
@@ -120,6 +123,7 @@ export async function seedSermonsEventLessons(
       title: "Prayer Service",
       timestamp: new Date("2026-09-30T19:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
+      event_type_id: 2,
       information: "Weekly prayer service",
     },
     {
@@ -127,6 +131,7 @@ export async function seedSermonsEventLessons(
       title: "Prayer Service",
       timestamp: new Date("2026-09-02T19:00:00-07:00"),
       location: "Jesus' Disciples Family Church",
+      event_type_id: 2,
       information: "Weekly prayer service",
     },
   ]);

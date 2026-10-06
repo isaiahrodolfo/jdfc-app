@@ -70,12 +70,14 @@ export async function seedLifeGroupEvents(
       title: "Life Group",
       location: "House 1",
       timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
+      event_type_id: 6,
     },
     {
       life_group_id: life_groups[1].id,
       title: "Life Group",
       location: "House 2",
       timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
+      event_type_id: 6,
     },
   ]);
 

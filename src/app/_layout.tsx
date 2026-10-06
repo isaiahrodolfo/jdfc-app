@@ -77,6 +77,19 @@ export default function RootLayout() {
                 name="info/[link]"
                 options={{ headerShown: false }}
               />
+              <Stack.Screen
+                name="lesson/[lessonId]"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="profile"
+                options={{
+                  headerTitle: "",
+                  headerShown: true,
+                  headerBackButtonDisplayMode: "minimal", // Circle back button
+                  headerTransparent: true,
+                }}
+              />
             </Stack>
           ) : (
             <Auth />

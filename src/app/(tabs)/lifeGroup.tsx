@@ -178,7 +178,7 @@ export default function LifeGroup() {
                 isUser={true}
                 name={lifeGroupMember.full_name ?? ""}
                 role={getRole(lifeGroupMember.life_group_role_id ?? 0)}
-                onProfilePress={() => routeToProfilePage(lifeGroupMember.id)}
+                onProfilePress={() => {}}
               />
             ) : (
               <PersonListItem
@@ -186,7 +186,7 @@ export default function LifeGroup() {
                 isUser={false}
                 name={lifeGroupMember.full_name ?? ""}
                 role={getRole(lifeGroupMember.life_group_role_id ?? 0)}
-                onProfilePress={() => {}}
+                onProfilePress={() => routeToProfilePage(lifeGroupMember.id)}
               />
             ),
           )}

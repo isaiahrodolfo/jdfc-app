@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { Database } from "../../../../database.types";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 /**
  * Gets all series by track id

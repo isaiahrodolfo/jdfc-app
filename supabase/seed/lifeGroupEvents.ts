@@ -1,9 +1,11 @@
 import type { createSeedClient } from "@snaplet/seed";
+import { Client } from "pg";
 
 export async function seedLifeGroupEvents(
   seed: Awaited<ReturnType<typeof createSeedClient>>,
-  member1: string,
-  member2: string,
+  client: Client,
+  dummyUserId1: string,
+  dummyUserId2: string,
 ) {
   // Creating:
   // two life groups,
@@ -14,20 +16,29 @@ export async function seedLifeGroupEvents(
     { name: "Life Group Name 2" },
   ]);
 
-  const { life_group_members } = await seed.life_group_members([
-    {
-      is_admin: true,
-      life_group_id: life_groups[0].id,
-      life_group_role_id: 1,
-      user_id: member1,
-    },
-    {
-      is_admin: true,
-      life_group_id: life_groups[1].id,
-      life_group_role_id: 1,
-      user_id: member2,
-    },
-  ]);
+  await client.query(
+    `
+    UPDATE public.profiles
+    SET
+      is_life_group_admin = true,
+      life_group_role_id = $1,
+      life_group_id = $2
+    WHERE id = $3
+  `,
+    [1, life_groups[0].id, dummyUserId1],
+  );
+
+  await client.query(
+    `
+    UPDATE public.profiles
+    SET
+      is_life_group_admin = true,
+      life_group_role_id = $1,
+      life_group_id = $2
+    WHERE id = $3
+  `,
+    [2, life_groups[1].id, dummyUserId2],
+  );
 
   const { life_group_events } = await seed.life_group_events([
     {
@@ -51,12 +62,12 @@ export async function seedLifeGroupEvents(
   await seed.life_group_events_members([
     {
       event_id: life_group_events[0].event_id,
-      user_id: member1,
+      user_id: dummyUserId1,
       event_availability_id: 1,
     },
     {
       event_id: life_group_events[1].event_id,
-      user_id: member2,
+      user_id: dummyUserId2,
       event_availability_id: 2,
     },
   ]);

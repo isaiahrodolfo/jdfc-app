@@ -1,4 +1,6 @@
 import { createSeedClient } from "@snaplet/seed";
+import { createDbClient } from "./seed.config";
+
 import { seedInitialData } from "./supabase/seed/initialData";
 import { seedLessonsEventsLinks } from "./supabase/seed/lessonsEventsLinks";
 import { seedLifeClass } from "./supabase/seed/lifeClass";
@@ -6,24 +8,43 @@ import { seedLifeGroupEvents } from "./supabase/seed/lifeGroupEvents";
 import { seedSermonsEventLessons } from "./supabase/seed/sermonsEventLessons";
 
 async function main() {
-  // const dummyUser1 = "bb222d2c-5124-4782-852f-2b92142ed391";
-
   const seed = await createSeedClient();
+  const client = await createDbClient();
 
-  await seedInitialData(seed);
-  await seedSermonsEventLessons(seed);
-  await seedLessonsEventsLinks(seed);
+  try {
+    await seedInitialData(seed);
+    await seedSermonsEventLessons(seed);
+    await seedLessonsEventsLinks(seed);
 
-  const { users } = await seed.users((x) => x(3));
+    const { users } = await seed.users([
+      {
+        raw_user_meta_data: {
+          full_name: "ABC",
+        },
+      },
+      {
+        raw_user_meta_data: {
+          full_name: "DEF",
+        },
+      },
+      {
+        raw_user_meta_data: {
+          full_name: "GHI",
+        },
+      },
+    ]);
 
-  const dummyUserId1 = users[0].id;
-  const dummyUserId2 = users[1].id;
-  const dummyUserId3 = users[2].id;
+    await seedLifeClass(seed, users[0].id);
 
-  await seedLifeClass(seed, dummyUserId1);
-  await seedLifeGroupEvents(seed, dummyUserId2, dummyUserId3);
+    await seedLifeGroupEvents(seed, client, users[1].id, users[2].id);
 
-  console.log("Database seeded!");
+    console.log("Database seeded!");
+  } finally {
+    await client.end();
+  }
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

@@ -5,34 +5,32 @@ import { Client } from "pg";
 
 dotenv.config({ path: ".env.local" });
 
-// Remote
-// export default defineConfig({
-//   adapter: async () => {
-//     const client = new Client({
-//       host: "aws-0-us-west-2.pooler.supabase.com",
-//       port: 5432,
-//       user: "postgres.rkqwfymfrlqbpbvcozff",
-//       password: process.env.DATABASE_PASSWORD,
-//       database: "postgres",
-//     });
+const connectionConfig = {
+  host: "127.0.0.1",
+  port: 54322,
+  user: "postgres",
+  password: "postgres",
+  database: "postgres",
+};
 
-//     await client.connect();
-//     return new SeedPg(client);
-//   },
-// });
+/**
+ * Creates a separate PostgreSQL client for direct SQL queries.
+ */
+export async function createDbClient() {
+  const client = new Client(connectionConfig);
 
-// Local
+  await client.connect();
+
+  return client;
+}
+
 export default defineConfig({
   adapter: async () => {
-    const client = new Client({
-      host: "127.0.0.1",
-      port: 54322,
-      user: "postgres",
-      password: "postgres",
-      database: "postgres",
-    });
+    // Snaplet gets its own connection.
+    const client = new Client(connectionConfig);
 
     await client.connect();
+
     return new SeedPg(client);
   },
 });

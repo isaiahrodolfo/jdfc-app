@@ -251,31 +251,6 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
-                },"life_group_members": {
-                  Row: {
-                    "created_at": string,"id": number,"is_admin": boolean | null,"life_group_id": number | null,"life_group_role_id": number | null,"user_id": string | null
-                  }
-                  Insert: {
-                    "created_at"?: string,"id"?: number,"is_admin"?: boolean | null,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"user_id"?: string | null
-                  }
-                  Update: {
-                    "created_at"?: string,"id"?: number,"is_admin"?: boolean | null,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"user_id"?: string | null
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "life_group_members_life_group_id_fkey"
-      columns: ["life_group_id"]
-isOneToOne: false
-      referencedRelation: "life_groups"
-      referencedColumns: ["id"]
-    },{
-      foreignKeyName: "life_group_members_life_group_role_id_fkey"
-      columns: ["life_group_role_id"]
-isOneToOne: false
-      referencedRelation: "life_group_roles"
-      referencedColumns: ["id"]
-    }
-                  ]
                 },"life_group_roles": {
                   Row: {
                     "created_at": string,"id": number,"name": string | null
@@ -304,16 +279,28 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "avatar_link": string | null,"birthday": string | null,"facebook_link": string | null,"full_name": string | null,"id": string,"instagram_link": string | null,"track_id": number | null,"updated_at": string | null
+                    "avatar_link": string | null,"birthday": string | null,"facebook_link": string | null,"full_name": string | null,"id": string,"instagram_link": string | null,"is_life_group_admin": boolean,"life_group_id": number | null,"life_group_role_id": number | null,"track_id": number | null,"updated_at": string | null
                   }
                   Insert: {
-                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"full_name"?: string | null,"id": string,"instagram_link"?: string | null,"track_id"?: number | null,"updated_at"?: string | null
+                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"full_name"?: string | null,"id": string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
                   }
                   Update: {
-                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"full_name"?: string | null,"id"?: string,"instagram_link"?: string | null,"track_id"?: number | null,"updated_at"?: string | null
+                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"full_name"?: string | null,"id"?: string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
                   }
                   Relationships: [
                     {
+      foreignKeyName: "profiles_life_group_id_fkey"
+      columns: ["life_group_id"]
+isOneToOne: false
+      referencedRelation: "life_groups"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "profiles_life_group_role_id_fkey"
+      columns: ["life_group_role_id"]
+isOneToOne: false
+      referencedRelation: "life_group_roles"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "profiles_track_id_fkey"
       columns: ["track_id"]
 isOneToOne: false

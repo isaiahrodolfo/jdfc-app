@@ -95,13 +95,13 @@ isOneToOne: false
                   ]
                 },"events": {
                   Row: {
-                    "announcement_end": string | null,"announcement_start": string | null,"created_at": string,"id": number,"information": string | null,"life_group_id": number | null,"location": string | null,"repeat_every_days": number | null,"timestamp": string | null,"title": string | null
+                    "announcement_end": string | null,"announcement_start": string | null,"created_at": string,"event_type_id": number | null,"id": number,"information": string | null,"is_onilne": boolean,"life_group_id": number | null,"location": string | null,"repeat_every_days": number | null,"timestamp": string | null,"title": string | null
                   }
                   Insert: {
-                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
+                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"event_type_id"?: number | null,"id"?: number,"information"?: string | null,"is_onilne"?: boolean,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
                   }
                   Update: {
-                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
+                    "announcement_end"?: string | null,"announcement_start"?: string | null,"created_at"?: string,"event_type_id"?: number | null,"id"?: number,"information"?: string | null,"is_onilne"?: boolean,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp"?: string | null,"title"?: string | null
                   }
                   Relationships: [
                     {

@@ -23,6 +23,7 @@ import {
   getUpcomingEvents,
 } from "@/api/supabase/events/getUpcomingEvents";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
+import { Profile, getProfile } from "@/api/supabase/profile/getProfile";
 import { CheckboxData } from "@/components/progress_tracker/CheckboxesContainer";
 import { useAuthContext } from "@/hooks/use-auth-context";
 
@@ -60,6 +61,7 @@ type TabsContextType = {
   todaysDevotional: DevotionLesson | null;
   devotionalsProgress: CheckboxData[];
   todaysDate: Date;
+  profile: Profile | null;
   refreshPage: () => Promise<void>;
 };
 
@@ -86,6 +88,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     CheckboxData[]
   >([]);
   const [todaysDate, setTodaysDate] = useState<Date>(getTodaysDate());
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   const devotionalsByDate = new Map(
     devotionals.map((devotional) => [devotional.dateKey, devotional]),
@@ -107,17 +110,20 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       announcementsData,
       upcomingEventsData,
       devotionalsData,
+      profileData,
     ] = await Promise.all([
       getLiveEvents(),
       getRecentLiveEventLessons(),
       getAnnouncements(),
       getUpcomingEvents(),
       getDevotionals(),
+      getProfile(user.id),
     ]);
     setLiveEvents(liveEventsData);
     setRecentLiveEventLessons(recentLiveEventLessonsData);
     setAnnouncements(announcementsData);
     setUpcomingEvents(upcomingEventsData);
+    setProfile(profileData[0] ?? null);
 
     // Make sure the devotionals can be found within Supabase
     const devotionalsWithIds = await Promise.all(
@@ -166,6 +172,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         todaysDevotional,
         devotionalsProgress,
         todaysDate,
+        profile,
         refreshPage,
       }}
     >

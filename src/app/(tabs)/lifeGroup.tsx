@@ -13,11 +13,13 @@ import {
 
 export default function LifeGroup() {
   const { theme, fonts } = useTheme();
-  const { upcomingEvents, refreshPage } = useTabs();
+  const { profile, upcomingEvents, refreshPage } = useTabs();
 
   const upcomingLifeGroupEvents = upcomingEvents
     .filter((upcomingEvent) => upcomingEvent.title === "Life Group")
-    .filter((lifeGroupEvent) => lifeGroupEvent.lifeGroupId);
+    .filter(
+      (lifeGroupEvent) => lifeGroupEvent.lifeGroupId === profile?.life_group_id,
+    );
 
   const [refreshing, setRefreshing] = useState(false);
 

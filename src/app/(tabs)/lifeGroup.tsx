@@ -72,7 +72,9 @@ export default function LifeGroup() {
     router.push({
       pathname: "/scheduleEvent",
       params: {
-        name: "Life Group",
+        title: "Life Group",
+        eventId: "",
+        eventTypeIndex: 5,
       },
     });
   };

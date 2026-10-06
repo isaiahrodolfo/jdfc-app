@@ -5,6 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import DividingLine from "./DividingLine";
 
 type DropdownSmallProps = {
+  isEditable?: boolean;
   selections: string[];
   isOpen: boolean;
   indexSelected: number;
@@ -13,12 +14,14 @@ type DropdownSmallProps = {
 };
 
 export default function DropdownSmall({
+  isEditable = true,
   selections,
   isOpen,
   indexSelected,
   onOpenPress,
   onClosePress,
 }: DropdownSmallProps) {
+  const nonEditableOpacity = 0.8;
   const { theme, fonts } = useTheme();
 
   return (
@@ -29,6 +32,7 @@ export default function DropdownSmall({
           backgroundColor: theme.accentGray,
           borderColor: theme.primary,
           borderWidth: 1,
+          opacity: isEditable ? 1 : nonEditableOpacity,
         },
       ]}
     >
@@ -50,7 +54,13 @@ export default function DropdownSmall({
                   {selection}
                 </Text>
                 <View
-                  style={[styles.arrow, { transform: [{ rotate: "180deg" }] }]}
+                  style={[
+                    styles.arrow,
+                    {
+                      transform: [{ rotate: "180deg" }],
+                      opacity: isEditable ? 1 : 0,
+                    },
+                  ]}
                 >
                   <ChevronDown />
                 </View>
@@ -78,7 +88,12 @@ export default function DropdownSmall({
           </Pressable>
         ))
       ) : (
-        <Pressable onPress={onOpenPress} style={styles.firstItemContainer}>
+        <Pressable
+          onPress={() => {
+            if (isEditable) onOpenPress;
+          }}
+          style={styles.firstItemContainer}
+        >
           <Text
             style={[
               styles.item,
@@ -86,12 +101,13 @@ export default function DropdownSmall({
                 fontFamily: fonts.family,
                 fontSize: fonts.sizes.h6,
                 color: theme.text,
+                opacity: isEditable ? 1 : nonEditableOpacity,
               },
             ]}
           >
             {selections[indexSelected]}
           </Text>
-          <View style={styles.arrow}>
+          <View style={[styles.arrow, { opacity: isEditable ? 1 : 0 }]}>
             <ChevronDown />
           </View>
         </Pressable>

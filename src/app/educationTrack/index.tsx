@@ -97,11 +97,6 @@ export default function Index() {
     });
   };
 
-  const handleClosePress = (selectedIndex: number) => {
-    setSelectedSeriesIndex(selectedIndex);
-    setDropdownIsOpen(false);
-  };
-
   const handleCheckboxPress = async (lessonId: number) => {
     const userId = user?.id;
 
@@ -239,7 +234,10 @@ export default function Index() {
           isOpen={dropdownIsOpen}
           indexSelected={selectedSeriesIndex}
           onOpenPress={() => setDropdownIsOpen(true)}
-          onClosePress={handleClosePress}
+          onClosePress={(selectedIndex: number) => {
+            setSelectedSeriesIndex(selectedIndex);
+            setDropdownIsOpen(false);
+          }}
         />
 
         <View style={styles.lessonsListContainer}>

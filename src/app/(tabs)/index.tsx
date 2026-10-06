@@ -29,6 +29,7 @@ export default function Home() {
     devotionals,
     setDevotionals,
     todaysDate,
+    profile,
     refreshPage,
   } = useTabs();
 
@@ -263,23 +264,30 @@ export default function Home() {
           </Text>
         )}
 
-        {upcomingEvents.map((upcomingEvent) => (
-          <EventCardSmall
-            key={upcomingEvent.id}
-            title={upcomingEvent.title}
-            location={upcomingEvent.location}
-            date={upcomingEvent.date}
-            onInfoPress={() =>
-              handleInfoPress({
-                title: upcomingEvent.title,
-                timestamp: upcomingEvent.date,
-                location: upcomingEvent.location,
-                information: upcomingEvent.information,
-                category: "Event",
-              })
-            }
-          />
-        ))}
+        {upcomingEvents
+          .filter(
+            (upcomingEvent) =>
+              (upcomingEvent.title === "Life Group" &&
+                upcomingEvent.lifeGroupId === profile?.life_group_id) ||
+              upcomingEvent.lifeGroupId === null,
+          )
+          .map((upcomingEvent) => (
+            <EventCardSmall
+              key={upcomingEvent.id}
+              title={upcomingEvent.title}
+              location={upcomingEvent.location}
+              date={upcomingEvent.date}
+              onInfoPress={() =>
+                handleInfoPress({
+                  title: upcomingEvent.title,
+                  timestamp: upcomingEvent.date,
+                  location: upcomingEvent.location,
+                  information: upcomingEvent.information,
+                  category: "Event",
+                })
+              }
+            />
+          ))}
       </View>
     </ScrollView>
   );

@@ -203,13 +203,13 @@ isOneToOne: false
                   ]
                 },"life_group_events": {
                   Row: {
-                    "created_at": string,"creator_user_id": string | null,"event_id": number | null,"id": number
+                    "created_at": string,"event_id": number,"id": number,"life_group_id": number
                   }
                   Insert: {
-                    "created_at"?: string,"creator_user_id"?: string | null,"event_id"?: number | null,"id"?: number
+                    "created_at"?: string,"event_id": number,"id"?: number,"life_group_id": number
                   }
                   Update: {
-                    "created_at"?: string,"creator_user_id"?: string | null,"event_id"?: number | null,"id"?: number
+                    "created_at"?: string,"event_id"?: number,"id"?: number,"life_group_id"?: number
                   }
                   Relationships: [
                     {
@@ -218,17 +218,23 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "events"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "life_group_events_life_group_id_fkey"
+      columns: ["life_group_id"]
+isOneToOne: false
+      referencedRelation: "life_groups"
+      referencedColumns: ["id"]
     }
                   ]
                 },"life_group_events_members": {
                   Row: {
-                    "created_at": string,"event_availability_id": number | null,"id": number,"life_group_event_id": number | null,"user_id": string | null
+                    "created_at": string,"event_availability_id": number | null,"event_id": number | null,"id": number,"user_id": string | null
                   }
                   Insert: {
-                    "created_at"?: string,"event_availability_id"?: number | null,"id"?: number,"life_group_event_id"?: number | null,"user_id"?: string | null
+                    "created_at"?: string,"event_availability_id"?: number | null,"event_id"?: number | null,"id"?: number,"user_id"?: string | null
                   }
                   Update: {
-                    "created_at"?: string,"event_availability_id"?: number | null,"id"?: number,"life_group_event_id"?: number | null,"user_id"?: string | null
+                    "created_at"?: string,"event_availability_id"?: number | null,"event_id"?: number | null,"id"?: number,"user_id"?: string | null
                   }
                   Relationships: [
                     {
@@ -238,10 +244,10 @@ isOneToOne: false
       referencedRelation: "event_availabilities"
       referencedColumns: ["id"]
     },{
-      foreignKeyName: "life_group_events_members_life_group_event_id_fkey"
-      columns: ["life_group_event_id"]
+      foreignKeyName: "life_group_events_members_event_id_fkey"
+      columns: ["event_id"]
 isOneToOne: false
-      referencedRelation: "life_group_events"
+      referencedRelation: "events"
       referencedColumns: ["id"]
     }
                   ]

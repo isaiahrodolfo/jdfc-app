@@ -18,8 +18,8 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
       timestamp,
       location,
       repeat_every_days,
-      lessons_events!inner (
-        lessons!inner (
+      lessons_events (
+        lessons (
           is_user_completable
         )
       )

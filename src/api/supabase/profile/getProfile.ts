@@ -14,7 +14,7 @@ type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export async function getProfile(userId: string): Promise<Profile | null> {
   const { data, error } = await supabase
     .from("profiles")
-    .select("*")
+    .select()
     .eq("id", userId)
     .single();
 

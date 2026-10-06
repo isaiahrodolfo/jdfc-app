@@ -1,8 +1,9 @@
 import { getProfile } from "@/api/supabase/profile/getProfile";
+import PersonInfoCard from "@/components/cards/PersonInfoCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Database } from "../../../database.types";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
@@ -50,8 +51,25 @@ export default function ProfilePreviewPage() {
         },
       ]}
     >
-      <Text>ProfilePreviewPage</Text>
-      <Text>{profile.full_name}</Text>
+      <Image
+        style={[styles.avatarImage, { backgroundColor: theme.secondary }]}
+        source={{ uri: profile.avatar_link ?? "" }}
+      />
+      <Text
+        style={{
+          fontFamily: fonts.family,
+          fontSize: fonts.sizes.h3,
+          color: theme.text,
+          fontWeight: "bold",
+        }}
+      >
+        {profile.full_name}
+      </Text>
+      <PersonInfoCard
+        birthday={profile.birthday ?? ""}
+        facebookLink={profile.facebook_link ?? ""}
+        instagramLink={profile.instagram_link ?? ""}
+      />
     </View>
   );
 }
@@ -60,6 +78,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: 128,
+    paddingTop: (128 + 196) / 2,
+    gap: 36,
+  },
+  avatarImage: {
+    width: 196,
+    height: 196,
+    borderRadius: 196 / 2,
   },
 });

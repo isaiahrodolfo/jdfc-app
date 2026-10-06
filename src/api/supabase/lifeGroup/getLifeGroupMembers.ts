@@ -17,6 +17,7 @@ export async function getLifeGroupMembers(
   const { data, error } = await supabase
     .from("profiles")
     .select()
+    .order("life_group_role_id")
     .eq("life_group_id", lifeGroupId);
 
   if (error || !data) {

@@ -56,13 +56,11 @@ export default function Devotion() {
 
     const pendingUpdate = pendingCompletionUpdates.current.get(lessonId);
     const newIsChecked = !(pendingUpdate?.desired ?? devotional.isCompleted);
-    const update =
-      pendingUpdate ??
-      {
-        desired: newIsChecked,
-        persisted: devotional.isCompleted,
-        revision: 0,
-      };
+    const update = pendingUpdate ?? {
+      desired: newIsChecked,
+      persisted: devotional.isCompleted,
+      revision: 0,
+    };
 
     update.desired = newIsChecked;
     update.revision += 1;
@@ -140,6 +138,7 @@ export default function Devotion() {
         </Text>
         <ProgressTrackerCard
           colorName="yellow"
+          checkmarkColor={theme.primary}
           progressTrackerData={[
             {
               checkboxesData: devotionalsProgress,

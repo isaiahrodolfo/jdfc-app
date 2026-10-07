@@ -1,5 +1,5 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { ColorValue, StyleSheet, Text, View } from "react-native";
 import DividingLine from "../miscellaneous/DividingLine";
 import { CheckboxData } from "./CheckboxesContainer";
 import ProgressTracker from "./ProgressTracker";
@@ -11,11 +11,13 @@ export type ProgressTrackerData = {
 
 type ProgressTrackerCardProps = {
   colorName: "yellow" | "green" | "blue" | "purple";
+  checkmarkColor: ColorValue;
   progressTrackerData: ProgressTrackerData[];
 };
 
 export default function ProgressTrackerCard({
   colorName,
+  checkmarkColor,
   progressTrackerData,
 }: ProgressTrackerCardProps) {
   const { theme, fonts } = useTheme();
@@ -39,6 +41,7 @@ export default function ProgressTrackerCard({
           <ProgressTracker
             key={index}
             colorName={colorName}
+            checkmarkColor={checkmarkColor}
             checkboxesData={data.checkboxesData}
             subtitles={data.subtitles}
           />

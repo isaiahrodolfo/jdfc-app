@@ -1,13 +1,14 @@
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
-import { Pressable, StyleSheet, View } from "react-native";
-import CheckmarkIndigo1 from "../../../assets/icons/CheckmarkIndigo1.svg";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6";
+import { ColorValue, Pressable, StyleSheet, View } from "react-native";
 
 type CheckboxProps = {
   isChecked: boolean;
   colorName: AccentColor;
   type: "Primary" | "Secondary";
   isCurrent: boolean;
+  checkmarkColor: ColorValue;
   onCheckboxPress: () => void;
 };
 
@@ -16,6 +17,7 @@ export default function Checkbox({
   colorName,
   type,
   isCurrent = false,
+  checkmarkColor,
   onCheckboxPress,
 }: CheckboxProps) {
   const { theme } = useTheme();
@@ -42,7 +44,16 @@ export default function Checkbox({
           },
         ]}
       >
-        <View>{isChecked ? <CheckmarkIndigo1 /> : <View></View>}</View>
+        <View>
+          {isChecked && (
+            <FontAwesome6
+              name="check"
+              color={checkmarkColor}
+              size={20}
+              iconStyle="solid"
+            />
+          )}
+        </View>
       </View>
     </Pressable>
   );

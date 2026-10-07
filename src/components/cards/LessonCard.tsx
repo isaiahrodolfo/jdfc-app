@@ -79,6 +79,7 @@ export default function LessonCard({
           >
             <Checkbox
               colorName={colorName}
+              checkmarkColor={theme.primary}
               type="Secondary"
               isChecked={isCompleted}
               isCurrent={false}

@@ -1,16 +1,18 @@
 import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
-import { StyleSheet, Text, View } from "react-native";
+import { ColorValue, StyleSheet, Text, View } from "react-native";
 import CheckboxesContainer, { CheckboxData } from "./CheckboxesContainer";
 
 type ProgressTrackerProps = {
   colorName: AccentColor;
+  checkmarkColor: ColorValue;
   checkboxesData: CheckboxData[];
   subtitles?: string[];
 };
 
 export default function ProgressTracker({
   colorName,
+  checkmarkColor,
   checkboxesData,
   subtitles,
 }: ProgressTrackerProps) {
@@ -20,6 +22,7 @@ export default function ProgressTracker({
     <View style={styles.container}>
       <CheckboxesContainer
         colorName={colorName}
+        checkmarkColor={checkmarkColor}
         checkboxesData={checkboxesData}
       />
       {subtitles && (

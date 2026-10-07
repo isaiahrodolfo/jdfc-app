@@ -1,5 +1,5 @@
 import { AccentColor } from "@/constants/theme";
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import Checkbox from "./Checkbox";
 
 export type CheckboxData = {
@@ -11,25 +11,25 @@ export type CheckboxData = {
 
 type CheckboxesContainerProps = {
   colorName: AccentColor;
+  checkmarkColor: ColorValue;
   checkboxesData: CheckboxData[];
 };
 
 export default function CheckboxesContainer({
   colorName,
+  checkmarkColor,
   checkboxesData,
 }: CheckboxesContainerProps) {
   return (
     <View style={styles.container}>
       {checkboxesData.map((checkbox) => (
-        <View
-          key={checkbox.dateKey ?? checkbox.date}
-          style={styles.gridItem}
-        >
+        <View key={checkbox.dateKey ?? checkbox.date} style={styles.gridItem}>
           <Checkbox
             isChecked={checkbox.isChecked}
             colorName={colorName}
             type="Primary"
             isCurrent={checkbox.isCurrent}
+            checkmarkColor={checkmarkColor}
             onCheckboxPress={() => {}}
           />
         </View>

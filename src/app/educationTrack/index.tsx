@@ -221,6 +221,7 @@ export default function Index() {
 
         <ProgressTrackerCard
           colorName={accentColor}
+          checkmarkColor={theme.primary}
           progressTrackerData={progressTrackerData}
         />
 

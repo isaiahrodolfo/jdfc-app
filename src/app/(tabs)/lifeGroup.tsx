@@ -158,12 +158,14 @@ export default function LifeGroup() {
           />
         ))}
         {/* Schedule Event */}
-        <ButtonBig
-          text="Schedule Event"
-          textColor={theme.iconAccent}
-          backgroundColor={theme.iconPrimary}
-          onButtonPress={routeToScheduleEventPage}
-        />
+        {profile?.is_life_group_admin && (
+          <ButtonBig
+            text="Schedule Event"
+            textColor={theme.iconAccent}
+            backgroundColor={theme.iconPrimary}
+            onButtonPress={routeToScheduleEventPage}
+          />
+        )}
         {/* Life Group Members */}
         <Text
           style={[

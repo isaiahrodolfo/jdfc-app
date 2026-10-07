@@ -155,6 +155,7 @@ export default function ScheduleEventPage() {
                 value={eventName}
                 placeholderText={title.toString()}
                 autoComplete="off"
+                fontFamily={fonts.family}
                 textColor={theme.text}
                 placeholderTextColor={theme.iconSecondary}
                 borderColor={theme.textAlt}
@@ -210,6 +211,7 @@ export default function ScheduleEventPage() {
                 value={location}
                 placeholderText="Location"
                 autoComplete="off"
+                fontFamily={fonts.family}
                 textColor={theme.text}
                 placeholderTextColor={theme.iconSecondary}
                 borderColor={theme.textAlt}
@@ -261,6 +263,7 @@ export default function ScheduleEventPage() {
                 value={information}
                 placeholderText="Information"
                 autoComplete="off"
+                fontFamily={fonts.family}
                 textColor={theme.text}
                 placeholderTextColor={theme.iconSecondary}
                 borderColor={theme.textAlt}

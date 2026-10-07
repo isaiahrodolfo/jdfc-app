@@ -97,6 +97,7 @@ export default function Lessons() {
           value={searchQuery}
           placeholderText="Search..."
           autoComplete="off"
+          fontFamily={fonts.family}
           textColor={theme.text}
           borderColor={theme.iconSecondary}
           placeholderTextColor={theme.iconSecondary}

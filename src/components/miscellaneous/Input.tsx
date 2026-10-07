@@ -14,6 +14,7 @@ type InputProps = {
   value: string;
   placeholderText: string;
   autoComplete: TextInputProps["autoComplete"];
+  fontFamily: string;
   textColor: ColorValue;
   placeholderTextColor: ColorValue;
   borderColor: ColorValue;
@@ -27,6 +28,7 @@ export default function Input({
   value,
   placeholderText,
   autoComplete,
+  fontFamily,
   textColor,
   placeholderTextColor,
   borderColor,
@@ -45,6 +47,7 @@ export default function Input({
         style={[
           styles.input,
           {
+            fontFamily: fontFamily,
             height: multiline ? inputHeight : INPUT_HEIGHT,
             color: textColor,
             borderWidth: 1,

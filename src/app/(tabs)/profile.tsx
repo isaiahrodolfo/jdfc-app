@@ -189,6 +189,7 @@ export default function Profile() {
               value={fullName}
               placeholderText="Full Name"
               autoComplete="name"
+              fontFamily={fonts.family}
               textColor={theme.textAlt}
               placeholderTextColor={theme.textAlt}
               borderColor={theme.textAlt}
@@ -233,6 +234,7 @@ export default function Profile() {
               value={facebookLink}
               placeholderText="facebook.com/your-profile"
               autoComplete="off"
+              fontFamily={fonts.family}
               textColor={theme.textAlt}
               placeholderTextColor={theme.iconSecondary}
               borderColor={theme.textAlt}
@@ -255,6 +257,7 @@ export default function Profile() {
               value={instagramLink}
               placeholderText="instagram.com/your-profile"
               autoComplete="off"
+              fontFamily={fonts.family}
               textColor={theme.textAlt}
               placeholderTextColor={theme.iconSecondary}
               borderColor={theme.textAlt}

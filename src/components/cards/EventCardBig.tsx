@@ -2,8 +2,8 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { Alert, Linking, StyleSheet, Text, View } from "react-native";
 import ButtonSmall from "../buttons/ButtonSmall";
 
-import NotesIcon from "@/assets/icons/NotesIndigo3.svg";
-import PlayIcon from "@/assets/icons/PlayIndigo3.svg";
+import { FontAwesome6 } from "@react-native-vector-icons/fontawesome6";
+import { Lucide } from "@react-native-vector-icons/lucide";
 
 type EventCardBigProps = {
   title: string;
@@ -83,11 +83,24 @@ export default function EventCardBig({
           {livestreamLink && (
             <ButtonSmall
               text={"Watch"}
-              icon={PlayIcon}
+              icon={
+                <FontAwesome6
+                  name="play"
+                  color={theme.iconAccent}
+                  size={18}
+                  iconStyle="solid"
+                />
+              }
               onPress={handleWatchButtonPress}
             />
           )}
-          <ButtonSmall text={"Notes"} icon={NotesIcon} onPress={() => {}} />
+          <ButtonSmall
+            text={"Notes"}
+            icon={
+              <Lucide name="notebook-pen" color={theme.iconAccent} size={18} />
+            }
+            onPress={() => {}}
+          />
         </View>
       </View>
     </View>

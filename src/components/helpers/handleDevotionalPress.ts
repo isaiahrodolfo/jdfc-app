@@ -1,7 +1,11 @@
 import { Devotional } from "@/api/supabase/our_daily_bread/odb_api";
 import { router } from "expo-router";
 
-export const handleDevotionalPress = (devotional: Devotional) => {
+type DevotionalWithLessonId = Devotional & { lessonId: number };
+
+export const handleDevotionalPress = (
+  devotional: DevotionalWithLessonId,
+) => {
   // Navigate to a detailed view
   router.push({
     pathname: "/devotional/[link]",
@@ -9,6 +13,7 @@ export const handleDevotionalPress = (devotional: Devotional) => {
       link: devotional.odbUrl,
       title: devotional.title,
       dateKey: devotional.dateKey,
+      lessonId: devotional.lessonId,
     },
   });
 };

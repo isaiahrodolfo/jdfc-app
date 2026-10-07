@@ -32,9 +32,7 @@ export default function DevotionPage() {
   const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
   const { link, title, dateKey } = useLocalSearchParams();
-  const { devotionals } = useTabs();
-
-  const [isLoading, setIsLoading] = useState(false);
+  const { devotionals, isLoadingTabsData } = useTabs();
 
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
   const [notesHtml, setNotesHtml] = useState("");
@@ -67,7 +65,7 @@ export default function DevotionPage() {
   }, []);
 
   useEffect(() => {
-    if (!user || !link) return;
+    if (!user || !link || !devotional) return;
 
     let isActive = true;
     getNotes(user.id, link.toString(), "devotional")
@@ -76,23 +74,55 @@ export default function DevotionPage() {
       })
       .catch((error: unknown) => {
         console.error("Error loading devotional notes:", error);
+        toastiva.error("Cannot find notes for devotion");
       });
 
     return () => {
       isActive = false;
     };
-  }, [link, user]);
+  }, [devotional, link, user]);
+
+  if (isLoadingTabsData) {
+    return (
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme.primary,
+          },
+        ]}
+      />
+    );
+  }
 
   if (!devotional) {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: theme.primary,
-        }}
-      />
+      <View style={[styles.errorContainer, { backgroundColor: theme.primary }]}>
+        <Text
+          accessibilityRole="alert"
+          style={[
+            styles.errorTitle,
+            {
+              color: theme.textH1,
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h2,
+            },
+          ]}
+        >
+          Devotion unavailable
+        </Text>
+
+        <Text
+          style={{
+            color: theme.text,
+            fontFamily: fonts.family,
+            fontSize: fonts.sizes.h5,
+            textAlign: "center",
+          }}
+        >
+          We couldn't find a devotion for this date. Please try again later.
+        </Text>
+      </View>
     );
   }
 
@@ -104,20 +134,16 @@ export default function DevotionPage() {
       return;
     }
 
-    setIsLoading(true);
-
     try {
       await noteEditorRef.current?.saveAndClose();
 
-      toastiva.success("Notes saved");
+      toastiva.success("Successfully saved notes");
 
       router.back();
     } catch (error) {
       console.error("Error saving devotional notes:", error);
 
       toastiva.error("Failed to save notes");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -433,6 +459,19 @@ export default function DevotionPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 32,
+    gap: 12,
+  },
+
+  errorTitle: {
+    fontWeight: "bold",
+    textAlign: "center",
   },
 
   scrollView: {

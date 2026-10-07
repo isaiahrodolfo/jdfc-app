@@ -41,6 +41,19 @@ This command will move the starter code to the **app-example** directory and cre
 - If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
 - Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
 
+### Devotional Jest integration tests
+
+The devotional tests connect to a local Supabase instance. Start it, apply the local seed data, and create `.env.test.local` from `.env.test.example`. Set its publishable key to the local anon or publishable key shown by `npx supabase status -o env`. The seeded `devotional-test@jdfc.local` user and today's devotional are test-only fixtures.
+
+```bash
+npx supabase start
+npx supabase db reset
+cp .env.test.example .env.test.local
+npm test -- src/__tests__/devotional/devotional.test.tsx
+```
+
+The Jest setup rejects non-local Supabase URLs so integration tests cannot modify a remote project.
+
 ## Learn more
 
 To learn more about developing your project with Expo, look at the following resources:

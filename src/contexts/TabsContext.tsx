@@ -68,6 +68,7 @@ type TabsContextType = {
   todaysDate: Date;
   profile: Profile | null;
   lifeGroupMembers: Profile[] | null;
+  isLoadingTabsData: boolean;
   refreshPage: () => Promise<void>;
 };
 
@@ -99,6 +100,8 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     null,
   );
 
+  const [isLoadingTabsData, setIsLoadingTabsData] = useState(true);
+
   const devotionalsByDate = new Map(
     devotionals.map((devotional) => [devotional.dateKey, devotional]),
   );
@@ -113,107 +116,116 @@ export function TabsProvider({ children }: { children: ReactNode }) {
   });
 
   const refreshPage = async () => {
-    const start = performance.now();
+    setIsLoadingTabsData(true);
 
-    const timed = async <T,>(name: string, promise: Promise<T>): Promise<T> => {
+    try {
       const start = performance.now();
 
-      const result = await promise;
-
-      console.log(`${name}: ${(performance.now() - start).toFixed(0)}ms`);
-
-      return result;
-    };
-
-    const profileData = await timed("getProfile", getProfile(user.id));
-
-    const [
-      liveEventsData,
-      recentLiveEventLessonsData,
-      announcementsData,
-      upcomingEventsData,
-      devotionalsData,
-      lifeGroupMembersData,
-    ] = await Promise.all([
-      timed("getLiveEvents", getLiveEvents()),
-      timed("getRecentLiveEventLessons", getRecentLiveEventLessons()),
-      timed("getAnnouncements", getAnnouncements()),
-      timed("getUpcomingEvents", getUpcomingEvents()),
-      timed("getDevotionals", getDevotionals()),
-      timed(
-        "getLifeGroupMembers",
-        profileData?.life_group_id != null
-          ? getLifeGroupMembers(profileData.life_group_id)
-          : Promise.resolve([]),
-      ),
-    ]);
-
-    console.log(
-      `Initial Promise.all: ${(performance.now() - start).toFixed(0)}ms`,
-    );
-
-    setLiveEvents(liveEventsData);
-    setRecentLiveEventLessons(recentLiveEventLessonsData);
-    setAnnouncements(announcementsData);
-    setUpcomingEvents(upcomingEventsData);
-    setProfile(profileData ?? null);
-    setLifeGroupMembers(lifeGroupMembersData);
-
-    const devotionalsStart = performance.now();
-
-    const devotionalsWithIds = await Promise.all(
-      devotionalsData.map(async (devotional) => {
+      const timed = async <T,>(
+        name: string,
+        promise: Promise<T>,
+      ): Promise<T> => {
         const start = performance.now();
 
-        const { lessonId, isCompleted } = await findDevotional(
-          devotional.odbUrl,
-          devotional.title,
-          devotional.dateKey,
-          user.id,
-        );
+        const result = await promise;
 
-        console.log(
-          `findDevotional ${devotional.dateKey}: ${(performance.now() - start).toFixed(0)}ms`,
-        );
+        console.log(`${name}: ${(performance.now() - start).toFixed(0)}ms`);
 
-        return {
-          ...devotional,
-          lessonId,
-          isCompleted,
-        };
-      }),
-    );
+        return result;
+      };
 
-    console.log(
-      `All findDevotional calls: ${(performance.now() - devotionalsStart).toFixed(0)}ms`,
-    );
+      const profileData = await timed("getProfile", getProfile(user.id));
 
-    setDevotionals(devotionalsWithIds);
+      const [
+        liveEventsData,
+        recentLiveEventLessonsData,
+        announcementsData,
+        upcomingEventsData,
+        devotionalsData,
+        lifeGroupMembersData,
+      ] = await Promise.all([
+        timed("getLiveEvents", getLiveEvents()),
+        timed("getRecentLiveEventLessons", getRecentLiveEventLessons()),
+        timed("getAnnouncements", getAnnouncements()),
+        timed("getUpcomingEvents", getUpcomingEvents()),
+        timed("getDevotionals", getDevotionals()),
+        timed(
+          "getLifeGroupMembers",
+          profileData?.life_group_id != null
+            ? getLifeGroupMembers(profileData.life_group_id)
+            : Promise.resolve([]),
+        ),
+      ]);
 
-    const progressStart = performance.now();
+      console.log(
+        `Initial Promise.all: ${(performance.now() - start).toFixed(0)}ms`,
+      );
 
-    const devotionalsProgressData = await getDevotionalsProgress();
+      setLiveEvents(liveEventsData);
+      setRecentLiveEventLessons(recentLiveEventLessonsData);
+      setAnnouncements(announcementsData);
+      setUpcomingEvents(upcomingEventsData);
+      setProfile(profileData ?? null);
+      setLifeGroupMembers(lifeGroupMembersData);
 
-    console.log(
-      `getDevotionalsProgress: ${(performance.now() - progressStart).toFixed(0)}ms`,
-    );
+      const devotionalsStart = performance.now();
 
-    setDevotionalsProgressData(devotionalsProgressData);
+      const devotionalsWithIds = await Promise.all(
+        devotionalsData.map(async (devotional) => {
+          const start = performance.now();
 
-    const todaysDate = getTodaysDate();
-    setTodaysDate(todaysDate);
+          const { lessonId, isCompleted } = await findDevotional(
+            devotional.odbUrl,
+            devotional.title,
+            devotional.dateKey,
+            user.id,
+          );
 
-    setTodaysDevotional(
-      devotionalsWithIds.find(
-        (devotional) =>
-          dateKeyToLocalDate(devotional.dateKey).getTime() ===
-          todaysDate.getTime(),
-      ) ?? null,
-    );
+          console.log(
+            `findDevotional ${devotional.dateKey}: ${(performance.now() - start).toFixed(0)}ms`,
+          );
 
-    console.log(
-      `TOTAL refreshPage: ${(performance.now() - start).toFixed(0)}ms`,
-    );
+          return {
+            ...devotional,
+            lessonId,
+            isCompleted,
+          };
+        }),
+      );
+
+      console.log(
+        `All findDevotional calls: ${(performance.now() - devotionalsStart).toFixed(0)}ms`,
+      );
+
+      setDevotionals(devotionalsWithIds);
+
+      const progressStart = performance.now();
+
+      const devotionalsProgressData = await getDevotionalsProgress();
+
+      console.log(
+        `getDevotionalsProgress: ${(performance.now() - progressStart).toFixed(0)}ms`,
+      );
+
+      setDevotionalsProgressData(devotionalsProgressData);
+
+      const todaysDate = getTodaysDate();
+      setTodaysDate(todaysDate);
+
+      setTodaysDevotional(
+        devotionalsWithIds.find(
+          (devotional) =>
+            dateKeyToLocalDate(devotional.dateKey).getTime() ===
+            todaysDate.getTime(),
+        ) ?? null,
+      );
+
+      console.log(
+        `TOTAL refreshPage: ${(performance.now() - start).toFixed(0)}ms`,
+      );
+    } finally {
+      setIsLoadingTabsData(false);
+    }
   };
 
   useEffect(() => {
@@ -234,6 +246,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         todaysDate,
         profile,
         lifeGroupMembers,
+        isLoadingTabsData,
         refreshPage,
       }}
     >

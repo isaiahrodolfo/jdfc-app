@@ -4,6 +4,7 @@ import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -21,7 +22,7 @@ export default function Profile() {
 
   const [isSaveProfileLoading, setIsSaveProfileLoading] = useState(true);
   const [fullName, setFullName] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [birthday, setBirthday] = useState(new Date());
   const [facebookLink, setFacebookLink] = useState("");
   const [instagramLink, setInstagramLink] = useState("");
   const [avatarLink, setAvatarLink] = useState("");
@@ -59,10 +60,14 @@ export default function Profile() {
 
       if (data) {
         setFullName(data.full_name ?? "");
-        setBirthday(data.birthday ?? "");
         setAvatarLink(data.avatar_link ?? "");
         setFacebookLink(data.facebook_link ?? "");
         setInstagramLink(data.instagram_link ?? "");
+
+        if (data.birthday) {
+          const [year, month, day] = data.birthday.split("-").map(Number);
+          setBirthday(new Date(year, month - 1, day));
+        }
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -79,6 +84,12 @@ export default function Profile() {
 
       const updatedAt = new Date().toISOString();
 
+      const birthdayString = [
+        birthday.getFullYear(),
+        String(birthday.getMonth() + 1).padStart(2, "0"),
+        String(birthday.getDate()).padStart(2, "0"),
+      ].join("-");
+
       const updates = {
         id: user.id,
         full_name: fullName,
@@ -86,6 +97,7 @@ export default function Profile() {
         facebook_link: facebookLink,
         instagram_link: instagramLink,
         updated_at: updatedAt,
+        birthday: birthdayString,
       };
 
       let { error } = await supabase.from("profiles").upsert(updates);
@@ -195,14 +207,14 @@ export default function Profile() {
             >
               Birthday
             </Text>
-            <Input
+            <DateTimePicker
+              mode="date"
               value={birthday}
-              placeholderText="Birthday"
-              autoComplete="birthdate-full"
-              textColor={theme.textAlt}
-              placeholderTextColor={theme.iconSecondary}
-              borderColor={theme.textAlt}
-              onChangeText={(text) => setBirthday(text)}
+              onValueChange={(_, selectedDate) => {
+                if (selectedDate) {
+                  setBirthday(selectedDate);
+                }
+              }}
             />
           </View>
           {/* Facebook Link */}

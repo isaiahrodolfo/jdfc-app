@@ -1,6 +1,6 @@
 import { useTheme } from "@/contexts/ThemeContext";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import InfoIcon from "../../../assets/icons/InfoIndigo5.svg";
 import { dateFormatter } from "../helpers/dateFormatter";
 import getEventTypeColor from "../helpers/getEventTypeColor";
 
@@ -62,7 +62,7 @@ export default function EventCardSmall({
         ]}
         onPress={() => onInfoPress(title, date, location)}
       >
-        <InfoIcon />
+        <Lucide size={20} name="info" color={theme.iconSecondary} />
       </Pressable>
     </View>
   );

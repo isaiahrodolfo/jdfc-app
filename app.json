@@ -38,7 +38,13 @@
           ]
         }
       ],
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      "@react-native-vector-icons/lucide",
+      "@react-native-vector-icons/fontawesome",
+      "@react-native-vector-icons/fontawesome6",
+      "@react-native-vector-icons/octicons",
+      "@react-native-vector-icons/entypo",
+      "@react-native-vector-icons/fontawesome-free-solid"
     ],
     "experiments": {
       "typedRoutes": true,

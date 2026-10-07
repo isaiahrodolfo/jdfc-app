@@ -8,6 +8,7 @@ import {
   it,
   jest,
 } from "@jest/globals";
+import type { User } from "@supabase/supabase-js";
 import {
   act,
   fireEvent,
@@ -15,16 +16,10 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react-native";
-import type { Ref } from "react";
-import type { User } from "@supabase/supabase-js";
 import { router, useLocalSearchParams } from "expo-router";
+import type { Ref } from "react";
 import { toastiva } from "toastiva";
 
-import { supabase } from "@/lib/supabase";
-import { useAuthContext } from "@/hooks/use-auth-context";
-import { useTabs } from "@/contexts/TabsContext";
-import Home from "@/app/(tabs)/index";
-import DevotionPage from "@/app/devotional/[link]";
 import {
   DEVOTIONAL_FIXTURE,
   DEVOTIONAL_TEST_EMAIL,
@@ -33,6 +28,11 @@ import {
   DEVOTIONAL_TEST_PASSWORD,
   DEVOTIONAL_TEST_USER_ID,
 } from "@/__tests__/__fixtures__/devotional";
+import Home from "@/app/(tabs)/index";
+import DevotionPage from "@/app/devotional/[link]";
+import { useTabs } from "@/contexts/TabsContext";
+import { useAuthContext } from "@/hooks/use-auth-context";
+import { supabase } from "@/lib/supabase";
 
 jest.mock("expo-router", () => ({
   router: {
@@ -169,9 +169,7 @@ const mockedUseAuthContext = jest.mocked(useAuthContext);
 const mockedUseTabs = jest.mocked(useTabs);
 const mockedUseLocalSearchParams = jest.mocked(useLocalSearchParams);
 
-const DEVOTIONAL_DATE = new Date(
-  `${DEVOTIONAL_FIXTURE.dateKey}T00:00:00`,
-);
+const DEVOTIONAL_DATE = new Date(`${DEVOTIONAL_FIXTURE.dateKey}T00:00:00`);
 const INVALID_USER_ID = "00000000-0000-4000-8000-000000000000";
 
 let testUser: User;
@@ -188,6 +186,7 @@ const emptyTabs: ReturnType<typeof useTabs> = {
   todaysDate: DEVOTIONAL_DATE,
   profile: null,
   lifeGroupMembers: null,
+  isLoadingTabsData: true,
   refreshPage: async () => {},
 };
 
@@ -330,9 +329,7 @@ describe("devotional page", () => {
     expect(getByText("First test paragraph.")).toBeTruthy();
     expect(getByText("Second test paragraph.")).toBeTruthy();
     await fireEvent.press(getByText("Take Notes"));
-    expect(
-      await screen.findByText("<p>Existing test notes.</p>"),
-    ).toBeTruthy();
+    expect(await screen.findByText("<p>Existing test notes.</p>")).toBeTruthy();
   });
 
   it("shows a Toastiva error when notes cannot be found", async () => {

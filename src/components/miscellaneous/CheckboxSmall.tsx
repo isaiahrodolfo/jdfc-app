@@ -1,4 +1,5 @@
-import { ColorValue, Pressable, StyleSheet, Text } from "react-native";
+import { Octicons } from "@react-native-vector-icons/octicons";
+import { ColorValue, Pressable, StyleSheet } from "react-native";
 
 type CheckboxSmallProps = {
   backgroundColor: ColorValue;
@@ -34,7 +35,7 @@ export default function CheckboxSmall({
         }
       }}
     >
-      {isChecked && <Text style={{ color: checkColor }}>X</Text>}
+      {isChecked && <Octicons name="check" color={checkColor} size={16} />}
     </Pressable>
   );
 }

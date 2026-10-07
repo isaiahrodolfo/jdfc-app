@@ -40,7 +40,7 @@ export default function ScheduleEventPage() {
     useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
-  const [eventName, setEventName] = useState("");
+  const [eventName, setEventName] = useState(title.toString());
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [location, setLocation] = useState("");

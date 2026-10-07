@@ -168,7 +168,7 @@ export const Fonts = {
     h3: 24,
     h4: 20,
     h5: 18,
-    h6: 14,
+    h6: 15,
     p: 12,
     small: 10,
   } as const,

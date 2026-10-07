@@ -35,7 +35,9 @@ export default function Home() {
 
   const todaysDevotional =
     devotionals.find(
-      (devotional) => dateKeyToLocalDate(devotional.dateKey) === todaysDate,
+      (devotional) =>
+        dateKeyToLocalDate(devotional.dateKey).getTime() ===
+        todaysDate.getTime(),
     ) ?? null;
 
   const [refreshing, setRefreshing] = useState(false);

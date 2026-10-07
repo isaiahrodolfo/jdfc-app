@@ -25,6 +25,7 @@ import {
 import { getLifeGroupMembers } from "@/api/supabase/lifeGroup/getLifeGroupMembers";
 import { getDevotionals } from "@/api/supabase/our_daily_bread/getDevotionals";
 import { getProfile } from "@/api/supabase/profile/getProfile";
+import { dateKeyToLocalDate } from "@/components/helpers/dateKeyToLocalDate";
 import { CheckboxData } from "@/components/progress_tracker/CheckboxesContainer";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { Database } from "../../database.types";
@@ -204,7 +205,9 @@ export function TabsProvider({ children }: { children: ReactNode }) {
 
     setTodaysDevotional(
       devotionalsWithIds.find(
-        (devotional) => new Date(devotional.dateKey) === todaysDate,
+        (devotional) =>
+          dateKeyToLocalDate(devotional.dateKey).getTime() ===
+          todaysDate.getTime(),
       ) ?? null,
     );
 

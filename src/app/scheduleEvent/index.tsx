@@ -191,7 +191,7 @@ export default function ScheduleEventPage() {
                       setTime(selectedTime);
                     }
                   }}
-                />{" "}
+                />
               </View>
             </View>
             {/* Location */}

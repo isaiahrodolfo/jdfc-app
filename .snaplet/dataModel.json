@@ -1470,20 +1470,6 @@
           "maxLength": null
         },
         {
-          "id": "public.events.announcement_end",
-          "name": "announcement_end",
-          "columnName": "announcement_end",
-          "type": "timestamp",
-          "isRequired": false,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.events.information",
           "name": "information",
           "columnName": "information",
@@ -1550,6 +1536,20 @@
           "isGenerated": false,
           "sequence": false,
           "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.events.timestamp_end",
+          "name": "timestamp_end",
+          "columnName": "timestamp_end",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
         },

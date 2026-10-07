@@ -1,4 +1,5 @@
 import type { createSeedClient } from "@snaplet/seed";
+import { getEventEndTimestamp } from "./eventDuration";
 
 export async function seedSermonsEventLessons(
   seed: Awaited<ReturnType<typeof createSeedClient>>,
@@ -40,11 +41,16 @@ export async function seedSermonsEventLessons(
     },
   ]);
 
+  const sundayServiceTimestamp = new Date("2026-10-25T10:00:00-07:00");
   await seed.events([
     {
       id: 1,
       title: "Sunday Service",
-      timestamp: new Date("2026-10-25T10:00:00-07:00"),
+      timestamp: sundayServiceTimestamp,
+      timestamp_end: getEventEndTimestamp(
+        "Sunday Service",
+        sundayServiceTimestamp,
+      ),
       location: "Jesus' Disciples Family Church",
       event_type_id: 1,
       information: "Weekly church service",
@@ -77,11 +83,16 @@ export async function seedSermonsEventLessons(
     },
   ]);
 
+  const prayerServiceTimestamp = new Date("2026-10-28T19:00:00-07:00");
   await seed.events([
     {
       id: 2,
       title: "Prayer Service",
-      timestamp: new Date("2026-10-28T19:00:00-07:00"),
+      timestamp: prayerServiceTimestamp,
+      timestamp_end: getEventEndTimestamp(
+        "Prayer Service",
+        prayerServiceTimestamp,
+      ),
       location: "Jesus' Disciples Family Church",
       event_type_id: 2,
       information: "Weekly prayer service",
@@ -109,11 +120,18 @@ export async function seedSermonsEventLessons(
   // Seeding previous Sunday and Prayer Service events
   // Testing getRecentLiveEventLessons.
   // Should return lessons 3 & 4, not 5.
+  const previousSundayServiceTimestamp = new Date("2026-09-27T10:00:00-07:00");
+  const previousPrayerServiceTimestamp = new Date("2026-09-30T19:00:00-07:00");
+  const oldPrayerServiceTimestamp = new Date("2026-09-02T19:00:00-07:00");
   await seed.events([
     {
       id: 3,
       title: "Sunday Service",
-      timestamp: new Date("2026-09-27T10:00:00-07:00"),
+      timestamp: previousSundayServiceTimestamp,
+      timestamp_end: getEventEndTimestamp(
+        "Sunday Service",
+        previousSundayServiceTimestamp,
+      ),
       location: "Jesus' Disciples Family Church",
       event_type_id: 1,
       information: "Weekly church service",
@@ -121,7 +139,11 @@ export async function seedSermonsEventLessons(
     {
       id: 4,
       title: "Prayer Service",
-      timestamp: new Date("2026-09-30T19:00:00-07:00"),
+      timestamp: previousPrayerServiceTimestamp,
+      timestamp_end: getEventEndTimestamp(
+        "Prayer Service",
+        previousPrayerServiceTimestamp,
+      ),
       location: "Jesus' Disciples Family Church",
       event_type_id: 2,
       information: "Weekly prayer service",
@@ -129,7 +151,11 @@ export async function seedSermonsEventLessons(
     {
       id: 5,
       title: "Prayer Service",
-      timestamp: new Date("2026-09-02T19:00:00-07:00"),
+      timestamp: oldPrayerServiceTimestamp,
+      timestamp_end: getEventEndTimestamp(
+        "Prayer Service",
+        oldPrayerServiceTimestamp,
+      ),
       location: "Jesus' Disciples Family Church",
       event_type_id: 2,
       information: "Weekly prayer service",

@@ -1,5 +1,6 @@
 import type { createSeedClient } from "@snaplet/seed";
 import { Client } from "pg";
+import { getEventEndTimestamp } from "./eventDuration";
 
 export async function seedLifeGroupEvents(
   seed: Awaited<ReturnType<typeof createSeedClient>>,
@@ -64,19 +65,22 @@ export async function seedLifeGroupEvents(
     ],
   );
 
+  const lifeGroupTimestamp = new Date("2026-10-09T19:00:00-07:00");
   const { events } = await seed.events([
     {
       life_group_id: life_groups[0].id,
       title: "Life Group",
       location: "House 1",
-      timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
+      timestamp: lifeGroupTimestamp, // October 9, 2026 at 7:00 pm Local Time
+      timestamp_end: getEventEndTimestamp("Life Group", lifeGroupTimestamp),
       event_type_id: 6,
     },
     {
       life_group_id: life_groups[1].id,
       title: "Life Group",
       location: "House 2",
-      timestamp: new Date("2026-10-09T19:00:00-07:00"), // October 9, 2026 at 7:00 pm Local Time
+      timestamp: lifeGroupTimestamp, // October 9, 2026 at 7:00 pm Local Time
+      timestamp_end: getEventEndTimestamp("Life Group", lifeGroupTimestamp),
       event_type_id: 6,
     },
   ]);

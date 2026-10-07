@@ -1,4 +1,7 @@
 import { useTheme } from "@/contexts/ThemeContext";
+import Feather from "@react-native-vector-icons/feather";
+import Lucide from "@react-native-vector-icons/lucide";
+import { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 type PersonInfoCardProps = {
@@ -9,7 +12,7 @@ type PersonInfoCardProps = {
 };
 
 type TextContainerProps = {
-  icon: string;
+  icon: ReactNode;
   fieldName: string;
   fieldContent: string;
 };
@@ -29,18 +32,11 @@ export default function PersonInfoCard({
   }: TextContainerProps) => {
     return (
       <View style={styles.textContainer}>
-        <Text
-          style={{
-            color: theme.iconSecondary,
-            fontSize: fonts.sizes.h5,
-          }}
-        >
-          {icon}
-        </Text>
+        {icon}
         <Text
           style={{
             fontFamily: fonts.family,
-            fontSize: fonts.sizes.h5,
+            fontSize: fonts.sizes.h6,
             color: theme.textAlt,
           }}
         >
@@ -56,7 +52,13 @@ export default function PersonInfoCard({
       <View style={styles.textColumns}>
         {phoneNumber && (
           <TextContainer
-            icon="ph"
+            icon={
+              <Lucide
+                name="phone"
+                size={fonts.sizes.h5}
+                color={theme.iconSecondary}
+              />
+            }
             fieldName="Phone"
             fieldContent={phoneNumber}
           />
@@ -64,7 +66,13 @@ export default function PersonInfoCard({
 
         {birthday && (
           <TextContainer
-            icon="bc"
+            icon={
+              <Lucide
+                name="cake"
+                size={fonts.sizes.h5}
+                color={theme.iconSecondary}
+              />
+            }
             fieldName="Birthday"
             fieldContent={birthday}
           />
@@ -72,7 +80,13 @@ export default function PersonInfoCard({
 
         {facebookLink && (
           <TextContainer
-            icon="fb"
+            icon={
+              <Feather
+                name="facebook"
+                size={fonts.sizes.h5}
+                color={theme.iconSecondary}
+              />
+            }
             fieldName="Facebook Link"
             fieldContent={facebookLink}
           />
@@ -80,7 +94,13 @@ export default function PersonInfoCard({
 
         {instagramLink && (
           <TextContainer
-            icon="in"
+            icon={
+              <Feather
+                name="instagram"
+                size={fonts.sizes.h5}
+                color={theme.iconSecondary}
+              />
+            }
             fieldName="Instagram Link"
             fieldContent={instagramLink}
           />

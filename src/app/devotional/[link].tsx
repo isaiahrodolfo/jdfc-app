@@ -8,6 +8,8 @@ import NoteEditor, {
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import FontAwesome from "@react-native-vector-icons/fontawesome";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -170,6 +172,19 @@ export default function DevotionPage() {
           style={[styles.button, { backgroundColor: theme.iconPrimary }]}
           onPress={handleTakeNotesPress}
         >
+          {isTakingNotes ? (
+            <FontAwesome
+              name="save"
+              color={theme.iconAccent}
+              size={fonts.sizes.h4}
+            />
+          ) : (
+            <Lucide
+              name="notebook-pen"
+              color={theme.iconAccent}
+              size={fonts.sizes.h4}
+            />
+          )}
           <Text
             style={{
               fontFamily: fonts.family,
@@ -177,7 +192,6 @@ export default function DevotionPage() {
               color: theme.iconAccent,
               textTransform: "uppercase",
               fontWeight: "bold",
-              // TODO: Add notes icon
             }}
           >
             {isTakingNotes ? "Save Notes" : "Take Notes"}

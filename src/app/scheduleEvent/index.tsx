@@ -4,6 +4,7 @@ import CheckboxSmall from "@/components/miscellaneous/CheckboxSmall";
 import DropdownSmall from "@/components/miscellaneous/DropdownSmall";
 import Input from "@/components/miscellaneous/Input";
 import { useTheme } from "@/contexts/ThemeContext";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
@@ -40,29 +41,52 @@ export default function ScheduleEventPage() {
   const { theme, fonts } = useTheme();
 
   const [eventName, setEventName] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
   const [location, setLocation] = useState("");
   const [isOnline, setIsOnline] = useState(false);
   const [information, setInformation] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
   const [selectedEventTypeIndex, setSelectedEventTypeIndex] = useState(
     Number(eventTypeIndex.toString()) - 1, // eventTypeIndex is 0-indexed, while eventTypeId is 1-indexed
   );
 
+  const timestamp = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    time.getHours(),
+    time.getMinutes(),
+  );
+
   const handleCreateEventButtonPress = async () => {
-    await upsertEvent({
-      eventId: Number(eventId.toString()),
-      title: title.toString() ?? "",
-      timestamp: new Date(`${date} ${time}`),
-      location: location.toString() ?? "",
-      information: information.toString() ?? "",
-      announcementStart: new Date(),
-      announcementEnd: new Date(`${date} ${time}`),
-      lifeGroupId: Number(lifeGroupId.toString()) ?? null,
-      isOnline: isOnline,
-    });
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      await upsertEvent({
+        eventId: eventId.toString() === "" ? null : Number(eventId.toString()),
+        eventTypeId: Number(eventTypeIndex.toString()),
+        title: eventName,
+        timestamp: timestamp,
+        location: location.toString() ?? "",
+        information: information.toString() ?? "",
+        announcementStart: new Date(),
+        announcementEnd: timestamp,
+        lifeGroupId: Number(lifeGroupId.toString()) ?? null,
+        isOnline: isOnline,
+      });
+
+      if (eventId === null) {
+        console.log("Upsert event failed");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -137,7 +161,7 @@ export default function ScheduleEventPage() {
                 onChangeText={(text) => setEventName(text)}
               />
             </View>
-            {/* Date */}
+            {/* Date & Time */}
             <View style={styles.field}>
               <Text
                 style={{
@@ -147,39 +171,28 @@ export default function ScheduleEventPage() {
                   color: theme.textAlt,
                 }}
               >
-                Date
+                Date & Time
               </Text>
-              <Input
-                value={date}
-                placeholderText="Date"
-                autoComplete="off"
-                textColor={theme.text}
-                placeholderTextColor={theme.iconSecondary}
-                borderColor={theme.textAlt}
-                onChangeText={(text) => setDate(text)}
-              />
-            </View>
-            {/* Time */}
-            <View style={styles.field}>
-              <Text
-                style={{
-                  fontFamily: fonts.family,
-                  fontSize: fonts.sizes.h4,
-                  fontWeight: "bold",
-                  color: theme.textAlt,
-                }}
-              >
-                Time
-              </Text>
-              <Input
-                value={time}
-                placeholderText="Time"
-                autoComplete="off"
-                textColor={theme.text}
-                placeholderTextColor={theme.iconSecondary}
-                borderColor={theme.textAlt}
-                onChangeText={(text) => setTime(text)}
-              />
+              <View style={styles.dateAndTimePickerContainer}>
+                <DateTimePicker
+                  mode="date"
+                  value={date}
+                  onValueChange={(_, selectedDate) => {
+                    if (selectedDate) {
+                      setDate(selectedDate);
+                    }
+                  }}
+                />
+                <DateTimePicker
+                  mode="time"
+                  value={time}
+                  onValueChange={(_, selectedTime) => {
+                    if (selectedTime) {
+                      setTime(selectedTime);
+                    }
+                  }}
+                />{" "}
+              </View>
             </View>
             {/* Location */}
             <View style={styles.field}>
@@ -256,12 +269,21 @@ export default function ScheduleEventPage() {
               />
             </View>
             <View style={styles.createEventButton}>
-              <ButtonBig
-                text="Create Event"
-                textColor={theme.iconAccent}
-                backgroundColor={theme.iconPrimary}
-                onButtonPress={handleCreateEventButtonPress}
-              />
+              {isLoading ? (
+                <ButtonBig
+                  text="Loading..."
+                  textColor={theme.iconSecondary}
+                  backgroundColor={theme.iconAccent}
+                  onButtonPress={() => {}}
+                />
+              ) : (
+                <ButtonBig
+                  text="Create Event"
+                  textColor={theme.iconAccent}
+                  backgroundColor={theme.iconPrimary}
+                  onButtonPress={handleCreateEventButtonPress}
+                />
+              )}
             </View>
           </View>
         </View>
@@ -293,5 +315,10 @@ const styles = StyleSheet.create({
   },
   createEventButton: {
     paddingVertical: 12,
+  },
+  dateAndTimePickerContainer: {
+    flexDirection: "row",
+    gap: 0,
+    alignItems: "center",
   },
 });

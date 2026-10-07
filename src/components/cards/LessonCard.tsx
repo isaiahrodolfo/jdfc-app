@@ -74,14 +74,18 @@ export default function LessonCard({
             },
           ]}
         >
-          <Checkbox
-            colorName={colorName}
-            type="Secondary"
-            isChecked={isCompleted}
-            isCurrent={false}
-            onCheckboxPress={isUserCompletable ? onCheckboxPress : () => {}}
-            // TODO: Have a person raising their hand for the attendance marker, and change the color/icon to show that it cannot be user modified.
-          />
+          <View
+            style={{ opacity: isUserCompletable && !isCompleted ? 1 : 0.5 }}
+          >
+            <Checkbox
+              colorName={colorName}
+              type="Secondary"
+              isChecked={isCompleted}
+              isCurrent={false}
+              onCheckboxPress={isUserCompletable ? onCheckboxPress : () => {}}
+              // TODO: Have a person raising their hand for the attendance marker, and change the color/icon to show that it cannot be user modified.
+            />
+          </View>
         </View>
 
         <View style={styles.contentContainer}>

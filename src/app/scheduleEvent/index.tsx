@@ -5,6 +5,7 @@ import DropdownSmall from "@/components/miscellaneous/DropdownSmall";
 import Input from "@/components/miscellaneous/Input";
 import { useTheme } from "@/contexts/ThemeContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
@@ -281,6 +282,13 @@ export default function ScheduleEventPage() {
                 />
               ) : (
                 <ButtonBig
+                  icon={
+                    <Lucide
+                      name="plus"
+                      color={theme.iconAccent}
+                      size={fonts.sizes.h4}
+                    />
+                  }
                   text="Create Event"
                   textColor={theme.iconAccent}
                   backgroundColor={theme.iconPrimary}

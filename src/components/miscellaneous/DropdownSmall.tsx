@@ -21,7 +21,7 @@ export default function DropdownSmall({
   onOpenPress,
   onClosePress,
 }: DropdownSmallProps) {
-  const nonEditableOpacity = 0.8;
+  const nonEditableOpacity = 0.7;
   const { theme, fonts } = useTheme();
 
   return (

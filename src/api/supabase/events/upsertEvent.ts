@@ -8,7 +8,7 @@ type UpsertEventProps = {
   information: string;
   announcementStart: Date;
   announcementEnd: Date;
-  lifeGroupId: number;
+  lifeGroupId: number | null;
   isOnline: boolean;
 };
 

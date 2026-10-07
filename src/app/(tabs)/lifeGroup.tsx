@@ -78,6 +78,7 @@ export default function LifeGroup() {
         title: "Life Group",
         eventId: "",
         eventTypeIndex: 6,
+        lifeGroupId: profile?.life_group_id,
       },
     });
   };

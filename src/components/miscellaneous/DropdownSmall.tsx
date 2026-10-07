@@ -1,8 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import ChevronDown from "@/assets/icons/ChevronDownWhite.svg";
 import { useTheme } from "@/contexts/ThemeContext";
 import DividingLine from "./DividingLine";
+
+import { Lucide } from "@react-native-vector-icons/lucide";
 
 type DropdownSmallProps = {
   isEditable?: boolean;
@@ -53,16 +54,12 @@ export default function DropdownSmall({
                 >
                   {selection}
                 </Text>
-                <View
-                  style={[
-                    styles.arrow,
-                    {
-                      transform: [{ rotate: "180deg" }],
-                      opacity: isEditable ? 1 : 0,
-                    },
-                  ]}
-                >
-                  <ChevronDown />
+                <View style={[styles.arrow, { opacity: isEditable ? 1 : 0 }]}>
+                  <Lucide
+                    name="chevron-up"
+                    color={theme.iconAccentAlt}
+                    size={fonts.sizes.h5}
+                  />
                 </View>
               </View>
             ) : (
@@ -108,7 +105,11 @@ export default function DropdownSmall({
             {selections[indexSelected]}
           </Text>
           <View style={[styles.arrow, { opacity: isEditable ? 1 : 0 }]}>
-            <ChevronDown />
+            <Lucide
+              name="chevron-down"
+              color={theme.iconAccentAlt}
+              size={fonts.sizes.h5}
+            />
           </View>
         </Pressable>
       )}

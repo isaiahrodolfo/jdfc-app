@@ -49,7 +49,7 @@ export default function AnnouncementCard({
         ]}
         onPress={() => onIconPress(title, category)}
       >
-        <Lucide size={20} name="info" color={theme.iconAccent} />
+        <Lucide size={fonts.sizes.h5} name="info" color={theme.iconAccent} />
       </Pressable>
     </View>
   );

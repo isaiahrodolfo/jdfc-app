@@ -4,6 +4,7 @@ import PersonListItem from "@/components/miscellaneous/PersonListItem";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import Lucide from "@react-native-vector-icons/lucide";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -161,6 +162,13 @@ export default function LifeGroup() {
         {/* Schedule Event */}
         {profile?.is_life_group_admin && (
           <ButtonBig
+            icon={
+              <Lucide
+                name="calendar-plus"
+                color={theme.iconAccent}
+                size={fonts.sizes.h3}
+              />
+            }
             text="Schedule Event"
             textColor={theme.iconAccent}
             backgroundColor={theme.iconPrimary}

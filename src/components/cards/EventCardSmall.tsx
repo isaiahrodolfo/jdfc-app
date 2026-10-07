@@ -62,7 +62,7 @@ export default function EventCardSmall({
         ]}
         onPress={() => onInfoPress(title, date, location)}
       >
-        <Lucide size={20} name="info" color={theme.iconSecondary} />
+        <Lucide size={fonts.sizes.h5} name="info" color={theme.iconSecondary} />
       </Pressable>
     </View>
   );

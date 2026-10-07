@@ -87,7 +87,7 @@ export default function EventCardBig({
                 <FontAwesome6
                   name="play"
                   color={theme.iconAccent}
-                  size={18}
+                  size={fonts.sizes.h5}
                   iconStyle="solid"
                 />
               }
@@ -97,7 +97,11 @@ export default function EventCardBig({
           <ButtonSmall
             text={"Notes"}
             icon={
-              <Lucide name="notebook-pen" color={theme.iconAccent} size={18} />
+              <Lucide
+                name="notebook-pen"
+                color={theme.iconAccent}
+                size={fonts.sizes.h5}
+              />
             }
             onPress={() => {}}
           />

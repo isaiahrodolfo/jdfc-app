@@ -1,8 +1,9 @@
 import { useTheme } from "@/contexts/ThemeContext";
+import { ReactNode } from "react";
 import { ColorValue, Pressable, StyleSheet, Text } from "react-native";
 
 type ButtonBigProps = {
-  icon?: React.ComponentType;
+  icon?: ReactNode;
   text: string;
   textColor: ColorValue;
   backgroundColor: ColorValue;
@@ -10,7 +11,7 @@ type ButtonBigProps = {
 };
 
 export default function ButtonBig({
-  icon: Icon,
+  icon,
   text,
   textColor,
   backgroundColor,
@@ -26,7 +27,7 @@ export default function ButtonBig({
       style={[styles.container, { backgroundColor: backgroundColor }]}
       onPress={onButtonPress}
     >
-      {Icon && <Icon />}
+      {icon}
       <Text
         style={[
           styles.text,
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 16,
     paddingTop: 16,
     paddingBottom: 16, // TODO: Do I add paddingLeft and Right if this button is always centered?
     borderRadius: 12,

@@ -4,5 +4,12 @@
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
   },
-  "cSpell.words": ["Favorited", "JDFC", "Postgrest", "Pressable", "supabase"]
+  "cSpell.words": [
+    "Favorited",
+    "JDFC",
+    "Postgrest",
+    "Pressable",
+    "supabase",
+    "toastiva"
+  ]
 }

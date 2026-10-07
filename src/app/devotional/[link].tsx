@@ -10,7 +10,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Lucide } from "@react-native-vector-icons/lucide";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -24,6 +24,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { toastiva } from "toastiva";
 
 const IMAGE_HEIGHT = 192;
 
@@ -32,6 +33,8 @@ export default function DevotionPage() {
   const { theme, fonts } = useTheme();
   const { link, title, dateKey } = useLocalSearchParams();
   const { devotionals } = useTabs();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
   const [notesHtml, setNotesHtml] = useState("");
@@ -95,13 +98,26 @@ export default function DevotionPage() {
 
   const date = new Date(devotional.dateKey);
 
-  const handleTakeNotesPress = () => {
-    if (isTakingNotes) {
-      void noteEditorRef.current?.saveAndClose().catch((error: unknown) => {
-        console.error("Error saving devotional notes:", error);
-      });
-    } else {
+  const handleTakeNotesPress = async () => {
+    if (!isTakingNotes) {
       setIsTakingNotes(true);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await noteEditorRef.current?.saveAndClose();
+
+      toastiva.success("Notes saved");
+
+      router.back();
+    } catch (error) {
+      console.error("Error saving devotional notes:", error);
+
+      toastiva.error("Failed to save notes");
+    } finally {
+      setIsLoading(false);
     }
   };
 

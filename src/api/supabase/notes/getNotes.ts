@@ -26,7 +26,9 @@ export async function getNotes(
       .eq("odb_link", uniqueIdentifier)
       .single();
 
-    if (devotionalError || !devotional) {
+    if (devotionalError) throw devotionalError;
+
+    if (!devotional) {
       console.log("Devotional not found");
       return "";
     }
@@ -48,7 +50,9 @@ export async function getNotes(
     .eq("lesson_id", lessonId)
     .single();
 
-  if (error || !data) {
+  if (error) throw error;
+
+  if (!data) {
     console.log("Lesson not found");
     return "";
   }

@@ -47,6 +47,7 @@ export default function AnnouncementCard({
           styles.infoIcon,
           { opacity: pressed ? 0.5 : 1 },
         ]}
+        hitSlop={fonts.sizes.h5}
         onPress={() => onIconPress(title, category)}
       >
         <Lucide size={fonts.sizes.h5} name="info" color={theme.iconAccent} />

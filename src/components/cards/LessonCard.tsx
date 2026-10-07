@@ -75,7 +75,7 @@ export default function LessonCard({
           ]}
         >
           <View
-            style={{ opacity: isUserCompletable && !isCompleted ? 1 : 0.5 }}
+            style={{ opacity: isUserCompletable ? 1 : isCompleted ? 1 : 0.5 }}
           >
             <Checkbox
               colorName={colorName}

@@ -5,6 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -266,6 +267,13 @@ export default function Profile() {
           </View>
         </View>
         <ButtonBig
+          icon={
+            <FontAwesome
+              name="save"
+              color={theme.iconAccent}
+              size={fonts.sizes.h4}
+            />
+          }
           text={isSaveProfileLoading ? "Loading..." : "Save Edits"}
           textColor={isSaveProfileLoading ? theme.textAlt : theme.textAccent}
           backgroundColor={

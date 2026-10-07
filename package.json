@@ -25,6 +25,7 @@
     "cross-env": "latest",
     "dotenv": "^18.0.5",
     "expo": "~57.0.27",
+    "expo-blur": "~57.0.3",
     "expo-checkbox": "~57.0.0",
     "expo-constants": "~57.0.18",
     "expo-device": "~57.0.2",
@@ -45,11 +46,12 @@
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "^5.8.0",
     "react-native-screens": "~4.26.0",
-    "react-native-svg": "^15.15.4",
+    "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.0",
     "react-native-webview": "13.16.1",
     "react-native-worklets": "0.10.1",
-    "storybook": "^10.6.0"
+    "storybook": "^10.6.0",
+    "toastiva": "^0.1.17"
   },
   "devDependencies": {
     "@snaplet/copycat": "^6.0.0",

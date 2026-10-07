@@ -1,6 +1,6 @@
 import { useTheme } from "@/contexts/ThemeContext";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import InfoIcon from "../../../assets/icons/InfoIndigo3.svg";
 
 type AnnouncementCardProps = {
   title: string | null;
@@ -49,7 +49,7 @@ export default function AnnouncementCard({
         ]}
         onPress={() => onIconPress(title, category)}
       >
-        <InfoIcon />
+        <Lucide size={20} name="info" color={theme.iconAccent} />
       </Pressable>
     </View>
   );

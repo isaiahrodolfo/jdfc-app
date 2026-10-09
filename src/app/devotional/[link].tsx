@@ -5,7 +5,6 @@ import { dateFormatter } from "@/components/helpers/dateFormatter";
 import NoteEditor, {
   type NoteEditorHandle,
 } from "@/components/miscellaneous/NoteEditor";
-import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
@@ -53,8 +52,6 @@ export default function DevotionPage() {
     language,
     odbUrl,
   } = useLocalSearchParams();
-  const { isLoadingTabsData } = useTabs();
-
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
   const [notesHtml, setNotesHtml] = useState("");
   const [editorHeight, setEditorHeight] = useState(300);
@@ -99,19 +96,6 @@ export default function DevotionPage() {
       isActive = false;
     };
   }, [lessonId, odbUrl, user]);
-
-  if (isLoadingTabsData) {
-    return (
-      <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: theme.primary,
-          },
-        ]}
-      />
-    );
-  }
 
   if (!lessonId || !dateKey || !title || !author || !content) {
     return (

@@ -4,7 +4,7 @@ import { router } from "expo-router";
 export const handleDevotionalPress = (devotional: DevotionLesson) => {
   // Navigate to a detailed view
   router.push({
-    pathname: "/devotional/[link]",
+    pathname: "/devotional/[odbUrl]",
     params: {
       lessonId: devotional.lessonId,
       dateKey: devotional.dateKey,

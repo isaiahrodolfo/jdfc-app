@@ -9,7 +9,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Lucide } from "@react-native-vector-icons/lucide";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -101,6 +101,14 @@ export default function DevotionPage() {
   if (!lessonId || !dateKey || !title || !author || !content) {
     return (
       <View style={[styles.errorContainer, { backgroundColor: theme.primary }]}>
+        <Stack.Screen
+          options={{
+            headerTitle: "",
+            headerShown: true,
+            headerBackButtonDisplayMode: "minimal", // Circle back button
+            headerTransparent: true,
+          }}
+        />
         <Text
           accessibilityRole="alert"
           style={[
@@ -171,6 +179,14 @@ export default function DevotionPage() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
+      <Stack.Screen
+        options={{
+          headerTitle: "",
+          headerShown: true,
+          headerBackButtonDisplayMode: "minimal", // Circle back button
+          headerTransparent: true,
+        }}
+      />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={[

@@ -74,13 +74,8 @@ export default function RootLayout() {
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen
-                      name="devotional"
-                      options={{
-                        headerTitle: "",
-                        headerShown: true,
-                        headerBackButtonDisplayMode: "minimal", // Circle back button
-                        headerTransparent: true,
-                      }}
+                      name="devotional/[odbUrl]"
+                      options={{ headerShown: false }}
                     />
                     <Stack.Screen
                       name="info/[link]"

@@ -31,17 +31,35 @@ const IMAGE_HEIGHT = 192;
 export default function DevotionPage() {
   const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
-  const { link, title, dateKey } = useLocalSearchParams();
-  const { devotionals, isLoadingTabsData } = useTabs();
+  const {
+    lessonId,
+    dateKey,
+    title,
+    author,
+    content,
+    excerpt,
+    insights,
+    response,
+    thought,
+    verse,
+    passageReference,
+    passageUrl,
+    bibleInYear,
+    bibleInYearUrl,
+    imageUrl,
+    audioUrl,
+    categories,
+    slug,
+    language,
+    odbUrl,
+  } = useLocalSearchParams();
+  const { isLoadingTabsData } = useTabs();
 
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
   const [notesHtml, setNotesHtml] = useState("");
   const [editorHeight, setEditorHeight] = useState(300);
   const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-
-  const devotional =
-    devotionals.find((devotional) => devotional.dateKey === dateKey) ?? null;
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const noteEditorRef = useRef<NoteEditorHandle>(null);
@@ -65,10 +83,10 @@ export default function DevotionPage() {
   }, []);
 
   useEffect(() => {
-    if (!user || !link || !devotional) return;
+    if (!user || !odbUrl || !lessonId) return;
 
     let isActive = true;
-    getNotes(user.id, link.toString(), "devotional")
+    getNotes(user.id, odbUrl.toString(), "devotional")
       .then((html) => {
         if (isActive) setNotesHtml(html);
       })
@@ -80,7 +98,7 @@ export default function DevotionPage() {
     return () => {
       isActive = false;
     };
-  }, [devotional, link, user]);
+  }, [lessonId, odbUrl, user]);
 
   if (isLoadingTabsData) {
     return (
@@ -95,7 +113,7 @@ export default function DevotionPage() {
     );
   }
 
-  if (!devotional) {
+  if (!lessonId || !dateKey || !title || !author || !content) {
     return (
       <View style={[styles.errorContainer, { backgroundColor: theme.primary }]}>
         <Text
@@ -126,7 +144,7 @@ export default function DevotionPage() {
     );
   }
 
-  const date = new Date(devotional.dateKey);
+  const date = new Date(dateKey.toString());
 
   const handleTakeNotesPress = async () => {
     if (!isTakingNotes) {
@@ -178,14 +196,14 @@ export default function DevotionPage() {
         keyboardShouldPersistTaps="always"
       >
         <View style={styles.imageContainer}>
-          <Image source={{ uri: devotional.imageUrl }} style={styles.image} />
+          <Image source={{ uri: imageUrl.toString() }} style={styles.image} />
         </View>
 
         <PreviewTitleCard
           eventTypeId={-1}
-          title={devotional.title.toString() || "No Title"}
+          title={title.toString() || "No Title"}
           category={dateFormatter("date").format(date)}
-          subtitle={devotional.author.toString() || "No Author"}
+          subtitle={author.toString() || "No Author"}
           hasTopAccent={false}
           backgroundColor={"primary"}
         />
@@ -206,7 +224,7 @@ export default function DevotionPage() {
               fontStyle: "italic",
             }}
           >
-            {devotional.verse}
+            {verse}
           </Text>
         </View>
         {/* Take Notes Button */}
@@ -277,7 +295,7 @@ export default function DevotionPage() {
                 textDecorationLine: "underline",
               }}
             >
-              {devotional.passageReference}
+              {passageReference}
             </Text>
           </Pressable>
         </View>
@@ -301,7 +319,8 @@ export default function DevotionPage() {
           >
             Read
           </Text>
-          {devotional.content
+          {content
+            .toString()
             .replace(/\n\t\t/g, " ")
             .replace(/\n\t/g, " ")
             .replace(/\n/g, "-----------")
@@ -351,7 +370,7 @@ export default function DevotionPage() {
                 fontWeight: "bold",
               }}
             >
-              {devotional.response.replace(/\s+/g, " ").trim()}
+              {response.toString().replace(/\s+/g, " ").trim()}
             </Text>
             <Text
               style={{
@@ -361,7 +380,7 @@ export default function DevotionPage() {
                 fontStyle: "italic",
               }}
             >
-              {devotional.thought.replace(/\s+/g, " ").trim()}
+              {thought.toString().replace(/\s+/g, " ").trim()}
             </Text>
           </View>
         </View>
@@ -393,7 +412,8 @@ export default function DevotionPage() {
                 color: theme.text,
               }}
             >
-              {devotional.insights
+              {insights
+                .toString()
                 .replace(/\s+/g, " ")
                 .replace(/&ldquo;/g, "'")
                 .replace(/&rsquo;/g, "'")
@@ -431,10 +451,10 @@ export default function DevotionPage() {
                 await saveNotes(
                   user,
                   html,
-                  link.toString(),
+                  odbUrl.toString(),
                   "devotional",
-                  devotional.title,
-                  devotional.dateKey,
+                  title.toString(),
+                  dateKey.toString(),
                 );
               }}
               onClose={() => setIsTakingNotes(false)}

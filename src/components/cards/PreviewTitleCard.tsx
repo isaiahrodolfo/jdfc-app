@@ -103,7 +103,7 @@ export default function PreviewTitleCard({
             {timestampEnd !== undefined &&
               timestampStart !== undefined &&
               timestampEnd.getTime() !== timestampStart.getTime() &&
-              ` to ${dateFormatter("full").format(timestampEnd)}`}
+              ` to\n${dateFormatter("full").format(timestampEnd)}`}
           </Text>
         )}
         {location && (

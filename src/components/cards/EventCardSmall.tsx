@@ -53,20 +53,38 @@ export default function EventCardSmall({
         >
           {title}
         </Text>
-        <Text
-          style={{
-            fontFamily: fonts.family,
-            fontSize: fonts.sizes.p,
-            color: theme.text,
-          }}
-        >
-          {dateFormatter("full").format(timestampStart)}
-          {timestampEnd.getTime() !== timestampStart.getTime() &&
-            ` to ${dateFormatter("full").format(timestampEnd)}`}
-        </Text>
-        <View>
-          <Text>{location}</Text>
-          <Text>{isOnline && "(Online)"}</Text>
+        <View style={{ gap: 2 }}>
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.p,
+              color: theme.text,
+            }}
+          >
+            {dateFormatter("full").format(timestampStart)}
+            {timestampEnd.getTime() !== timestampStart.getTime()}
+          </Text>
+          <View style={{ flexDirection: "row", gap: 4 }}>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.p,
+                color: theme.text,
+              }}
+            >
+              {location}
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.p,
+                color: theme.text,
+                fontStyle: "italic",
+              }}
+            >
+              {isOnline && "(Online)"}
+            </Text>
+          </View>
         </View>
       </View>
       <Pressable

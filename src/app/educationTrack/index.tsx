@@ -270,21 +270,14 @@ export default function Index() {
             const size = isToday || isYesterday ? "medium" : "small";
 
             const lessonDateString = isValidDate
-              ? new Intl.DateTimeFormat("en-US", {
-                  timeZone: "America/Los_Angeles",
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                }).format(lessonDate)
+              ? dateFormatter("date").format(lessonDate)
               : "";
 
             const descriptionSubheadingDateAndTime = lesson.timestamp_start
-              ? dateFormatter("full").format(
-                  new Date(lesson.timestamp_start),
-                ) +
+              ? dateFormatter("full").format(new Date(lesson.timestamp_start)) +
                 (lesson.timestamp_end &&
                 lesson.timestamp_end !== lesson.timestamp_start
-                  ? ` to ${dateFormatter("full").format(
+                  ? ` to ${dateFormatter("time").format(
                       new Date(lesson.timestamp_end),
                     )}`
                   : "")

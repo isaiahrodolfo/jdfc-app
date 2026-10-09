@@ -270,17 +270,13 @@ export default function Index() {
             const size = isToday || isYesterday ? "medium" : "small";
 
             const lessonDateString = isValidDate
-              ? dateFormatter("date").format(
-                  new Date(
-                    lessonDate.getUTCFullYear(),
-                    lessonDate.getUTCMonth(),
-                    lessonDate.getUTCDate(),
-                  ),
-                )
+              ? new Intl.DateTimeFormat("en-US", {
+                  timeZone: "America/Los_Angeles",
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }).format(lessonDate)
               : "";
-
-            const descriptionSubheadingDate =
-              isToday || isYesterday ? "" : lessonDateString;
 
             const descriptionSubheadingDateAndTime = lesson.timestamp_start
               ? dateFormatter("full").format(
@@ -292,15 +288,17 @@ export default function Index() {
                       new Date(lesson.timestamp_end),
                     )}`
                   : "")
-              : descriptionSubheadingDate;
+              : lessonDateString;
 
-            const descriptionSubheading = [
-              descriptionSubheadingDateAndTime,
-              lesson.location,
-              lesson.is_online ? "(Online)" : null,
-            ]
-              .filter(Boolean)
-              .join("\n");
+            const descriptionSubheading = lesson.location
+              ? [
+                  descriptionSubheadingDateAndTime,
+                  lesson.location,
+                  lesson.is_online ? "(Online)" : null,
+                ]
+                  .filter(Boolean)
+                  .join("\n")
+              : lessonDateString;
 
             return (
               <LessonCard

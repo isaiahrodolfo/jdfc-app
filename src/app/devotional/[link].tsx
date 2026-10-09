@@ -88,8 +88,9 @@ export default function DevotionPage() {
         if (isActive) setNotesHtml(html);
       })
       .catch((error: unknown) => {
-        console.error("Error loading devotional notes:", error);
-        toastiva.error("Cannot find notes for devotion");
+        console.log("User does not have notes for this devotion");
+        // console.error("Error loading devotional notes:", error);
+        // toastiva.error("Cannot find notes for devotion");
       });
 
     return () => {

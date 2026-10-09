@@ -243,8 +243,8 @@ export default function Index() {
 
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => {
-            const lessonDate = lesson.timestamp
-              ? new Date(lesson.timestamp)
+            const lessonDate = lesson.timestamp_start
+              ? new Date(lesson.timestamp_start)
               : null;
 
             const today = new Date();
@@ -282,13 +282,25 @@ export default function Index() {
             const descriptionSubheadingDate =
               isToday || isYesterday ? "" : lessonDateString;
 
-            const descriptionSubheadingDateAndTime = lesson.timestamp
-              ? dateFormatter("full").format(new Date(lesson.timestamp))
-              : "";
-
-            const descriptionSubheading = lesson.location
-              ? `${descriptionSubheadingDateAndTime}\n${lesson.location}`
+            const descriptionSubheadingDateAndTime = lesson.timestamp_start
+              ? dateFormatter("full").format(
+                  new Date(lesson.timestamp_start),
+                ) +
+                (lesson.timestamp_end &&
+                lesson.timestamp_end !== lesson.timestamp_start
+                  ? ` to ${dateFormatter("full").format(
+                      new Date(lesson.timestamp_end),
+                    )}`
+                  : "")
               : descriptionSubheadingDate;
+
+            const descriptionSubheading = [
+              descriptionSubheadingDateAndTime,
+              lesson.location,
+              lesson.is_online ? "(Online)" : null,
+            ]
+              .filter(Boolean)
+              .join("\n");
 
             return (
               <LessonCard

@@ -71,7 +71,7 @@ export async function seedLifeGroupEvents(
       life_group_id: life_groups[0].id,
       title: "Life Group",
       location: "House 1",
-      timestamp: lifeGroupTimestamp, // October 9, 2026 at 7:00 pm Local Time
+      timestamp_start: lifeGroupTimestamp, // October 9, 2026 at 7:00 pm Local Time
       timestamp_end: getEventEndTimestamp("Life Group", lifeGroupTimestamp),
       event_type_id: 6,
     },
@@ -79,7 +79,7 @@ export async function seedLifeGroupEvents(
       life_group_id: life_groups[1].id,
       title: "Life Group",
       location: "House 2",
-      timestamp: lifeGroupTimestamp, // October 9, 2026 at 7:00 pm Local Time
+      timestamp_start: lifeGroupTimestamp, // October 9, 2026 at 7:00 pm Local Time
       timestamp_end: getEventEndTimestamp("Life Group", lifeGroupTimestamp),
       event_type_id: 6,
     },

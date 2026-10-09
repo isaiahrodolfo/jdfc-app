@@ -104,16 +104,20 @@ export default function Home() {
     title,
     subtitle,
     category,
-    timestamp,
+    timestampStart,
+    timestampEnd,
     location,
+    isOnline,
     information,
   }: {
     eventTypeId: number;
     title: string;
     subtitle?: string;
     category?: string;
-    timestamp?: Date;
+    timestampStart?: Date;
+    timestampEnd?: Date;
     location?: string;
+    isOnline?: boolean;
     information?: string;
   }) => {
     // Navigate to a detailed view
@@ -125,8 +129,10 @@ export default function Home() {
         title: title,
         subtitle: subtitle,
         category: category,
-        timestamp: timestamp?.toISOString(),
+        timestampStart: timestampStart?.toISOString(),
+        timestampEnd: timestampEnd?.toISOString(),
         location: location,
+        isOnline: isOnline?.toString(),
         information: information,
       },
     });
@@ -282,14 +288,18 @@ export default function Home() {
               key={upcomingEvent.id}
               eventTypeId={upcomingEvent.eventTypeId ?? -1}
               title={upcomingEvent.title}
+              timestampStart={upcomingEvent.timestamp_start}
+              timestampEnd={upcomingEvent.timestamp_end}
               location={upcomingEvent.location}
-              date={upcomingEvent.date}
+              isOnline={upcomingEvent.is_online}
               onInfoPress={() =>
                 handleInfoPress({
                   eventTypeId: upcomingEvent.eventTypeId ?? -1,
                   title: upcomingEvent.title,
-                  timestamp: upcomingEvent.date,
+                  timestampStart: upcomingEvent.timestamp_start,
+                  timestampEnd: upcomingEvent.timestamp_end,
                   location: upcomingEvent.location,
+                  isOnline: upcomingEvent.is_online,
                   information: upcomingEvent.information,
                   category: "Event",
                 })

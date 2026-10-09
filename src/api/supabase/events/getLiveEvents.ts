@@ -5,8 +5,10 @@ export type LiveEvent = {
   id: number;
   title: string;
   information: string;
-  timestamp: string;
+  timestamp_start: string;
+  timestamp_end: string;
   location: string;
+  is_online: boolean;
   is_live: boolean;
   livestream_link: string | null;
 };
@@ -26,8 +28,10 @@ export async function getLiveEvents(): Promise<LiveEvent[]> {
       id,
       title,
       information,
-      timestamp,
+      timestamp_start,
+      timestamp_end,
       location,
+      is_online,
       lessons_events!inner (
         lessons_events_link!inner (
           is_live,
@@ -50,8 +54,10 @@ export async function getLiveEvents(): Promise<LiveEvent[]> {
       id: event.id,
       title: event.title ?? "",
       information: event.information ?? "",
-      timestamp: event.timestamp ?? "",
+      timestamp_start: event.timestamp_start ?? "",
+      timestamp_end: event.timestamp_end ?? "",
       location: event.location ?? "",
+      is_online: event.is_online ?? false,
       is_live: link?.is_live ?? false,
       livestream_link: link?.livestream_link ?? null,
     };

@@ -29,7 +29,7 @@ import {
   DEVOTIONAL_TEST_USER_ID,
 } from "@/__tests__/__fixtures__/devotional";
 import Home from "@/app/(tabs)/index";
-import DevotionPage from "@/app/devotional/[link]";
+import DevotionPage from "@/app/devotional/[odbUrl]";
 import { useTabs } from "@/contexts/TabsContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";

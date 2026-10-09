@@ -20,8 +20,10 @@ export type EducationLesson = {
   lessonNumber: number | null;
   title: string | null;
   tags: Json;
-  timestamp?: string | null;
+  timestamp_start?: string | null;
+  timestamp_end?: string | null;
   location?: string | null;
+  is_online?: boolean;
   speakers?: string[];
   isCompleted?: boolean;
   isUserCompletable?: boolean;
@@ -65,8 +67,10 @@ export async function getEducationLessons(
             events (
               id,
               title,
-              timestamp,
-              location
+              timestamp_start,
+              timestamp_end,
+              location,
+              is_online
             ),
             lessons_events_speakers (
               user_id
@@ -138,8 +142,10 @@ export async function getEducationLessons(
       lessonNumber: item.lesson_number,
       title: item.lessons.title,
       tags: item.lessons.tags,
-      timestamp: lessonEvent?.events?.timestamp ?? null,
+      timestamp_start: lessonEvent?.events?.timestamp_start ?? null,
+      timestamp_end: lessonEvent?.events?.timestamp_end ?? null,
       location: lessonEvent?.events?.location ?? null,
+      is_online: lessonEvent?.events?.is_online ?? false,
       speakers:
         lessonEvent?.lessons_events_speakers
           ?.map((speaker) => speaker.user_id)

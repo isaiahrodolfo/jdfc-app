@@ -7,16 +7,26 @@ import getEventTypeColor from "../helpers/getEventTypeColor";
 type EventCardSmallProps = {
   eventTypeId: number;
   title: string;
-  date: Date;
+  timestampStart: Date;
+  timestampEnd: Date;
   location: string;
-  onInfoPress: (title: string, date: Date, location: string) => void;
+  isOnline: boolean;
+  onInfoPress: (
+    title: string,
+    timestampStart: Date,
+    timestampEnd: Date,
+    location: string,
+    isOnline: boolean,
+  ) => void;
 };
 
 export default function EventCardSmall({
   eventTypeId,
   title,
-  date,
+  timestampStart,
+  timestampEnd,
   location,
+  isOnline,
   onInfoPress,
 }: EventCardSmallProps) {
   const { theme, fonts } = useTheme();
@@ -50,10 +60,14 @@ export default function EventCardSmall({
             color: theme.text,
           }}
         >
-          {dateFormatter("full").format(date)}
-          {"\n"}
-          {location}
+          {dateFormatter("full").format(timestampStart)}
+          {timestampEnd.getTime() !== timestampStart.getTime() &&
+            ` to ${dateFormatter("full").format(timestampEnd)}`}
         </Text>
+        <View>
+          <Text>{location}</Text>
+          <Text>{isOnline && "(Online)"}</Text>
+        </View>
       </View>
       <Pressable
         style={({ pressed }) => [
@@ -61,7 +75,9 @@ export default function EventCardSmall({
           { opacity: pressed ? 0.5 : 1 },
         ]}
         hitSlop={fonts.sizes.h5}
-        onPress={() => onInfoPress(title, date, location)}
+        onPress={() =>
+          onInfoPress(title, timestampStart, timestampEnd, location, isOnline)
+        }
       >
         <Lucide size={fonts.sizes.h5} name="info" color={theme.iconSecondary} />
       </Pressable>

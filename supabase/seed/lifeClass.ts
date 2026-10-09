@@ -103,7 +103,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-19T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-19T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -117,7 +117,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-20T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-20T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -131,7 +131,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-21T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-21T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -145,7 +145,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-22T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-22T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -159,7 +159,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-23T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-23T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -173,7 +173,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-24T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-24T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -187,7 +187,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-25T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-25T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -201,7 +201,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-25T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-25T13:00:00-07:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -222,7 +222,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-26T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-26T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -236,7 +236,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-27T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-27T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -250,7 +250,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-28T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-28T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -264,7 +264,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-29T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-29T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -278,7 +278,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-30T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-30T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -292,7 +292,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-10-31T13:00:00-07:00"),
+            timestamp_start: new Date("2026-10-31T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -306,7 +306,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-01T13:00:00-07:00"),
+            timestamp_start: new Date("2026-11-01T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
           },
@@ -320,7 +320,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-01T13:00:00-07:00"),
+            timestamp_start: new Date("2026-11-01T13:00:00-07:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -341,7 +341,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-02T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-02T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -355,7 +355,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-03T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-03T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -369,7 +369,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-04T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-04T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -383,7 +383,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-05T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-05T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -397,7 +397,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-06T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-06T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -411,7 +411,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-07T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-07T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -425,7 +425,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-08T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-08T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -439,7 +439,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-08T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-08T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -460,7 +460,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-09T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-09T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -474,7 +474,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-10T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-10T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -488,7 +488,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-11T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-11T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -502,7 +502,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-12T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-12T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -516,7 +516,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-13T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-13T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -530,7 +530,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-14T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-14T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -544,7 +544,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-15T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-15T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -558,7 +558,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-15T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-15T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -579,7 +579,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-16T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-16T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -593,7 +593,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-17T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-17T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -607,7 +607,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-18T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-18T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -621,7 +621,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-19T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-19T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -635,7 +635,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-20T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-20T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -649,7 +649,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-21T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-21T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -663,7 +663,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-22T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-22T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -677,7 +677,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-22T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-22T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -698,7 +698,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-23T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-23T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -712,7 +712,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-24T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-24T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -726,7 +726,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-25T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-25T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -740,7 +740,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-26T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-26T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -754,7 +754,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-27T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-27T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -768,7 +768,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-28T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-28T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -782,7 +782,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-29T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-29T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -796,7 +796,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-29T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-29T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -817,7 +817,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-11-30T13:00:00-08:00"),
+            timestamp_start: new Date("2026-11-30T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -831,7 +831,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-01T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-01T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -845,7 +845,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-02T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-02T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -859,7 +859,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-03T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-03T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -873,7 +873,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-04T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-04T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -887,7 +887,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-05T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-05T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -901,7 +901,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-06T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-06T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -915,7 +915,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-06T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-06T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -936,7 +936,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-07T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-07T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -950,7 +950,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-08T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-08T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -964,7 +964,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-09T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-09T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -978,7 +978,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-10T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-10T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -992,7 +992,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-11T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-11T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1006,7 +1006,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-12T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-12T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1020,7 +1020,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-13T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-13T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1034,7 +1034,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-13T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-13T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },
@@ -1055,7 +1055,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-14T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-14T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1069,7 +1069,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-15T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-15T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1083,7 +1083,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-16T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-16T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1097,7 +1097,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-17T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-17T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1111,7 +1111,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-18T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-18T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1125,7 +1125,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-19T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-19T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1139,7 +1139,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-20T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-20T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
           },
@@ -1153,7 +1153,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
-            timestamp: new Date("2026-12-20T13:00:00-08:00"),
+            timestamp_start: new Date("2026-12-20T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
           },

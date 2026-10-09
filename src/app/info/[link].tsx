@@ -9,8 +9,10 @@ export default function InfoPageWrapper() {
     title,
     subtitle,
     category,
-    timestamp,
+    timestampStart,
+    timestampEnd,
     location,
+    isOnline,
     information,
   } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
@@ -37,8 +39,14 @@ export default function InfoPageWrapper() {
             title={title ? title.toString() : ""}
             subtitle={subtitle ? subtitle.toString() : undefined}
             category={category ? category.toString() : undefined}
-            timestamp={timestamp ? new Date(timestamp.toString()) : undefined}
+            timestampStart={
+              timestampStart ? new Date(timestampStart.toString()) : undefined
+            }
+            timestampEnd={
+              timestampEnd ? new Date(timestampEnd.toString()) : undefined
+            }
             location={location ? location.toString() : undefined}
+            isOnline={isOnline?.toString() === "true"}
           />
 
           <View style={[styles.container, { top: 192 }]}>

@@ -10,8 +10,10 @@ type PreviewTitleCardProps = {
   title: string;
   subtitle?: string;
   category?: string;
-  timestamp?: Date;
+  timestampStart?: Date;
+  timestampEnd?: Date;
   location?: string;
+  isOnline?: boolean;
   hasTopAccent?: boolean;
   backgroundColor?: "primary" | "secondary";
 };
@@ -21,8 +23,10 @@ export default function PreviewTitleCard({
   title,
   subtitle,
   category,
-  timestamp,
+  timestampStart,
+  timestampEnd,
   location,
+  isOnline = false,
   hasTopAccent = true,
   backgroundColor = "secondary",
 }: PreviewTitleCardProps) {
@@ -30,6 +34,7 @@ export default function PreviewTitleCard({
   const { height } = useWindowDimensions();
 
   const colorName = getEventTypeColor(eventTypeId);
+  const eventTimestamp = timestampStart ?? timestampEnd;
 
   return (
     <View style={styles.container}>
@@ -86,7 +91,7 @@ export default function PreviewTitleCard({
             {subtitle}
           </Text>
         )}
-        {timestamp && (
+        {eventTimestamp !== undefined && (
           <Text
             style={{
               fontFamily: fonts.family,
@@ -94,7 +99,11 @@ export default function PreviewTitleCard({
               color: theme.text,
             }}
           >
-            {dateFormatter("full").format(timestamp)}
+            {dateFormatter("full").format(eventTimestamp)}
+            {timestampEnd !== undefined &&
+              timestampStart !== undefined &&
+              timestampEnd.getTime() !== timestampStart.getTime() &&
+              ` to ${dateFormatter("full").format(timestampEnd)}`}
           </Text>
         )}
         {location && (
@@ -106,6 +115,17 @@ export default function PreviewTitleCard({
             }}
           >
             {location}
+          </Text>
+        )}
+        {isOnline && (
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h6,
+              color: theme.text,
+            }}
+          >
+            Online
           </Text>
         )}
       </View>

@@ -46,7 +46,7 @@ export async function seedSermonsEventLessons(
     {
       id: 1,
       title: "Sunday Service",
-      timestamp: sundayServiceTimestamp,
+      timestamp_start: sundayServiceTimestamp,
       timestamp_end: getEventEndTimestamp(
         "Sunday Service",
         sundayServiceTimestamp,
@@ -88,7 +88,7 @@ export async function seedSermonsEventLessons(
     {
       id: 2,
       title: "Prayer Service",
-      timestamp: prayerServiceTimestamp,
+      timestamp_start: prayerServiceTimestamp,
       timestamp_end: getEventEndTimestamp(
         "Prayer Service",
         prayerServiceTimestamp,
@@ -127,7 +127,7 @@ export async function seedSermonsEventLessons(
     {
       id: 3,
       title: "Sunday Service",
-      timestamp: previousSundayServiceTimestamp,
+      timestamp_start: previousSundayServiceTimestamp,
       timestamp_end: getEventEndTimestamp(
         "Sunday Service",
         previousSundayServiceTimestamp,
@@ -139,7 +139,7 @@ export async function seedSermonsEventLessons(
     {
       id: 4,
       title: "Prayer Service",
-      timestamp: previousPrayerServiceTimestamp,
+      timestamp_start: previousPrayerServiceTimestamp,
       timestamp_end: getEventEndTimestamp(
         "Prayer Service",
         previousPrayerServiceTimestamp,
@@ -151,7 +151,7 @@ export async function seedSermonsEventLessons(
     {
       id: 5,
       title: "Prayer Service",
-      timestamp: oldPrayerServiceTimestamp,
+      timestamp_start: oldPrayerServiceTimestamp,
       timestamp_end: getEventEndTimestamp(
         "Prayer Service",
         oldPrayerServiceTimestamp,

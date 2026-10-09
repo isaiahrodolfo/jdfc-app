@@ -118,7 +118,7 @@ export default function Lessons() {
         </Text>
         <View style={styles.recentLiveEventLessonContainer}>
           {recentLiveEventLessons.map((recentLiveEventLesson) => {
-            const date = new Date(recentLiveEventLesson.timestamp);
+            const date = new Date(recentLiveEventLesson.timestamp_start);
 
             return (
               <EventCardBig

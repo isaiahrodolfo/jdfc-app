@@ -4,11 +4,11 @@ type UpsertEventProps = {
   eventId: number | null;
   eventTypeId: number;
   title: string;
-  timestamp: Date;
+  timestampStart: Date;
+  timestampEnd: Date;
   location: string;
   information: string;
   announcementStart: Date;
-  announcementEnd: Date;
   lifeGroupId: number | null;
   isOnline: boolean;
 };
@@ -17,22 +17,22 @@ export default async function upsertEvent({
   eventId,
   eventTypeId,
   title,
-  timestamp,
+  timestampStart,
+  timestampEnd,
   location,
   information,
   announcementStart,
-  announcementEnd,
   lifeGroupId,
   isOnline,
 }: UpsertEventProps): Promise<number | null> {
   let query = supabase.from("events").upsert({
     event_type_id: eventTypeId,
     title,
-    timestamp: timestamp.toISOString(),
+    timestamp_start: timestampStart.toISOString(),
+    timestamp_end: timestampEnd.toISOString(),
     location,
     information,
     announcement_start: announcementStart.toISOString(),
-    announcement_end: announcementEnd.toISOString(),
     life_group_id: lifeGroupId,
     is_online: isOnline,
   });

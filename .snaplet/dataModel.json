@@ -1428,20 +1428,6 @@
           "maxLength": null
         },
         {
-          "id": "public.events.timestamp",
-          "name": "timestamp",
-          "columnName": "timestamp",
-          "type": "timestamptz",
-          "isRequired": false,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.events.location",
           "name": "location",
           "columnName": "location",
@@ -1543,6 +1529,20 @@
           "id": "public.events.timestamp_end",
           "name": "timestamp_end",
           "columnName": "timestamp_end",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.events.timestamp_start",
+          "name": "timestamp_start",
+          "columnName": "timestamp_start",
           "type": "timestamptz",
           "isRequired": false,
           "kind": "scalar",

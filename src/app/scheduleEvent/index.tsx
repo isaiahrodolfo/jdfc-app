@@ -42,8 +42,10 @@ export default function ScheduleEventPage() {
   const { theme, fonts } = useTheme();
 
   const [eventName, setEventName] = useState(title.toString());
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
+  const [dateStart, setDateStart] = useState(new Date()); // Default start: now
+  const [timeStart, setTimeStart] = useState(new Date()); // Default start: now
+  const [dateEnd, setDateEnd] = useState(new Date(Date.now() + 3600000)); // Default end: now plus one hour
+  const [timeEnd, setTimeEnd] = useState(new Date(Date.now() + 3600000)); // Default end: now plus one hour
   const [location, setLocation] = useState("");
   const [isOnline, setIsOnline] = useState(false);
   const [information, setInformation] = useState("");
@@ -55,12 +57,20 @@ export default function ScheduleEventPage() {
     Number(eventTypeIndex.toString()) - 1, // eventTypeIndex is 0-indexed, while eventTypeId is 1-indexed
   );
 
-  const timestamp = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    time.getHours(),
-    time.getMinutes(),
+  const timestampStart = new Date(
+    dateStart.getFullYear(),
+    dateStart.getMonth(),
+    dateStart.getDate(),
+    timeStart.getHours(),
+    timeStart.getMinutes(),
+  );
+
+  const timestampEnd = new Date(
+    dateEnd.getFullYear(),
+    dateEnd.getMonth(),
+    dateEnd.getDate(),
+    timeEnd.getHours() + 1,
+    timeEnd.getMinutes(),
   );
 
   const handleCreateEventButtonPress = async () => {
@@ -71,11 +81,11 @@ export default function ScheduleEventPage() {
         eventId: eventId.toString() === "" ? null : Number(eventId.toString()),
         eventTypeId: Number(eventTypeIndex.toString()),
         title: eventName,
-        timestamp: timestamp,
+        timestampStart: timestampStart,
+        timestampEnd: timestampEnd,
         location: location.toString() ?? "",
         information: information.toString() ?? "",
         announcementStart: new Date(),
-        announcementEnd: timestamp,
         lifeGroupId: Number(lifeGroupId.toString()) ?? null,
         isOnline: isOnline,
       });
@@ -163,7 +173,7 @@ export default function ScheduleEventPage() {
                 onChangeText={(text) => setEventName(text)}
               />
             </View>
-            {/* Date & Time */}
+            {/* Date & Time (Start) */}
             <View style={styles.field}>
               <Text
                 style={{
@@ -173,24 +183,57 @@ export default function ScheduleEventPage() {
                   color: theme.textAlt,
                 }}
               >
-                Date & Time
+                Date & Time (Start)
               </Text>
               <View style={styles.dateAndTimePickerContainer}>
                 <DateTimePicker
                   mode="date"
-                  value={date}
+                  value={dateStart}
                   onValueChange={(_, selectedDate) => {
                     if (selectedDate) {
-                      setDate(selectedDate);
+                      setDateStart(selectedDate);
                     }
                   }}
                 />
                 <DateTimePicker
                   mode="time"
-                  value={time}
+                  value={timeStart}
                   onValueChange={(_, selectedTime) => {
                     if (selectedTime) {
-                      setTime(selectedTime);
+                      setTimeStart(selectedTime);
+                    }
+                  }}
+                />
+              </View>
+            </View>
+            {/* Date & Time (End) */}
+            <View style={styles.field}>
+              <Text
+                style={{
+                  fontFamily: fonts.family,
+                  fontSize: fonts.sizes.h4,
+                  fontWeight: "bold",
+                  color: theme.textAlt,
+                }}
+              >
+                Date & Time (End)
+              </Text>
+              <View style={styles.dateAndTimePickerContainer}>
+                <DateTimePicker
+                  mode="date"
+                  value={dateEnd}
+                  onValueChange={(_, selectedDate) => {
+                    if (selectedDate) {
+                      setDateEnd(selectedDate);
+                    }
+                  }}
+                />
+                <DateTimePicker
+                  mode="time"
+                  value={timeEnd}
+                  onValueChange={(_, selectedTime) => {
+                    if (selectedTime) {
+                      setTimeEnd(selectedTime);
                     }
                   }}
                 />

@@ -106,28 +106,31 @@ export default function PreviewTitleCard({
               ` to\n${dateFormatter("full").format(timestampEnd)}`}
           </Text>
         )}
-        {location && (
-          <Text
-            style={{
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h6,
-              color: theme.text,
-            }}
-          >
-            {location}
-          </Text>
-        )}
-        {isOnline && (
-          <Text
-            style={{
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h6,
-              color: theme.text,
-            }}
-          >
-            Online
-          </Text>
-        )}
+        <View style={{ flexDirection: "row", gap: 6 }}>
+          {location && (
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h6,
+                color: theme.text,
+              }}
+            >
+              {location}
+            </Text>
+          )}
+          {isOnline && (
+            <Text
+              style={{
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h6,
+                color: theme.text,
+                fontStyle: "italic",
+              }}
+            >
+              (Online)
+            </Text>
+          )}
+        </View>
       </View>
     </View>
   );

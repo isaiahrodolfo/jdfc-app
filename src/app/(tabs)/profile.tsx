@@ -192,7 +192,7 @@ export default function Profile() {
               autoComplete="name"
               fontFamily={fonts.family}
               textColor={theme.textAlt}
-              placeholderTextColor={theme.textAlt}
+              placeholderTextColor={theme.iconSecondary}
               borderColor={theme.textAlt}
               onChangeText={(text) => setFullName(text)}
             />

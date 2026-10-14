@@ -36,9 +36,10 @@ export async function seedConsolidation(
       lessons_events: [
         {
           events: {
+            title: "Consolidation",
             timestamp_start: getPacificSundayTimestamp(index),
             location: "Jesus' Disciples Family Church",
-            event_type_id: 4,
+            event_type_id: 3,
           },
           lessons_events_speakers: [{ user_id: speakerId }],
         },

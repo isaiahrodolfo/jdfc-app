@@ -6,7 +6,7 @@ import Input from "@/components/miscellaneous/Input";
 import { useTheme } from "@/contexts/ThemeContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Lucide } from "@react-native-vector-icons/lucide";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -16,6 +16,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { toastiva } from "toastiva";
 
 type EventType =
   | "Sunday Service"
@@ -92,9 +93,14 @@ export default function ScheduleEventPage() {
 
       if (eventId === null) {
         console.log("Upsert event failed");
+        toastiva.error("Failed to create event");
       }
+
+      toastiva.success("Created event");
+      router.back();
     } catch (error) {
       console.log(error);
+      toastiva.error("Failed to create event");
     } finally {
       setIsLoading(false);
     }

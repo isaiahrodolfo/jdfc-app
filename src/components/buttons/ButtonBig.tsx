@@ -24,7 +24,10 @@ export default function ButtonBig({
 
   return (
     <Pressable
-      style={[styles.container, { backgroundColor: backgroundColor }]}
+      style={({ pressed }) => [
+        styles.container,
+        { backgroundColor: backgroundColor, opacity: pressed ? 0.7 : 1 },
+      ]}
       onPress={onButtonPress}
     >
       {icon}

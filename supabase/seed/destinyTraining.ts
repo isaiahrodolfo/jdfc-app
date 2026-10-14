@@ -112,6 +112,7 @@ export async function seedDestinyTraining(
   const lessons = series.flatMap(({ lessons: seriesLessons }, seriesIndex) =>
     seriesLessons.map((title, lessonIndex) => {
       const timestampStart = getPacificSundayTimestamp(weekOffset);
+      const timestampEnd = new Date(timestampStart.getTime() + 60 * 60 * 1000);
       weekOffset += 1;
       weekOffset = weekOffset % 10;
 
@@ -129,6 +130,7 @@ export async function seedDestinyTraining(
             events: {
               title: "Destiny Training",
               timestamp_start: timestampStart,
+              timestamp_end: timestampEnd,
               location: "Jesus' Disciples Family Church",
               event_type_id: 5,
             },

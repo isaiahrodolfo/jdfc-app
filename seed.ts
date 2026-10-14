@@ -3,6 +3,8 @@ import { createDbClient } from "./seed.config";
 
 import { seedInitialData } from "./supabase/seed/initialData";
 import { seedLessonsEventsLinks } from "./supabase/seed/lessonsEventsLinks";
+import { seedConsolidation } from "./supabase/seed/consolidation";
+import { seedDestinyTraining } from "./supabase/seed/destinyTraining";
 import { seedLifeClass } from "./supabase/seed/lifeClass";
 import { seedLifeGroupEvents } from "./supabase/seed/lifeGroupEvents";
 import { seedSermonsEventLessons } from "./supabase/seed/sermonsEventLessons";
@@ -35,6 +37,8 @@ async function main() {
     ]);
 
     await seedLifeClass(seed, users[0].id);
+    await seedConsolidation(seed, users[0].id);
+    await seedDestinyTraining(seed, users[0].id);
 
     await seedLifeGroupEvents(seed, client, users[1].id, users[2].id);
 

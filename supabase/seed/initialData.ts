@@ -31,27 +31,6 @@ export async function seedInitialData(
     },
   ]);
 
-  await seed.series([
-    {
-      id: 1,
-      name: "Consolidation",
-      series_number: null,
-      track_id: 3,
-    },
-    // { We already have this in seedLifeClass
-    //   id: 2,
-    //   name: "Learning From Our Mistakes",
-    //   series_number: 1,
-    //   track_id: 4,
-    // },
-    {
-      id: 11,
-      name: "DT Example Title",
-      series_number: 1,
-      track_id: 5,
-    },
-  ]);
-
   await seed.life_group_roles([
     {
       id: 1,

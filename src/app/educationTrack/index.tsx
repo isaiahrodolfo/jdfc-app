@@ -225,21 +225,23 @@ export default function Index() {
           progressTrackerData={progressTrackerData}
         />
 
-        <DropdownSmall
-          selections={
-            educationTrack?.seriesLessons.map(
-              (series) =>
-                `${educationTrack.heading} ${series.seriesNumber}: ${series.name}`,
-            ) ?? []
-          }
-          isOpen={dropdownIsOpen}
-          indexSelected={selectedSeriesIndex}
-          onOpenPress={() => setDropdownIsOpen(true)}
-          onClosePress={(selectedIndex: number) => {
-            setSelectedSeriesIndex(selectedIndex);
-            setDropdownIsOpen(false);
-          }}
-        />
+        {educationTrack?.seriesLessons.length !== 1 && (
+          <DropdownSmall
+            selections={
+              educationTrack?.seriesLessons.map(
+                (series) =>
+                  `${educationTrack.heading} ${series.seriesNumber}: ${series.name}`,
+              ) ?? []
+            }
+            isOpen={dropdownIsOpen}
+            indexSelected={selectedSeriesIndex}
+            onOpenPress={() => setDropdownIsOpen(true)}
+            onClosePress={(selectedIndex: number) => {
+              setSelectedSeriesIndex(selectedIndex);
+              setDropdownIsOpen(false);
+            }}
+          />
+        )}
 
         <View style={styles.lessonsListContainer}>
           {selectedSeries?.lessons.map((lesson) => {

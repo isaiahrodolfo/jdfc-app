@@ -1,6 +1,8 @@
+import { ProfileSearchResult } from "@/api/supabase/profile/getProfileNames";
 import ButtonBig from "@/components/buttons/ButtonBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
 import PersonListItem from "@/components/miscellaneous/PersonListItem";
+import UserNamesDropdownSmall from "@/components/miscellaneous/UserNamesDropdownSmall";
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
@@ -38,6 +40,8 @@ export default function LifeGroup() {
       setRefreshing(false);
     }
   };
+
+  const [selectedProfile, setSelectedProfile] = useState<ProfileSearchResult>();
 
   const handleInfoPress = ({
     eventTypeId,
@@ -121,6 +125,10 @@ export default function LifeGroup() {
       }
     >
       <View style={styles.container}>
+        <UserNamesDropdownSmall
+          selectedProfile={selectedProfile}
+          onProfileSelect={setSelectedProfile}
+        />
         <Text
           style={[
             styles.h1,

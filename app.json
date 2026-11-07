@@ -45,7 +45,10 @@
       "@react-native-vector-icons/octicons",
       "@react-native-vector-icons/entypo",
       "@react-native-vector-icons/fontawesome-free-solid",
-      "@react-native-vector-icons/feather"
+      "@react-native-vector-icons/feather",
+      "expo-image",
+      "expo-status-bar",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

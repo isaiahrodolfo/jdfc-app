@@ -7,6 +7,8 @@ import {
 } from "react-native";
 
 import { toggleCompleted } from "@/api/supabase/lessons/toggleCompleted";
+import getUserNextTrackAndModule from "@/api/supabase/profile/getUserNextTrackAndModule";
+import ButtonBig from "@/components/buttons/ButtonBig";
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
@@ -157,6 +159,18 @@ export default function Home() {
       }
     >
       <View style={styles.container}>
+        <ButtonBig
+          text={"Test getUserNextTrackAndModule"}
+          textColor={theme.text}
+          backgroundColor={theme.accent}
+          onButtonPress={async () => {
+            const next = await getUserNextTrackAndModule({
+              userId: user.id,
+              completionThreshold: 0.7,
+            });
+            console.log(next);
+          }}
+        />
         <Text
           style={[
             styles.h1,

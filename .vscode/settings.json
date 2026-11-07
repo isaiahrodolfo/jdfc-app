@@ -9,6 +9,7 @@
     "JDFC",
     "Postgrest",
     "Pressable",
+    "Snaplet",
     "supabase",
     "toastiva"
   ]

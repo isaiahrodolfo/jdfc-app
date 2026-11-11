@@ -1,6 +1,7 @@
 import { useTheme } from "@/contexts/ThemeContext";
 import { Lucide } from "@react-native-vector-icons/lucide";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import convertEventTypeIdToName from "../helpers/convertEventTypeIdToName";
 import { dateFormatter } from "../helpers/dateFormatter";
 import getEventTypeColor from "../helpers/getEventTypeColor";
 
@@ -32,6 +33,7 @@ export default function EventCardSmall({
   const { theme, fonts } = useTheme();
 
   const colorName = getEventTypeColor(eventTypeId);
+  const eventCategory = convertEventTypeIdToName(eventTypeId);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.secondary }]}>
@@ -45,6 +47,15 @@ export default function EventCardSmall({
         <Text
           style={{
             fontFamily: fonts.family,
+            fontSize: fonts.sizes.p,
+            color: theme.text,
+          }}
+        >
+          {eventCategory}
+        </Text>
+        <Text
+          style={{
+            fontFamily: fonts.family,
             fontSize: fonts.sizes.h5,
             fontWeight: "bold",
             textTransform: "uppercase",
@@ -53,7 +64,7 @@ export default function EventCardSmall({
         >
           {title}
         </Text>
-        <View style={{ gap: 2 }}>
+        <View style={{ gap: 1 }}>
           <Text
             style={{
               fontFamily: fonts.family,
@@ -116,7 +127,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
   },
   textContainer: {
-    gap: 4,
+    gap: 6,
     paddingTop: 16,
     paddingLeft: 16,
     paddingBottom: 16,

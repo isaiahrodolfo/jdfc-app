@@ -158,6 +158,18 @@ export default function DevotionPage() {
     }
   };
 
+  function replaceSpecialCharacters(text: string): string {
+    return text
+      .replace(/\n/g, " ")
+      .replace(/\s+/g, " ")
+      .replace(/&lsquo;/g, "‘")
+      .replace(/&rsquo;/g, "’")
+      .replace(/&ldquo;/g, "“")
+      .replace(/&rdquo;/g, "”")
+      .replace(/&mdash;/g, "—")
+      .trim();
+  }
+
   /*
    * The ScrollView itself moves the image upward by scrollY.
    *
@@ -197,7 +209,7 @@ export default function DevotionPage() {
         keyboardShouldPersistTaps="always"
       >
         <View style={styles.imageContainer}>
-          <Image source={{ uri: imageUrl.toString() }} style={styles.image} />
+          <Image source={{ uri: imageUrl?.toString() }} style={styles.image} />
         </View>
 
         <PreviewTitleCard
@@ -338,7 +350,7 @@ export default function DevotionPage() {
                   },
                 ]}
               >
-                {paragraph.replace(/\n/g, " ").trim()}
+                {replaceSpecialCharacters(paragraph.toString())}
               </Text>
             ))}
         </View>
@@ -371,7 +383,7 @@ export default function DevotionPage() {
                 fontWeight: "bold",
               }}
             >
-              {response.toString().replace(/\s+/g, " ").trim()}
+              {replaceSpecialCharacters(response?.toString() ?? "")}
             </Text>
             <Text
               style={{
@@ -381,7 +393,7 @@ export default function DevotionPage() {
                 fontStyle: "italic",
               }}
             >
-              {thought.toString().replace(/\s+/g, " ").trim()}
+              {replaceSpecialCharacters(thought?.toString() ?? "")}
             </Text>
           </View>
         </View>
@@ -413,13 +425,7 @@ export default function DevotionPage() {
                 color: theme.text,
               }}
             >
-              {insights
-                .toString()
-                .replace(/\s+/g, " ")
-                .replace(/&ldquo;/g, "'")
-                .replace(/&rsquo;/g, "'")
-                .replace(/&rdquo;/g, "'")
-                .trim()}
+              {replaceSpecialCharacters(insights?.toString() ?? "")}
             </Text>
           </View>
         </View>
@@ -452,7 +458,7 @@ export default function DevotionPage() {
                 await saveNotes(
                   user,
                   html,
-                  odbUrl.toString(),
+                  odbUrl?.toString() ?? "",
                   "devotional",
                   title.toString(),
                   dateKey.toString(),

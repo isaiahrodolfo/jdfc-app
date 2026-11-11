@@ -44,15 +44,17 @@ export default function EventCardSmall({
         ]}
       ></View>
       <View style={styles.textContainer}>
-        <Text
-          style={{
-            fontFamily: fonts.family,
-            fontSize: fonts.sizes.p,
-            color: theme.text,
-          }}
-        >
-          {eventCategory}
-        </Text>
+        {eventCategory && (
+          <Text
+            style={{
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.p,
+              color: theme.text,
+            }}
+          >
+            {eventCategory}
+          </Text>
+        )}
         <Text
           style={{
             fontFamily: fonts.family,
@@ -62,7 +64,7 @@ export default function EventCardSmall({
             color: theme.text,
           }}
         >
-          {title}
+          {title ?? "Unnamed Event"}
         </Text>
         <View style={{ gap: 1 }}>
           <Text
@@ -76,25 +78,29 @@ export default function EventCardSmall({
             {timestampEnd.getTime() !== timestampStart.getTime()}
           </Text>
           <View style={{ flexDirection: "row", gap: 4 }}>
-            <Text
-              style={{
-                fontFamily: fonts.family,
-                fontSize: fonts.sizes.p,
-                color: theme.text,
-              }}
-            >
-              {location}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.family,
-                fontSize: fonts.sizes.p,
-                color: theme.text,
-                fontStyle: "italic",
-              }}
-            >
-              {isOnline && "(Online)"}
-            </Text>
+            {location && (
+              <Text
+                style={{
+                  fontFamily: fonts.family,
+                  fontSize: fonts.sizes.p,
+                  color: theme.text,
+                }}
+              >
+                {location}
+              </Text>
+            )}
+            {isOnline && (
+              <Text
+                style={{
+                  fontFamily: fonts.family,
+                  fontSize: fonts.sizes.p,
+                  color: theme.text,
+                  fontStyle: "italic",
+                }}
+              >
+                {isOnline && "(Online)"}
+              </Text>
+            )}
           </View>
         </View>
       </View>

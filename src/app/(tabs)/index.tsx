@@ -280,7 +280,7 @@ export default function Home() {
           .filter(
             (upcomingEvent) =>
               (upcomingEvent.title === "Life Group" &&
-                upcomingEvent.lifeGroupId === profile?.life_group_id) ||
+                upcomingEvent.lifeGroupId === profile?.life_group_id) || // Filter for the user's Life Group events
               upcomingEvent.lifeGroupId === null,
           )
           .map((upcomingEvent) => (

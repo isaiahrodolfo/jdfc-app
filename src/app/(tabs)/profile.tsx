@@ -5,6 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Feather from "@react-native-vector-icons/feather";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { useEffect, useState } from "react";
 import {
@@ -15,6 +16,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { toastiva } from "toastiva";
 
 export default function Profile() {
   const { user, isLoading } = useAuthContext();
@@ -110,6 +112,14 @@ export default function Profile() {
       Alert.alert(error.message);
     } finally {
       setIsSaveProfileLoading(false);
+    }
+  }
+
+  async function logOut() {
+    const { error } = await supabase.auth.signOut({ scope: "local" });
+
+    if (error) {
+      toastiva.error("Failed to log out");
     }
   }
 
@@ -280,6 +290,19 @@ export default function Profile() {
             isSaveProfileLoading ? theme.secondary : theme.iconSecondary
           }
           onButtonPress={updateProfile}
+        />
+        <ButtonBig
+          icon={
+            <Feather
+              name="log-out"
+              color={theme.iconSecondary}
+              size={fonts.sizes.h4}
+            />
+          }
+          text={"Log Out"}
+          textColor={theme.iconSecondary}
+          backgroundColor={theme.secondary}
+          onButtonPress={logOut}
         />
       </View>
     </ScrollView>

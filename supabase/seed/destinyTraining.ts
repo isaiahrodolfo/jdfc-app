@@ -128,7 +128,7 @@ export async function seedDestinyTraining(
         lessons_events: [
           {
             events: {
-              title: "Destiny Training",
+              title,
               timestamp_start: timestampStart,
               timestamp_end: timestampEnd,
               location: "Jesus' Disciples Family Church",

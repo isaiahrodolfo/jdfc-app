@@ -39,7 +39,7 @@ export async function seedConsolidation(
         lessons_events: [
           {
             events: {
-              title: "Consolidation",
+              title,
               timestamp_start: timestampStart,
               timestamp_end: timestampEnd,
               location: "Jesus' Disciples Family Church",

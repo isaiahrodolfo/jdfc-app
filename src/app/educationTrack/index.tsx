@@ -275,15 +275,20 @@ export default function Index() {
               ? dateFormatter("date").format(lessonDate)
               : "";
 
-            const time = lesson.timestamp_start
-              ? dateFormatter("time").format(new Date(lesson.timestamp_start)) +
-                (lesson.timestamp_end &&
-                lesson.timestamp_end !== lesson.timestamp_start
-                  ? ` to ${dateFormatter("time").format(
-                      new Date(lesson.timestamp_end),
-                    )}`
-                  : "")
-              : "";
+            const time = lesson.isUserCompletable
+              ? ""
+              : lesson.timestamp_start
+                ? dateFormatter("time").format(
+                    new Date(lesson.timestamp_start),
+                  ) +
+                  (lesson.timestamp_end &&
+                  lesson.timestamp_end !== lesson.timestamp_start
+                    ? ` to ${dateFormatter("time").format(
+                        new Date(lesson.timestamp_end),
+                      )}`
+                    : "")
+                : "";
+
             const location = [
               lesson.location,
               lesson.is_online ? "(Online)" : null,

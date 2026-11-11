@@ -9,25 +9,25 @@ export async function seedSermonsEventLessons(
     {
       id: 67,
       name: "Sunday Service Sermon Series 1",
-      series_number: null,
+      series_number: 1,
       track_id: 1,
     },
     {
       id: 68,
       name: "Sunday Service Sermon Series 2",
-      series_number: null,
+      series_number: 2,
       track_id: 1,
     },
     {
       id: 124,
       name: "Prayer Service Sermon Series 1",
-      series_number: null,
+      series_number: 1,
       track_id: 2,
     },
     {
       id: 125,
       name: "Prayer Service Sermon Series 2",
-      series_number: null,
+      series_number: 2,
       track_id: 2,
     },
   ]);

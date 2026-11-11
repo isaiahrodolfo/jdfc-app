@@ -22,7 +22,7 @@ export async function seedConsolidation(
     {
       id: seriesId,
       name: "Consolidation",
-      series_number: null,
+      series_number: 1,
       track_id: 3,
     },
   ]);

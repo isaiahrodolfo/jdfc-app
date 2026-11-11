@@ -3901,6 +3901,20 @@
           "hasDefaultValue": true,
           "isId": false,
           "maxLength": null
+        },
+        {
+          "id": "realtime.messages.expires_at",
+          "name": "expires_at",
+          "columnName": "expires_at",
+          "type": "timestamp",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
         }
       ],
       "uniqueConstraints": []
@@ -8467,11 +8481,10 @@
       ],
       "uniqueConstraints": [
         {
-          "name": "subscription_subscription_id_entity_filters_action_filter_selec",
+          "name": "subscription_subscription_id_entity_filters_hash_key",
           "fields": [
             "action_filter",
             "entity",
-            "filters",
             "subscription_id"
           ],
           "nullNotDistinct": false

@@ -103,6 +103,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "A New Day",
             timestamp_start: new Date("2026-10-19T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -117,6 +118,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "An Opportunity For An Encounter",
             timestamp_start: new Date("2026-10-20T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -131,6 +133,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Is It Too Late For Reconciliation?",
             timestamp_start: new Date("2026-10-21T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -145,6 +148,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "An Opportunity For Restoration",
             timestamp_start: new Date("2026-10-22T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -159,6 +163,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "An Opportunity For Provision",
             timestamp_start: new Date("2026-10-23T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -173,6 +178,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Who Is Jesus?",
             timestamp_start: new Date("2026-10-24T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -187,6 +193,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Four Opportunities",
             timestamp_start: new Date("2026-10-25T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -201,6 +208,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Learning From Our Mistakes — Week 1 Recap",
             timestamp_start: new Date("2026-10-25T13:00:00-07:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -222,6 +230,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Best Deal Of Your Life",
             timestamp_start: new Date("2026-10-26T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -236,6 +245,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Jesus Took Our Place",
             timestamp_start: new Date("2026-10-27T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -250,6 +260,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Miracle Of Exchange",
             timestamp_start: new Date("2026-10-28T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -264,6 +275,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Freedom At The Foot Of The Cross",
             timestamp_start: new Date("2026-10-29T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -278,6 +290,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Every Last Drop Of Blood",
             timestamp_start: new Date("2026-10-30T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -292,6 +305,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Incomparable Price Jesus Paid For Me",
             timestamp_start: new Date("2026-10-31T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -306,6 +320,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Contemplating The Cross",
             timestamp_start: new Date("2026-11-01T13:00:00-07:00"),
             location: null,
             event_type_id: 4,
@@ -320,6 +335,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Best Deal Of Your Life — Week 2 Recap",
             timestamp_start: new Date("2026-11-01T13:00:00-07:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -341,6 +357,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Best Experience",
             timestamp_start: new Date("2026-11-02T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -355,6 +372,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Recovering Our Sight",
             timestamp_start: new Date("2026-11-03T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -369,6 +387,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Created To Grow",
             timestamp_start: new Date("2026-11-04T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -383,6 +402,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "A New Heart",
             timestamp_start: new Date("2026-11-05T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -397,6 +417,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Born Into Holiness",
             timestamp_start: new Date("2026-11-06T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -411,6 +432,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Born Of The Spirit",
             timestamp_start: new Date("2026-11-07T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -425,6 +447,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "A Life Of Faith",
             timestamp_start: new Date("2026-11-08T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -439,6 +462,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Best Experience Of Your Life — Week 3 Recap",
             timestamp_start: new Date("2026-11-08T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -460,6 +484,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Enemy",
             timestamp_start: new Date("2026-11-09T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -474,6 +499,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "A Life Of Conquest",
             timestamp_start: new Date("2026-11-10T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -488,6 +514,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Our Secret Weapon",
             timestamp_start: new Date("2026-11-11T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -502,6 +529,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "All My Sins Are Forgiven",
             timestamp_start: new Date("2026-11-12T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -516,6 +544,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Whiter Than Snow",
             timestamp_start: new Date("2026-11-13T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -530,6 +559,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "As If I Had Never Sinned",
             timestamp_start: new Date("2026-11-14T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -544,6 +574,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Set Apart For God",
             timestamp_start: new Date("2026-11-15T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -558,6 +589,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Life Is A Battle — Week 4 Recap",
             timestamp_start: new Date("2026-11-15T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -579,6 +611,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "After The Encounter",
             timestamp_start: new Date("2026-11-16T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -593,6 +626,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "180 Degrees",
             timestamp_start: new Date("2026-11-17T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -607,6 +641,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Take Hold Of What Is Yours",
             timestamp_start: new Date("2026-11-18T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -621,6 +656,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Best Medicine",
             timestamp_start: new Date("2026-11-19T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -635,6 +671,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Protect Your Freedom",
             timestamp_start: new Date("2026-11-20T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -649,6 +686,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Change Your Nation, Twelve People At A Time",
             timestamp_start: new Date("2026-11-21T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -663,6 +701,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Holy Spirit, I Need You!",
             timestamp_start: new Date("2026-11-22T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -677,6 +716,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Encounter — Week 5 Recap",
             timestamp_start: new Date("2026-11-22T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -698,6 +738,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "We Need To Relate To God Personally",
             timestamp_start: new Date("2026-11-23T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -712,6 +753,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Hearing God (I)",
             timestamp_start: new Date("2026-11-24T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -726,6 +768,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Hearing God (II)",
             timestamp_start: new Date("2026-11-25T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -740,6 +783,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Speaking To God (I)",
             timestamp_start: new Date("2026-11-26T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -754,6 +798,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Speaking To God (II)",
             timestamp_start: new Date("2026-11-27T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -768,6 +813,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Devotional",
             timestamp_start: new Date("2026-11-28T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -782,6 +828,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Book Of Dreams",
             timestamp_start: new Date("2026-11-29T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -796,6 +843,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Discover The Secret That Will Transform Your Life — Week 6 Recap",
             timestamp_start: new Date("2026-11-29T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -817,6 +865,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Serve Jesus With All Your Heart",
             timestamp_start: new Date("2026-11-30T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -831,6 +880,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Stand Firm When Under Attack",
             timestamp_start: new Date("2026-12-01T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -845,6 +895,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Stand Firm Against Yourself",
             timestamp_start: new Date("2026-12-02T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -859,6 +910,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Depend Completely On God",
             timestamp_start: new Date("2026-12-03T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -873,6 +925,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Be A Mighty Warrior",
             timestamp_start: new Date("2026-12-04T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -887,6 +940,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Obtain Victory",
             timestamp_start: new Date("2026-12-05T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -901,6 +955,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Decide To Serve Others",
             timestamp_start: new Date("2026-12-06T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -915,6 +970,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Your Decisions Define You — Week 7 Recap",
             timestamp_start: new Date("2026-12-06T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -936,6 +992,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "I Am A Son Or Daughter",
             timestamp_start: new Date("2026-12-07T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -950,6 +1007,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Best Inheritance",
             timestamp_start: new Date("2026-12-08T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -964,6 +1022,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "The Will Of God",
             timestamp_start: new Date("2026-12-09T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -978,6 +1037,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Accepting God's Thoughts",
             timestamp_start: new Date("2026-12-10T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -992,6 +1052,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "God Is My Strength",
             timestamp_start: new Date("2026-12-11T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1006,6 +1067,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "A Renewed Mind",
             timestamp_start: new Date("2026-12-12T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1020,6 +1082,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "I Am An Overcomer",
             timestamp_start: new Date("2026-12-13T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1034,6 +1097,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Nothing Less Than God's Best — Week 8 Recap",
             timestamp_start: new Date("2026-12-13T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,
@@ -1055,6 +1119,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Starting Over",
             timestamp_start: new Date("2026-12-14T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1069,6 +1134,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Who Has This Opportunity?",
             timestamp_start: new Date("2026-12-15T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1083,6 +1149,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Can I Do It Now?",
             timestamp_start: new Date("2026-12-16T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1097,6 +1164,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "Jesus' Example",
             timestamp_start: new Date("2026-12-17T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1111,6 +1179,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "What That Means For Me",
             timestamp_start: new Date("2026-12-18T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1125,6 +1194,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "You Decide!",
             timestamp_start: new Date("2026-12-19T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1139,6 +1209,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "New Life",
             timestamp_start: new Date("2026-12-20T13:00:00-08:00"),
             location: null,
             event_type_id: 4,
@@ -1153,6 +1224,7 @@ export async function seedLifeClass(
       lessons_events: [
         {
           events: {
+            title: "A New Beginning — Week 9 Recap",
             timestamp_start: new Date("2026-12-20T13:00:00-08:00"),
             location: "Jesus' Disciples Family Church",
             event_type_id: 4,

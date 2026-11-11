@@ -11,6 +11,7 @@ import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import EventCardBig from "@/components/cards/EventCardBig";
 import EventCardSmall from "@/components/cards/EventCardSmall";
 import LessonCard from "@/components/cards/LessonCard";
+import convertEventTypeIdToName from "@/components/helpers/convertEventTypeIdToName";
 import { dateKeyToLocalDate } from "@/components/helpers/dateKeyToLocalDate";
 import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPress";
 import { useTabs } from "@/contexts/TabsContext";
@@ -301,7 +302,7 @@ export default function Home() {
                   location: upcomingEvent.location,
                   isOnline: upcomingEvent.is_online,
                   information: upcomingEvent.information,
-                  category: "Event",
+                  category: convertEventTypeIdToName(upcomingEvent.eventTypeId),
                 })
               }
             />

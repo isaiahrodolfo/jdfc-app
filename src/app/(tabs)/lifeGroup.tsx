@@ -164,7 +164,7 @@ export default function LifeGroup() {
                 location: upcomingEvent.location,
                 isOnline: upcomingEvent.is_online,
                 information: upcomingEvent.information,
-                category: "Event",
+                category: "Life Group",
               })
             }
           />

@@ -33,47 +33,83 @@ export async function getUpcomingEvents({
   userId,
   lifeGroupId,
 }: getUpcomingEventsProps): Promise<UpcomingEvent[]> {
-  console.log("userId for this function", userId);
-  // If user id provided, filter education events based on the user's current track and module
-  // (Get only education events here)
+  let educationEvents: UpcomingEvent[] = [];
+
+  console.log("userId for this function:", userId);
+
+  // If user id provided, filter education events based on
+  // the user's current track and module.
   if (userId) {
     const userNextTrackAndModule = await getUserNextTrackAndModule({
-      userId: userId,
+      userId,
       completionThreshold: 0.7,
     });
 
+    console.log("userNextTrackAndModule:", userNextTrackAndModule);
+
     if (userNextTrackAndModule) {
+      const { track, module } = userNextTrackAndModule;
+
+      console.log("Filtering education events by:", {
+        track,
+        module,
+      });
+
       const { data, error } = await supabase
         .from("lessons_events")
         .select(
           `
-        lessons!inner (
-          church_lessons!inner (
-            series!inner (
-              track_id,
-              series_number
+          lessons!inner (
+            church_lessons!inner (
+              series!inner (
+                track_id,
+                series_number
+              )
             )
+          ),
+          events!inner (
+            *
           )
-        ),
-        events!inner (*)
-        `,
+          `,
         )
-        .eq(
-          "lessons.church_lessons.series.track_id",
-          userNextTrackAndModule?.track,
-        )
-        .eq(
-          "lessons.church_lessons.series.series_number",
-          userNextTrackAndModule?.module,
-        )
-        .gte("event_type_id", 3);
+        .eq("lessons.church_lessons.series.track_id", track)
+        .eq("lessons.church_lessons.series.series_number", module)
+        .gte("events.event_type_id", 3);
 
-      console.log("education events for this user", data);
+      if (error) {
+        console.error("Error getting education events:", error);
+      } else {
+        console.log(
+          "Education events for this user:",
+          JSON.stringify(data, null, 2),
+        );
+
+        educationEvents = (data ?? []).map(({ events: event }) => {
+          const timestampStart = event.timestamp_start
+            ? new Date(event.timestamp_start)
+            : new Date();
+
+          return {
+            id: event.id,
+            title: event.title ?? "",
+            information: event.information ?? "",
+            timestamp_start: timestampStart,
+            timestamp_end: event.timestamp_end
+              ? new Date(event.timestamp_end)
+              : timestampStart,
+            location: event.location ?? "",
+            is_online: event.is_online ?? false,
+            repeatEveryDays: event.repeat_every_days ?? null,
+            eventTypeId: event.event_type_id,
+            lifeGroupId: event.life_group_id,
+          };
+        });
+      }
     } else {
       console.log("User does not have a next track or module");
     }
   } else {
-    console.log("no user id provided");
+    console.log("No user id provided");
   }
 
   // Get only sermons, devotions, and life group events here
@@ -81,17 +117,17 @@ export async function getUpcomingEvents({
     .from("events")
     .select(
       `
-    id,
-    title,
-    information,
-    timestamp_start,
-    timestamp_end,
-    location,
-    is_online,
-    repeat_every_days,
-    event_type_id,
-    life_group_id
-  `,
+      id,
+      title,
+      information,
+      timestamp_start,
+      timestamp_end,
+      location,
+      is_online,
+      repeat_every_days,
+      event_type_id,
+      life_group_id
+      `,
     )
     .or("location.not.is.null,is_online.eq.true")
     .neq("event_type_id", 3)
@@ -107,31 +143,36 @@ export async function getUpcomingEvents({
 
   const { data, error } = await query;
 
-  console.log("events data", data); // TESTING
+  console.log("events data:", data);
 
   if (error) {
-    console.log("Upcoming events not found", error);
-    return [];
+    console.error("Upcoming events not found:", error);
+    return educationEvents;
   }
 
-  return (data ?? []).map((event) => {
-    const timestampStart = event.timestamp_start
-      ? new Date(event.timestamp_start)
-      : new Date();
+  const events: UpcomingEvent[] = [
+    ...educationEvents,
+    ...(data ?? []).map((event) => {
+      const timestampStart = event.timestamp_start
+        ? new Date(event.timestamp_start)
+        : new Date();
 
-    return {
-      id: event.id,
-      title: event.title ?? "",
-      information: event.information ?? "",
-      timestamp_start: timestampStart,
-      timestamp_end: event.timestamp_end
-        ? new Date(event.timestamp_end)
-        : timestampStart,
-      location: event.location ?? "",
-      is_online: event.is_online ?? false,
-      repeatEveryDays: event.repeat_every_days ?? null,
-      eventTypeId: event.event_type_id,
-      lifeGroupId: event.life_group_id,
-    };
-  });
+      return {
+        id: event.id,
+        title: event.title ?? "",
+        information: event.information ?? "",
+        timestamp_start: timestampStart,
+        timestamp_end: event.timestamp_end
+          ? new Date(event.timestamp_end)
+          : timestampStart,
+        location: event.location ?? "",
+        is_online: event.is_online ?? false,
+        repeatEveryDays: event.repeat_every_days ?? null,
+        eventTypeId: event.event_type_id,
+        lifeGroupId: event.life_group_id,
+      };
+    }),
+  ];
+
+  return events;
 }

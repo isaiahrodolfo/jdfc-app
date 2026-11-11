@@ -33,7 +33,9 @@ export async function getUpcomingEvents({
   userId,
   lifeGroupId,
 }: getUpcomingEventsProps): Promise<UpcomingEvent[]> {
-  // If user id provided, filter events based on the user's current track and module
+  console.log("userId for this function", userId);
+  // If user id provided, filter education events based on the user's current track and module
+  // (Get only education events here)
   if (userId) {
     const userNextTrackAndModule = await getUserNextTrackAndModule({
       userId: userId,
@@ -65,10 +67,16 @@ export async function getUpcomingEvents({
           userNextTrackAndModule?.module,
         )
         .gte("event_type_id", 3);
+
+      console.log("education events for this user", data);
+    } else {
+      console.log("User does not have a next track or module");
     }
+  } else {
+    console.log("no user id provided");
   }
 
-  // Get all events TODO: Replace this with getting only sermons and devotions events
+  // Get only sermons, devotions, and life group events here
   let query = supabase
     .from("events")
     .select(

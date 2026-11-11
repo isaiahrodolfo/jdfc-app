@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -81,7 +82,8 @@ const getTodaysDate = (): Date => {
 };
 
 export function TabsProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuthContext();
+  const { user, isLoading: isAuthLoading } = useAuthContext();
+  const userId = user?.id;
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
   const [recentLiveEventLessons, setRecentLiveEventLessons] = useState<
@@ -115,7 +117,12 @@ export function TabsProvider({ children }: { children: ReactNode }) {
       : progress;
   });
 
-  const refreshPage = async () => {
+  const refreshPage = useCallback(async () => {
+    if (!userId) {
+      setIsLoadingTabsData(false);
+      return;
+    }
+
     setIsLoadingTabsData(true);
 
     try {
@@ -134,7 +141,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         return result;
       };
 
-      const profileData = await timed("getProfile", getProfile(user.id));
+      const profileData = await timed("getProfile", getProfile(userId));
 
       const [
         liveEventsData,
@@ -150,7 +157,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         timed(
           "getUpcomingEvents",
           getUpcomingEvents({
-            userId: user.userId,
+            userId,
             lifeGroupId: profileData?.life_group_id,
           }),
         ),
@@ -184,7 +191,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
             devotional.odbUrl,
             devotional.title,
             devotional.dateKey,
-            user.id,
+            userId,
           );
 
           console.log(
@@ -232,11 +239,13 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoadingTabsData(false);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
-    refreshPage();
-  }, []);
+    if (isAuthLoading) return;
+
+    void refreshPage();
+  }, [isAuthLoading, refreshPage]);
 
   return (
     <TabsContext.Provider

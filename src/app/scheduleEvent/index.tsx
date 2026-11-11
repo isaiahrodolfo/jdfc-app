@@ -42,7 +42,7 @@ export default function ScheduleEventPage() {
     useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
-  const [eventName, setEventName] = useState(title.toString());
+  const [eventName, setEventName] = useState(title?.toString());
   const [dateStart, setDateStart] = useState(new Date()); // Default start: now
   const [timeStart, setTimeStart] = useState(new Date()); // Default start: now
   const [dateEnd, setDateEnd] = useState(new Date(Date.now() + 3600000)); // Default end: now plus one hour
@@ -55,7 +55,7 @@ export default function ScheduleEventPage() {
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
   const [selectedEventTypeIndex, setSelectedEventTypeIndex] = useState(
-    Number(eventTypeIndex.toString()) - 1, // eventTypeIndex is 0-indexed, while eventTypeId is 1-indexed
+    Number(eventTypeIndex?.toString()) - 1, // eventTypeIndex is 0-indexed, while eventTypeId is 1-indexed
   );
 
   const timestampStart = new Date(
@@ -79,15 +79,16 @@ export default function ScheduleEventPage() {
     setIsLoading(true);
     try {
       await upsertEvent({
-        eventId: eventId.toString() === "" ? null : Number(eventId.toString()),
-        eventTypeId: Number(eventTypeIndex.toString()),
-        title: eventName,
+        eventId:
+          eventId?.toString() === "" ? null : Number(eventId?.toString()),
+        eventTypeId: Number(eventTypeIndex?.toString()),
+        title: eventName ?? "",
         timestampStart: timestampStart,
         timestampEnd: timestampEnd,
         location: location.toString() ?? "",
         information: information.toString() ?? "",
         announcementStart: new Date(),
-        lifeGroupId: Number(lifeGroupId.toString()) ?? null,
+        lifeGroupId: Number(lifeGroupId?.toString()) ?? null,
         isOnline: isOnline,
       });
 
@@ -145,7 +146,7 @@ export default function ScheduleEventPage() {
                 Event Type
               </Text>
               <DropdownSmall
-                isEditable={eventTypeIndex.toString() === ""}
+                isEditable={eventTypeIndex?.toString() === ""}
                 selections={eventTypes}
                 isOpen={dropdownIsOpen}
                 indexSelected={selectedEventTypeIndex}
@@ -169,8 +170,8 @@ export default function ScheduleEventPage() {
                 Event Name
               </Text>
               <Input
-                value={eventName}
-                placeholderText={title.toString()}
+                value={eventName?.toString() ?? ""}
+                placeholderText={title?.toString() ?? ""}
                 autoComplete="off"
                 fontFamily={fonts.family}
                 textColor={theme.text}

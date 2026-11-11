@@ -147,7 +147,13 @@ export function TabsProvider({ children }: { children: ReactNode }) {
         timed("getLiveEvents", getLiveEvents()),
         timed("getRecentLiveEventLessons", getRecentLiveEventLessons()),
         timed("getAnnouncements", getAnnouncements()),
-        timed("getUpcomingEvents", getUpcomingEvents()),
+        timed(
+          "getUpcomingEvents",
+          getUpcomingEvents({
+            userId: user.userId,
+            lifeGroupId: profileData?.life_group_id,
+          }),
+        ),
         timed("getDevotionals", getDevotionals()),
         timed(
           "getLifeGroupMembers",

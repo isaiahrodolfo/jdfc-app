@@ -9,7 +9,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Lucide } from "@react-native-vector-icons/lucide";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -149,8 +149,6 @@ export default function DevotionPage() {
       await noteEditorRef.current?.saveAndClose();
 
       toastiva.success("Successfully saved notes");
-
-      router.back();
     } catch (error) {
       console.error("Error saving devotional notes:", error);
 

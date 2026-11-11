@@ -42,6 +42,7 @@ export async function findDevotional(
     console.log(
       "Warning: userId is not provided. Completion status will default to false.",
     );
+    throw Error;
   }
 
   let isCompleted = false;

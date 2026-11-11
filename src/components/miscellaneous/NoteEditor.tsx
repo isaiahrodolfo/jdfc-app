@@ -58,95 +58,95 @@ const NoteEditor = forwardRef<NoteEditorHandle, NoteEditorProps>(
     },
     ref,
   ) {
-  const { height: windowHeight } = useWindowDimensions();
-  const [localHeight, setLocalHeight] = useState<number | null>(null);
-  const closing = useRef(false);
-  const keyboardTop = useRef<number | null>(null);
-  const heightAtStart = useRef(height ?? localHeight ?? 300);
-  const measuredHeight = useRef(0);
-  const maxHeight = Math.min(
-    availableMaxHeight && availableMaxHeight > 0
-      ? availableMaxHeight
-      : windowHeight * 0.65,
-    windowHeight,
-  );
-  const minHeight = Math.min(200, maxHeight);
-  const requestedHeight = height ?? localHeight;
-  const panelHeight =
-    requestedHeight === null || requestedHeight === undefined
-      ? undefined
-      : Math.min(requestedHeight, maxHeight);
-  const resizeValues = useRef({
-    height,
-    maxHeight,
-    minHeight,
-    onHeightChange,
-    panelHeight,
-    windowHeight,
-  });
-  resizeValues.current = {
-    height,
-    maxHeight,
-    minHeight,
-    onHeightChange,
-    panelHeight,
-    windowHeight,
-  };
+    const { height: windowHeight } = useWindowDimensions();
+    const [localHeight, setLocalHeight] = useState<number | null>(null);
+    const closing = useRef(false);
+    const keyboardTop = useRef<number | null>(null);
+    const heightAtStart = useRef(height ?? localHeight ?? 300);
+    const measuredHeight = useRef(0);
+    const maxHeight = Math.min(
+      availableMaxHeight && availableMaxHeight > 0
+        ? availableMaxHeight
+        : windowHeight * 0.65,
+      windowHeight,
+    );
+    const minHeight = Math.min(200, maxHeight);
+    const requestedHeight = height ?? localHeight;
+    const panelHeight =
+      requestedHeight === null || requestedHeight === undefined
+        ? undefined
+        : Math.min(requestedHeight, maxHeight);
+    const resizeValues = useRef({
+      height,
+      maxHeight,
+      minHeight,
+      onHeightChange,
+      panelHeight,
+      windowHeight,
+    });
+    resizeValues.current = {
+      height,
+      maxHeight,
+      minHeight,
+      onHeightChange,
+      panelHeight,
+      windowHeight,
+    };
 
-  const editor = useEditorBridge({
-    autofocus: false,
-    avoidIosKeyboard: true,
-    initialContent,
-    theme: {
-      webview: {
-        backgroundColor,
-      },
-      toolbar: {
-        toolbarBody: {
-          backgroundColor,
-          borderTopColor: accentColor,
-          borderBottomColor: accentColor,
-        },
-        toolbarButton: {
+    const editor = useEditorBridge({
+      autofocus: false,
+      avoidIosKeyboard: true,
+      initialContent,
+      theme: {
+        webview: {
           backgroundColor,
         },
-        icon: {
-          tintColor: textColor,
-        },
-        iconDisabled: {
-          tintColor: accentColor,
-        },
-        iconActive: {
-          tintColor: accentColor,
-        },
-        iconWrapper: {
-          backgroundColor,
-        },
-        iconWrapperActive: {
-          backgroundColor: accentColor,
-        },
-        linkBarTheme: {
-          addLinkContainer: {
+        toolbar: {
+          toolbarBody: {
             backgroundColor,
             borderTopColor: accentColor,
             borderBottomColor: accentColor,
           },
-          linkInput: {
+          toolbarButton: {
             backgroundColor,
-            color: textColor,
           },
-          placeholderTextColor: textColor,
-          doneButton: {
+          icon: {
+            tintColor: textColor,
+          },
+          iconDisabled: {
+            tintColor: accentColor,
+          },
+          iconActive: {
+            tintColor: accentColor,
+          },
+          iconWrapper: {
+            backgroundColor,
+          },
+          iconWrapperActive: {
             backgroundColor: accentColor,
           },
-          doneButtonText: {
-            color: backgroundColor,
+          linkBarTheme: {
+            addLinkContainer: {
+              backgroundColor,
+              borderTopColor: accentColor,
+              borderBottomColor: accentColor,
+            },
+            linkInput: {
+              backgroundColor,
+              color: textColor,
+            },
+            placeholderTextColor: textColor,
+            doneButton: {
+              backgroundColor: accentColor,
+            },
+            doneButtonText: {
+              color: backgroundColor,
+            },
           },
         },
       },
-    },
-  });
-  const editorCss = `
+    });
+    const editorCss = `
     html, body, #root {
       background-color: ${backgroundColor} !important;
     }
@@ -170,140 +170,145 @@ const NoteEditor = forwardRef<NoteEditorHandle, NoteEditorProps>(
     }
   `;
 
-  const handleClose = useCallback(
-    async (dismissKeyboard = true) => {
-      if (closing.current) return;
+    const handleClose = useCallback(
+      async (dismissKeyboard = true) => {
+        if (closing.current) return;
 
-      closing.current = true;
-      try {
-        const html = await editor.getHTML();
-        await onSaveNotes(html);
+        closing.current = true;
+        try {
+          const html = await editor.getHTML();
+          await onSaveNotes(html);
 
-        if (dismissKeyboard) Keyboard.dismiss();
-        onClose?.();
-      } finally {
-        closing.current = false;
-      }
-    },
-    [editor, onClose, onSaveNotes],
-  );
+          if (dismissKeyboard) Keyboard.dismiss();
+          onClose?.();
+        } finally {
+          closing.current = false;
+        }
+      },
+      [editor, onClose, onSaveNotes],
+    );
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      saveAndClose: () => handleClose(),
-    }),
-    [handleClose],
-  );
-
-  const handleCloseRef = useRef(handleClose);
-  handleCloseRef.current = handleClose;
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", (event) => {
-      keyboardTop.current = event.endCoordinates.screenY;
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      keyboardTop.current = null;
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
-
-  const resizePanResponder = useMemo(
-    () =>
-      PanResponder.create({
-        onMoveShouldSetPanResponder: (_, gestureState) =>
-          Math.abs(gestureState.dy) > 4,
-        onPanResponderGrant: () => {
-          const {
-            panelHeight: currentPanelHeight,
-            windowHeight: currentWindowHeight,
-          } = resizeValues.current;
-          heightAtStart.current =
-            currentPanelHeight ??
-            (measuredHeight.current || currentWindowHeight);
-        },
-        onPanResponderMove: (_, gestureState) => {
-          const currentKeyboardTop = keyboardTop.current;
-          if (
-            currentKeyboardTop !== null &&
-            gestureState.moveY >= currentKeyboardTop
-          ) {
-            void handleCloseRef.current().catch((error: unknown) => {
-              console.error("Error saving notes:", error);
-            });
-            return;
-          }
-
-          const {
-            height: currentHeight,
-            maxHeight: currentMaxHeight,
-            minHeight: currentMinHeight,
-            onHeightChange: notifyHeightChange,
-          } = resizeValues.current;
-          const nextHeight = Math.min(
-            currentMaxHeight,
-            Math.max(currentMinHeight, heightAtStart.current - gestureState.dy),
-          );
-          if (currentHeight === undefined) {
-            setLocalHeight(nextHeight);
-          }
-          notifyHeightChange?.(nextHeight);
-        },
+    useImperativeHandle(
+      ref,
+      () => ({
+        saveAndClose: () => handleClose(),
       }),
-    [],
-  );
+      [handleClose],
+    );
 
-  const content = (
-    <SafeAreaView
-      style={[
-        styles.container,
-        { backgroundColor },
-        panelHeight === undefined
-          ? styles.flexContainer
-          : { height: panelHeight },
-      ]}
-      edges={["bottom"]}
-      onLayout={(event) => {
-        measuredHeight.current = event.nativeEvent.layout.height;
-      }}
-    >
-      <View
-        style={[styles.resizeHandle, { backgroundColor }]}
-        {...resizePanResponder.panHandlers}
+    const onCloseRef = useRef(onClose);
+    onCloseRef.current = onClose;
+
+    useEffect(() => {
+      const showSubscription = Keyboard.addListener(
+        "keyboardDidShow",
+        (event) => {
+          keyboardTop.current = event.endCoordinates.screenY;
+        },
+      );
+      const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+        keyboardTop.current = null;
+      });
+
+      return () => {
+        showSubscription.remove();
+        hideSubscription.remove();
+      };
+    }, []);
+
+    const resizePanResponder = useMemo(
+      () =>
+        PanResponder.create({
+          onMoveShouldSetPanResponder: (_, gestureState) =>
+            Math.abs(gestureState.dy) > 4,
+          onPanResponderGrant: () => {
+            const {
+              panelHeight: currentPanelHeight,
+              windowHeight: currentWindowHeight,
+            } = resizeValues.current;
+            heightAtStart.current =
+              currentPanelHeight ??
+              (measuredHeight.current || currentWindowHeight);
+          },
+          onPanResponderMove: (_, gestureState) => {
+            const currentKeyboardTop = keyboardTop.current;
+            if (
+              currentKeyboardTop !== null &&
+              gestureState.moveY >= currentKeyboardTop
+            ) {
+              Keyboard.dismiss();
+              onCloseRef.current?.();
+              return;
+            }
+
+            const {
+              height: currentHeight,
+              maxHeight: currentMaxHeight,
+              minHeight: currentMinHeight,
+              onHeightChange: notifyHeightChange,
+            } = resizeValues.current;
+            const nextHeight = Math.min(
+              currentMaxHeight,
+              Math.max(
+                currentMinHeight,
+                heightAtStart.current - gestureState.dy,
+              ),
+            );
+            if (currentHeight === undefined) {
+              setLocalHeight(nextHeight);
+            }
+            notifyHeightChange?.(nextHeight);
+          },
+        }),
+      [],
+    );
+
+    const content = (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor },
+          panelHeight === undefined
+            ? styles.flexContainer
+            : { height: panelHeight },
+        ]}
+        edges={["bottom"]}
+        onLayout={(event) => {
+          measuredHeight.current = event.nativeEvent.layout.height;
+        }}
       >
-        <View style={[styles.resizeGrip, { backgroundColor: accentColor }]} />
-      </View>
-      <View style={styles.editorContainer}>
-        <RichText
-          editor={editor}
-          onLoad={() => {
-            requestAnimationFrame(() => editor.injectCSS(editorCss));
-          }}
-        />
-      </View>
+        <View
+          style={[styles.resizeHandle, { backgroundColor }]}
+          {...resizePanResponder.panHandlers}
+        >
+          <View style={[styles.resizeGrip, { backgroundColor: accentColor }]} />
+        </View>
+        <View style={styles.editorContainer}>
+          <RichText
+            editor={editor}
+            onLoad={() => {
+              requestAnimationFrame(() => editor.injectCSS(editorCss));
+            }}
+          />
+        </View>
 
-      {/* <View style={styles.toolbarContainer}>
+        {/* <View style={styles.toolbarContainer}>
         <Toolbar editor={editor} />
       </View> */}
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+    );
 
-  if (!keyboardAvoiding) return content;
+    if (!keyboardAvoiding) return content;
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={0}
-      style={styles.keyboardContainer}
-    >
-      {content}
-    </KeyboardAvoidingView>
-  );
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={0}
+        style={styles.keyboardContainer}
+      >
+        {content}
+      </KeyboardAvoidingView>
+    );
   },
 );
 

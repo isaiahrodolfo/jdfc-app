@@ -42,7 +42,6 @@ export default function PersonInfoCard({
         >
           {fieldName}: {fieldContent}
         </Text>
-        TextContainer
       </View>
     );
   };

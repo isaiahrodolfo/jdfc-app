@@ -172,7 +172,7 @@ export default function Devotion() {
                 isCompleted={devotional.isCompleted}
                 titleHeading={devotional.title || "No Devotional Today"}
                 descriptionHeading="Daily Devotion"
-                descriptionSubheading={
+                date={
                   isToday
                     ? "Today"
                     : isYesterday

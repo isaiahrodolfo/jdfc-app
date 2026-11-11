@@ -2,7 +2,6 @@ import { AccentColor } from "@/constants/theme";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-import { useAuthContext } from "@/hooks/use-auth-context";
 import ChevronCompact from "../../../assets/icons/ChevronCompactIndigo5.svg";
 import DividingLine from "../miscellaneous/DividingLine";
 import Checkbox from "../progress_tracker/Checkbox";
@@ -13,7 +12,9 @@ type LessonCardProps = {
   colorName: AccentColor;
   size: "big" | "medium" | "small";
   descriptionHeading?: string;
-  descriptionSubheading?: string;
+  date?: string;
+  time?: string;
+  location?: string;
   titleHeading: string;
   titleSubheading?: string;
   imageLink?: string;
@@ -27,17 +28,18 @@ export default function LessonCard({
   colorName,
   size,
   descriptionHeading,
-  descriptionSubheading,
+  date,
+  time,
+  location,
   titleHeading,
   titleSubheading,
   imageLink,
   onCheckboxPress,
   onLessonPress,
 }: LessonCardProps) {
-  const { user } = useAuthContext();
   const { theme, fonts } = useTheme();
 
-  const hasDescription = !!descriptionSubheading || !!descriptionHeading;
+  const hasDescription = !!date || !!time || !!location || !!descriptionHeading;
 
   const hasTitle = !!titleSubheading || !!titleHeading;
 
@@ -97,15 +99,15 @@ export default function LessonCard({
                 {
                   backgroundColor: theme.secondary,
                   borderTopRightRadius:
-                    (size === "small" && descriptionSubheading) ||
-                    descriptionHeading
+                    size === "small" &&
+                    (date || time || location || descriptionHeading)
                       ? 8
                       : 0,
                 },
               ]}
             >
               <View style={styles.columnContent}>
-                {descriptionSubheading && (
+                {date && (
                   <Text
                     style={{
                       fontFamily: fonts.family,
@@ -115,10 +117,35 @@ export default function LessonCard({
                       color: theme.text,
                     }}
                   >
-                    {descriptionSubheading}
+                    {date}
                   </Text>
                 )}
 
+                <View style={styles.timeAndLocation}>
+                  {time && (
+                    <Text
+                      style={{
+                        fontFamily: fonts.family,
+                        fontSize: fonts.sizes.p,
+                        color: theme.text,
+                      }}
+                    >
+                      {time}
+                    </Text>
+                  )}
+
+                  {location && (
+                    <Text
+                      style={{
+                        fontFamily: fonts.family,
+                        fontSize: fonts.sizes.p,
+                        color: theme.text,
+                      }}
+                    >
+                      {location}
+                    </Text>
+                  )}
+                </View>
                 {descriptionHeading && (
                   <Text
                     style={{
@@ -151,7 +178,9 @@ export default function LessonCard({
                   backgroundColor: theme.secondary,
                   borderTopRightRadius:
                     size === "small" &&
-                    !descriptionSubheading &&
+                    !date &&
+                    !time &&
+                    !location &&
                     !descriptionHeading
                       ? 8
                       : 0,
@@ -250,6 +279,10 @@ const styles = StyleSheet.create({
 
   columnContent: {
     gap: 4,
+  },
+
+  timeAndLocation: {
+    gap: 0,
   },
 
   chevronCompact: {

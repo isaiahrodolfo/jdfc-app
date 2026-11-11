@@ -275,25 +275,21 @@ export default function Index() {
               ? dateFormatter("date").format(lessonDate)
               : "";
 
-            const descriptionSubheadingDateAndTime = lesson.timestamp_start
-              ? dateFormatter("full").format(new Date(lesson.timestamp_start)) +
+            const time = lesson.timestamp_start
+              ? dateFormatter("time").format(new Date(lesson.timestamp_start)) +
                 (lesson.timestamp_end &&
                 lesson.timestamp_end !== lesson.timestamp_start
                   ? ` to ${dateFormatter("time").format(
                       new Date(lesson.timestamp_end),
                     )}`
                   : "")
-              : lessonDateString;
-
-            const descriptionSubheading = lesson.location
-              ? [
-                  descriptionSubheadingDateAndTime,
-                  lesson.location,
-                  lesson.is_online ? "(Online)" : null,
-                ]
-                  .filter(Boolean)
-                  .join("\n")
-              : lessonDateString;
+              : "";
+            const location = [
+              lesson.location,
+              lesson.is_online ? "(Online)" : null,
+            ]
+              .filter(Boolean)
+              .join(" ");
 
             return (
               <LessonCard
@@ -302,7 +298,9 @@ export default function Index() {
                 isCompleted={lesson.isCompleted ?? false}
                 colorName={accentColor}
                 size={size}
-                descriptionSubheading={descriptionSubheading}
+                date={lessonDateString}
+                time={time}
+                location={location}
                 descriptionHeading={
                   isToday ? "Today" : isYesterday ? "Yesterday" : ""
                 }

@@ -86,6 +86,9 @@ export async function getUpcomingEvents({
   `,
     )
     .or("location.not.is.null,is_online.eq.true")
+    .neq("event_type_id", 3)
+    .neq("event_type_id", 4)
+    .neq("event_type_id", 5)
     .gte("timestamp_start", new Date().toISOString());
 
   // Keep all non-life-group events, but only show life-group events

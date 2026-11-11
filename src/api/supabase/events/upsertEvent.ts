@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 
 type UpsertEventProps = {
-  eventId: number | null;
+  eventId?: number;
   eventTypeId: number;
   title: string;
   timestampStart: Date;
@@ -9,7 +9,7 @@ type UpsertEventProps = {
   location: string;
   information: string;
   announcementStart: Date;
-  lifeGroupId: number | null;
+  lifeGroupId?: number;
   isOnline: boolean;
 };
 

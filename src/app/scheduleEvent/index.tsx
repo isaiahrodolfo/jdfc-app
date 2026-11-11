@@ -80,7 +80,9 @@ export default function ScheduleEventPage() {
     try {
       await upsertEvent({
         eventId:
-          eventId?.toString() === "" ? null : Number(eventId?.toString()),
+          typeof eventId === "undefined"
+            ? undefined
+            : Number(eventId.toString()),
         eventTypeId: Number(eventTypeIndex?.toString()),
         title: eventName ?? "",
         timestampStart: timestampStart,
@@ -91,6 +93,8 @@ export default function ScheduleEventPage() {
         lifeGroupId: Number(lifeGroupId?.toString()) ?? null,
         isOnline: isOnline,
       });
+
+      console.log("eventId", eventId);
 
       if (eventId === null) {
         console.log("Upsert event failed");

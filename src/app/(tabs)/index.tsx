@@ -1,4 +1,5 @@
 import {
+  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -17,6 +18,7 @@ import { handleDevotionalPress } from "@/components/helpers/handleDevotionalPres
 import { useTabs } from "@/contexts/TabsContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6";
 import { router } from "expo-router";
 import { useState } from "react";
 
@@ -139,6 +141,12 @@ export default function Home() {
     });
   };
 
+  const handleSettingsPress = () => {
+    router.push({
+      pathname: "/settings",
+    });
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.primary }}
@@ -158,18 +166,34 @@ export default function Home() {
       }
     >
       <View style={styles.container}>
-        <Text
-          style={[
-            styles.h1,
-            {
-              fontFamily: fonts.family,
-              fontSize: fonts.sizes.h1,
-              color: theme.textH1,
-            },
-          ]}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          Home
-        </Text>
+          <Text
+            style={[
+              styles.h1,
+              {
+                fontFamily: fonts.family,
+                fontSize: fonts.sizes.h1,
+                color: theme.textH1,
+              },
+            ]}
+          >
+            Home
+          </Text>
+          <Pressable onPress={handleSettingsPress}>
+            <FontAwesome6
+              name="gear"
+              iconStyle="solid"
+              color={theme.accentGrayAlt}
+              size={fonts.sizes.h1 - 12}
+            />
+          </Pressable>
+        </View>
 
         {/* Live Events */}
         <Text

@@ -57,13 +57,16 @@ export default function FamilyMembersList() {
         >
           Edit Family Members
         </Text>
-        {familyProfiles?.map((profile) => (
-          <LessonCategoryCard
-            color={null}
-            titleHeading={profile.full_name ?? ""}
-            onPress={() => handleFamilyMemberPress(profile.id)}
-          />
-        ))}
+        {familyProfiles?.map(
+          (profile) =>
+            profile.id != user.id && (
+              <LessonCategoryCard
+                color={null}
+                titleHeading={profile.full_name ?? ""}
+                onPress={() => handleFamilyMemberPress(profile.id)}
+              />
+            ),
+        )}
       </View>
     </ScrollView>
   );

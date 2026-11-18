@@ -1,5 +1,5 @@
 import { useBibleClient } from "@youversion/platform-react-hooks";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Book = {
   title: string;
@@ -91,8 +91,9 @@ export type UseBiblePassageResult = {
   passages: BiblePassageText[];
   loading: boolean;
   error: Error | null;
-  refetch: () => void;
 };
+
+const passageRequestCache = new Map<string, Promise<BiblePassageText[]>>();
 
 function normalizeBookName(name: string): string {
   return name.toLowerCase().replace(/[\s.]/g, "");
@@ -190,18 +191,38 @@ export function parseBiblePassageReferences(
   return parsed;
 }
 
+function getPassages(
+  bibleClient: ReturnType<typeof useBibleClient>,
+  passageReference: string,
+): Promise<BiblePassageText[]> {
+  const references = parseBiblePassageReferences(passageReference);
+  const cacheKey = `111:${references.map(({ usfm }) => usfm).join(",")}`;
+  const cachedRequest = passageRequestCache.get(cacheKey);
+  if (cachedRequest) return cachedRequest;
+
+  const request = Promise.all(
+    references.map(async ({ passageReference, usfm }) => {
+      const result = await bibleClient.getPassage(111, usfm, "text", true, false);
+      return { passageReference, text: result.content };
+    }),
+  );
+  passageRequestCache.set(cacheKey, request);
+  void request.catch(() => passageRequestCache.delete(cacheKey));
+  return request;
+}
+
 export function useBiblePassage(
   passageReference: string,
 ): UseBiblePassageResult {
   const bibleClient = useBibleClient();
+  const bibleClientRef = useRef(bibleClient);
   const [passages, setPassages] = useState<BiblePassageText[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [requestNumber, setRequestNumber] = useState(0);
 
-  const refetch = useCallback(() => {
-    setRequestNumber((current) => current + 1);
-  }, []);
+  useEffect(() => {
+    bibleClientRef.current = bibleClient;
+  }, [bibleClient]);
 
   useEffect(() => {
     let isActive = true;
@@ -221,20 +242,10 @@ export function useBiblePassage(
 
     void (async () => {
       try {
-        const references = parseBiblePassageReferences(passageReference);
-        const results = await Promise.all(
-          references.map(async ({ passageReference, usfm }) => {
-            const result = await bibleClient.getPassage(
-              111,
-              usfm,
-              "text",
-              true,
-              false,
-            );
-            return { passageReference, text: result.content };
-          }),
+        const results = await getPassages(
+          bibleClientRef.current,
+          passageReference,
         );
-
         if (isActive) setPassages(results);
       } catch (requestError: unknown) {
         if (isActive) {
@@ -252,7 +263,7 @@ export function useBiblePassage(
     return () => {
       isActive = false;
     };
-  }, [bibleClient, passageReference, requestNumber]);
+  }, [passageReference]);
 
-  return { passages, loading, error, refetch };
+  return { passages, loading, error };
 }

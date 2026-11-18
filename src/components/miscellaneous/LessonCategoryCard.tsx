@@ -26,9 +26,13 @@ export default function LessonCategoryCard({
       onPress={onPress}
     >
       <View style={styles.bottomHalf}>
-        <View
-          style={[styles.leftAccentShape, { backgroundColor: color }]}
-        ></View>
+        {color ? (
+          <View
+            style={[styles.leftAccentShape, { backgroundColor: color }]}
+          ></View>
+        ) : (
+          <View style={styles.leftAccentShapeEmpty}></View>
+        )}
         <View style={styles.contentContainer}>
           <View style={styles.titleColumn}>
             <View style={styles.columnContent}>
@@ -60,6 +64,13 @@ const styles = StyleSheet.create({
 
   leftAccentShape: {
     width: 16,
+    height: "100%",
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
+  },
+
+  leftAccentShapeEmpty: {
+    width: 4,
     height: "100%",
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,

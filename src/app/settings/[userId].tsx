@@ -250,19 +250,21 @@ export default function EditProfilePage() {
           }
           onButtonPress={updateProfile}
         />
-        <ButtonBig
-          icon={
-            <Feather
-              name="log-out"
-              color={theme.iconSecondary}
-              size={fonts.sizes.h4}
-            />
-          }
-          text={"Log Out"}
-          textColor={theme.iconSecondary}
-          backgroundColor={theme.secondary}
-          onButtonPress={logOut}
-        />
+        {user.id === userId && (
+          <ButtonBig
+            icon={
+              <Feather
+                name="log-out"
+                color={theme.iconSecondary}
+                size={fonts.sizes.h4}
+              />
+            }
+            text={"Log Out"}
+            textColor={theme.iconSecondary}
+            backgroundColor={theme.secondary}
+            onButtonPress={logOut}
+          />
+        )}
       </View>
     </ScrollView>
   );

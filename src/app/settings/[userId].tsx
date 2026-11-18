@@ -1,6 +1,7 @@
 import ButtonBig from "@/components/buttons/ButtonBig";
 import Input from "@/components/miscellaneous/Input";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -12,6 +13,7 @@ import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import { toastiva } from "toastiva";
 
 export default function EditProfilePage() {
+  const { user } = useAuthContext();
   const { userId } = useLocalSearchParams();
   const { theme, fonts } = useTheme();
 
@@ -125,7 +127,7 @@ export default function EditProfilePage() {
             },
           ]}
         >
-          Profile
+          {user.id === userId ? "Your Profile" : `${fullName}'s Profile`}
         </Text>
         {/* Account Details */}
         <Text

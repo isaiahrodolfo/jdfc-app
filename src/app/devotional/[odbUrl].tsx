@@ -346,7 +346,7 @@ export default function DevotionPage() {
                 style={{
                   fontFamily: fonts.family,
                   fontSize: fonts.sizes.h5,
-                  color: theme.text,
+                  color: theme.textAlt,
                 }}
               >
                 Loading passage...
@@ -357,7 +357,7 @@ export default function DevotionPage() {
                 style={{
                   fontFamily: fonts.family,
                   fontSize: fonts.sizes.h5,
-                  color: theme.text,
+                  color: theme.textAlt,
                 }}
               >
                 {passageResult.error.message}

@@ -1,6 +1,6 @@
 import { getNotes } from "@/api/supabase/notes/getNotes";
 import { saveNotes } from "@/api/supabase/notes/saveNotes";
-import { getBiblePassage } from "@/api/youversion/getBiblePassage";
+import { useBiblePassage } from "@/api/youversion/useBiblePassage";
 import PreviewTitleCard from "@/components/cards/PreviewTitleCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
 import NoteEditor, {
@@ -56,7 +56,8 @@ export default function DevotionPage() {
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
   const [isPassageShown, setIsPassageShown] = useState(false);
   const [notesHtml, setNotesHtml] = useState("");
-  const [passageHtml, setPassageHtml] = useState("");
+  const passageResult = useBiblePassage(passageReference?.toString() ?? "");
+  console.log("passage content", passageResult.error);
 
   const [editorHeight, setEditorHeight] = useState(300);
   const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
@@ -101,14 +102,6 @@ export default function DevotionPage() {
       isActive = false;
     };
   }, [lessonId, odbUrl, user]);
-
-  useEffect(() => {
-    if (!passageReference) return;
-
-    getBiblePassage(passageReference.toString()).then((html) =>
-      setPassageHtml(html),
-    );
-  }, [lessonId, odbUrl]);
 
   if (!lessonId || !dateKey || !title || !author || !content) {
     return (
@@ -336,7 +329,50 @@ export default function DevotionPage() {
                 backgroundColor: theme.primary,
               },
             ]}
-          ></View>
+          >
+            {passageResult.loading ? (
+              <Text
+                style={{
+                  fontFamily: fonts.family,
+                  fontSize: fonts.sizes.h5,
+                  color: theme.text,
+                }}
+              >
+                Loading passage...
+              </Text>
+            ) : passageResult.error ? (
+              <Text
+                accessibilityRole="alert"
+                style={{
+                  fontFamily: fonts.family,
+                  fontSize: fonts.sizes.h5,
+                  color: theme.text,
+                }}
+              >
+                {passageResult.error.message}
+              </Text>
+            ) : (
+              passageResult.passages.map(({ passageReference, text }, index) => (
+                <Text
+                  key={`${passageReference}-${index}`}
+                  style={[
+                    styles.paragraph,
+                    {
+                      fontFamily: fonts.family,
+                      fontSize: fonts.sizes.h5,
+                      color: theme.text,
+                    },
+                  ]}
+                >
+                  <Text style={{ fontWeight: "bold" }}>
+                    {passageReference}
+                    {"\n"}
+                  </Text>
+                  {text}
+                </Text>
+              ))
+            )}
+          </View>
         )}
         {/* Read */}
         <View

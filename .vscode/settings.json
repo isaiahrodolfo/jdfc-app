@@ -12,6 +12,8 @@
     "Pressable",
     "Snaplet",
     "supabase",
-    "toastiva"
+    "toastiva",
+    "usfm",
+    "youversion"
   ]
 }

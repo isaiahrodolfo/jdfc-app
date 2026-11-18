@@ -8,6 +8,7 @@ import NoteEditor, {
 } from "@/components/miscellaneous/NoteEditor";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import Feather from "@react-native-vector-icons/feather";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Lucide } from "@react-native-vector-icons/lucide";
 import { Stack, useLocalSearchParams } from "expo-router";
@@ -313,11 +314,21 @@ export default function DevotionPage() {
                 fontFamily: fonts.family,
                 fontSize: fonts.sizes.h6,
                 color: theme.iconPrimary,
-                textDecorationLine: "underline",
               }}
             >
               {passageReference}
             </Text>
+            <View
+              style={{
+                transform: isPassageShown ? [{ scaleY: -1 }] : [{ scaleY: 1 }],
+              }}
+            >
+              <Feather
+                name={"chevron-down"}
+                size={fonts.sizes.h6 + 2}
+                color={theme.iconPrimary}
+              />
+            </View>
           </Pressable>
         </View>
         {/* Bible */}
@@ -352,25 +363,27 @@ export default function DevotionPage() {
                 {passageResult.error.message}
               </Text>
             ) : (
-              passageResult.passages.map(({ passageReference, text }, index) => (
-                <Text
-                  key={`${passageReference}-${index}`}
-                  style={[
-                    styles.paragraph,
-                    {
-                      fontFamily: fonts.family,
-                      fontSize: fonts.sizes.h5,
-                      color: theme.text,
-                    },
-                  ]}
-                >
-                  <Text style={{ fontWeight: "bold" }}>
-                    {passageReference}
-                    {"\n"}
+              passageResult.passages.map(
+                ({ passageReference, text }, index) => (
+                  <Text
+                    key={`${passageReference}-${index}`}
+                    style={[
+                      styles.paragraph,
+                      {
+                        fontFamily: fonts.family,
+                        fontSize: fonts.sizes.h5,
+                        color: theme.text,
+                      },
+                    ]}
+                  >
+                    <Text style={{ fontWeight: "bold" }}>
+                      {passageReference}
+                      {"\n"}
+                    </Text>
+                    {text}
                   </Text>
-                  {text}
-                </Text>
-              ))
+                ),
+              )
             )}
           </View>
         )}
@@ -597,8 +610,10 @@ const styles = StyleSheet.create({
   },
 
   passageLinkButton: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    gap: 8,
     borderRadius: 4,
     padding: 8,
   },

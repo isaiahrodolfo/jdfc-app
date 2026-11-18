@@ -52,10 +52,6 @@ export default function RootLayout() {
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen
-                      name="bible/[passage]"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
                       name="info/[link]"
                       options={{ headerShown: false }}
                     />

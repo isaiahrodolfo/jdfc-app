@@ -1,5 +1,6 @@
 import { getNotes } from "@/api/supabase/notes/getNotes";
 import { saveNotes } from "@/api/supabase/notes/saveNotes";
+import { getBiblePassage } from "@/api/youversion/getBiblePassage";
 import PreviewTitleCard from "@/components/cards/PreviewTitleCard";
 import { dateFormatter } from "@/components/helpers/dateFormatter";
 import NoteEditor, {
@@ -9,7 +10,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Lucide } from "@react-native-vector-icons/lucide";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -53,7 +54,10 @@ export default function DevotionPage() {
     odbUrl,
   } = useLocalSearchParams();
   const [isTakingNotes, setIsTakingNotes] = useState<boolean>(false);
+  const [isPassageShown, setIsPassageShown] = useState(false);
   const [notesHtml, setNotesHtml] = useState("");
+  const [passageHtml, setPassageHtml] = useState("");
+
   const [editorHeight, setEditorHeight] = useState(300);
   const [editorAvailableHeight, setEditorAvailableHeight] = useState(0);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
@@ -97,6 +101,14 @@ export default function DevotionPage() {
       isActive = false;
     };
   }, [lessonId, odbUrl, user]);
+
+  useEffect(() => {
+    if (!passageReference) return;
+
+    getBiblePassage(passageReference.toString()).then((html) =>
+      setPassageHtml(html),
+    );
+  }, [lessonId, odbUrl]);
 
   if (!lessonId || !dateKey || !title || !author || !content) {
     return (
@@ -157,12 +169,7 @@ export default function DevotionPage() {
   };
 
   const handleTodaysScripturePress = async () => {
-    router.push({
-      pathname: "/bible/[passage]",
-      params: {
-        passage: passageReference?.toString() ?? "",
-      },
-    });
+    setIsPassageShown((s) => !s);
   };
 
   function replaceSpecialCharacters(text: string): string {
@@ -320,6 +327,17 @@ export default function DevotionPage() {
             </Text>
           </Pressable>
         </View>
+        {/* Bible */}
+        {isPassageShown && (
+          <View
+            style={[
+              styles.textContainer,
+              {
+                backgroundColor: theme.primary,
+              },
+            ]}
+          ></View>
+        )}
         {/* Read */}
         <View
           style={[

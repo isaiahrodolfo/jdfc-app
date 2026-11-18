@@ -27,6 +27,7 @@ export type Database = {
                   Row: {
                     "announcement_end": string | null,"category": string | null,"color": string | null,"created_at": string,"id": number,"information": string | null,"name": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "announcement_end"?: string | null,"category"?: string | null,"color"?: string | null,"created_at"?: string,"id"?: number,"information"?: string | null,"name"?: string | null
                   }
@@ -40,6 +41,7 @@ export type Database = {
                   Row: {
                     "created_at": string,"id": number,"lesson_id": number | null,"lesson_number": number,"series_id": number
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"lesson_id"?: number | null,"lesson_number": number,"series_id": number
                   }
@@ -65,6 +67,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"date": string,"id": number,"lesson_id": number | null,"odb_link": string
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"date": string,"id"?: number,"lesson_id"?: number | null,"odb_link": string
                   }
@@ -84,6 +87,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"name": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"name"?: string | null
                   }
@@ -97,6 +101,7 @@ isOneToOne: false
                   Row: {
                     "announcement_start": string | null,"created_at": string,"event_type_id": number | null,"id": number,"information": string | null,"is_online": boolean,"life_group_id": number | null,"location": string | null,"repeat_every_days": number | null,"timestamp_end": string | null,"timestamp_start": string | null,"title": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "announcement_start"?: string | null,"created_at"?: string,"event_type_id"?: number | null,"id"?: number,"information"?: string | null,"is_online"?: boolean,"life_group_id"?: number | null,"location"?: string | null,"repeat_every_days"?: number | null,"timestamp_end"?: string | null,"timestamp_start"?: string | null,"title"?: string | null
                   }
@@ -112,10 +117,25 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"families": {
+                  Row: {
+                    "created_at": string,"family_name": string | null,"id": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"family_name"?: string | null,"id"?: number
+                  }
+                  Update: {
+                    "created_at"?: string,"family_name"?: string | null,"id"?: number
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"lessons": {
                   Row: {
                     "created_at": string,"id": number,"is_user_completable": boolean,"tags": Json | null,"title": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"is_user_completable"?: boolean,"tags"?: Json | null,"title"?: string | null
                   }
@@ -129,6 +149,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"event_id": number,"id": number,"lesson_id": number
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"event_id": number,"id"?: number,"lesson_id": number
                   }
@@ -154,6 +175,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"is_live": boolean | null,"lessons_events_id": number | null,"livestream_link": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"is_live"?: boolean | null,"lessons_events_id"?: number | null,"livestream_link"?: string | null
                   }
@@ -173,6 +195,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"lessons_events_id": number | null,"slides_link": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"lessons_events_id"?: number | null,"slides_link"?: string | null
                   }
@@ -192,6 +215,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"lessons_events_id": number | null,"user_id": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"lessons_events_id"?: number | null,"user_id"?: string | null
                   }
@@ -211,6 +235,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"event_availability_id": number | null,"event_id": number | null,"id": number,"user_id": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"event_availability_id"?: number | null,"event_id"?: number | null,"id"?: number,"user_id"?: string | null
                   }
@@ -236,6 +261,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"name": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"name"?: string | null
                   }
@@ -249,6 +275,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"name": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"name"?: string | null
                   }
@@ -260,16 +287,23 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "avatar_link": string | null,"birthday": string | null,"facebook_link": string | null,"full_name": string | null,"id": string,"instagram_link": string | null,"is_life_group_admin": boolean,"life_group_id": number | null,"life_group_role_id": number | null,"track_id": number | null,"updated_at": string | null
+                    "avatar_link": string | null,"birthday": string | null,"facebook_link": string | null,"family_id": number | null,"full_name": string | null,"id": string,"instagram_link": string | null,"is_life_group_admin": boolean,"life_group_id": number | null,"life_group_role_id": number | null,"track_id": number | null,"updated_at": string | null
                   }
+                  ComputedFields: never
                   Insert: {
-                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"full_name"?: string | null,"id": string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
+                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"family_id"?: number | null,"full_name"?: string | null,"id": string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
                   }
                   Update: {
-                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"full_name"?: string | null,"id"?: string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
+                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"family_id"?: number | null,"full_name"?: string | null,"id"?: string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
                   }
                   Relationships: [
                     {
+      foreignKeyName: "profiles_family_id_fkey"
+      columns: ["family_id"]
+isOneToOne: false
+      referencedRelation: "families"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "profiles_life_group_id_fkey"
       columns: ["life_group_id"]
 isOneToOne: false
@@ -293,6 +327,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"name": string | null,"series_number": number | null,"track_id": number
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"name"?: string | null,"series_number"?: number | null,"track_id": number
                   }
@@ -312,6 +347,7 @@ isOneToOne: false
                   Row: {
                     "id": number,"title": string
                   }
+                  ComputedFields: never
                   Insert: {
                     "id"?: never,"title": string
                   }
@@ -325,6 +361,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"heading": string | null,"id": number,"name": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"heading"?: string | null,"id"?: number,"name"?: string | null
                   }
@@ -338,6 +375,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"lesson_id": number | null,"notes": string | null,"tags": Json | null,"user_id": string | null
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"lesson_id"?: number | null,"notes"?: string | null,"tags"?: Json | null,"user_id"?: string | null
                   }
@@ -357,6 +395,7 @@ isOneToOne: false
                   Row: {
                     "created_at": string,"id": number,"is_completed": boolean | null,"lesson_id": number,"user_id": string
                   }
+                  ComputedFields: never
                   Insert: {
                     "created_at"?: string,"id"?: number,"is_completed"?: boolean | null,"lesson_id": number,"user_id": string
                   }

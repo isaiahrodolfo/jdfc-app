@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 
-export default function index() {
+export default function Settings() {
   const { user } = useAuthContext();
   const { fonts, theme } = useTheme();
 
@@ -93,19 +93,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   container: { paddingBottom: 96, gap: 20, top: 64 },
-  fieldsContainer: { gap: 16, paddingRight: 24 },
-  field: { gap: 8 },
   h2: {
     fontWeight: "bold",
     textTransform: "uppercase",
     paddingBottom: 24,
-  },
-  createEventButton: {
-    paddingVertical: 12,
-  },
-  dateAndTimePickerContainer: {
-    flexDirection: "row",
-    gap: 0,
-    alignItems: "center",
   },
 });

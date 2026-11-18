@@ -11,38 +11,12 @@ import { supabase } from "../lib/supabase";
 
 export default function RootLayout() {
   const [userId, setUserId] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    supabase.auth.getClaims().then(({ data, error }) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      if (data?.claims) {
-        setUserId(data.claims.sub);
-        setEmail(data.claims.email);
-      }
-    });
-
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, _session) => {
-      const { data, error } = await supabase.auth.getClaims();
-
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      if (data?.claims) {
-        setUserId(data.claims.sub);
-        setEmail(data.claims.email);
-      } else {
-        setUserId(null);
-        setEmail(undefined);
-      }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user.id ?? null);
     });
 
     return () => {
@@ -75,6 +49,10 @@ export default function RootLayout() {
                     />
                     <Stack.Screen
                       name="devotional/[odbUrl]"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="bible/[passage]"
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen

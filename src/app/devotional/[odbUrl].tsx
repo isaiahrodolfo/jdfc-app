@@ -9,7 +9,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Lucide } from "@react-native-vector-icons/lucide";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -156,6 +156,15 @@ export default function DevotionPage() {
     }
   };
 
+  const handleTodaysScripturePress = async () => {
+    router.push({
+      pathname: "/bible/[passage]",
+      params: {
+        passage: passageReference?.toString() ?? "",
+      },
+    });
+  };
+
   function replaceSpecialCharacters(text: string): string {
     return text
       .replace(/\n/g, " ")
@@ -297,6 +306,7 @@ export default function DevotionPage() {
                 backgroundColor: theme.iconAccent,
               },
             ]}
+            onPress={handleTodaysScripturePress}
           >
             <Text
               style={{

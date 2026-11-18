@@ -365,23 +365,30 @@ export default function DevotionPage() {
             ) : (
               passageResult.passages.map(
                 ({ passageReference, text }, index) => (
-                  <Text
+                  <View
                     key={`${passageReference}-${index}`}
-                    style={[
-                      styles.paragraph,
-                      {
+                    style={[styles.paragraph, { gap: 8 }]}
+                  >
+                    <Text
+                      style={{
                         fontFamily: fonts.family,
                         fontSize: fonts.sizes.h5,
                         color: theme.text,
-                      },
-                    ]}
-                  >
-                    <Text style={{ fontWeight: "bold" }}>
+                        fontWeight: "bold",
+                      }}
+                    >
                       {passageReference}
-                      {"\n"}
                     </Text>
-                    {text}
-                  </Text>
+                    <Text
+                      style={{
+                        fontFamily: fonts.family,
+                        fontSize: fonts.sizes.h5,
+                        color: theme.text,
+                      }}
+                    >
+                      {text}
+                    </Text>
+                  </View>
                 ),
               )
             )}

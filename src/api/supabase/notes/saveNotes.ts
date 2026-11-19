@@ -27,6 +27,7 @@ export async function saveNotes(
   date?: string,
 ) {
   console.log("saveNotes() was triggered with", {
+    user: user?.id,
     text,
     uniqueIdentifier,
     noteType,
@@ -58,7 +59,12 @@ export async function saveNotes(
     throw new Error("A devotional title and date are required to save notes.");
   }
 
-  const { lessonId } = await findDevotional(uniqueIdentifier, title, date);
+  const { lessonId } = await findDevotional(
+    uniqueIdentifier,
+    title,
+    date,
+    user.id,
+  );
 
   if (!lessonId) {
     throw new Error("Devotional has no lesson ID.");

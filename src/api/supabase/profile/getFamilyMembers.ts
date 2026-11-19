@@ -21,8 +21,11 @@ export async function getFamilyMembers(
     .eq("id", userId)
     .single();
 
-  if (profileError || !userProfile?.family_id) {
-    console.log("User family not found", profileError);
+  if (profileError) {
+    throw profileError;
+  }
+
+  if (!userProfile?.family_id) {
     return null;
   }
 
@@ -33,8 +36,7 @@ export async function getFamilyMembers(
     .eq("family_id", userProfile.family_id);
 
   if (error) {
-    console.log("Family members not found", error);
-    return null;
+    throw error;
   }
 
   return data;

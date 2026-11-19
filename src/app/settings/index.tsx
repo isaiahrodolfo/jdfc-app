@@ -1,10 +1,12 @@
 import ButtonBig from "@/components/buttons/ButtonBig";
 import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
+import { getFamilyAdminStatus } from "@/api/supabase/profile/getFamilyAdminStatus";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
 import Feather from "@react-native-vector-icons/feather";
 import { router, Stack } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -18,6 +20,43 @@ import { toastiva } from "toastiva";
 export default function Settings() {
   const { user } = useAuthContext();
   const { fonts, theme } = useTheme();
+  const [familyAdminStatus, setFamilyAdminStatus] = useState<{
+    userId: string;
+    isAdmin: boolean;
+  } | null>(null);
+  const isFamilyAdmin =
+    familyAdminStatus?.userId === user?.id &&
+    familyAdminStatus?.isAdmin === true;
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadFamilyAdminStatus() {
+      if (!user?.id) return;
+
+      try {
+        const isAdmin = await getFamilyAdminStatus(user.id);
+        if (isActive) {
+          setFamilyAdminStatus({
+            userId: user.id,
+            isAdmin,
+          });
+        }
+      } catch (error) {
+        console.error("Error loading family admin status:", error);
+        if (isActive) {
+          setFamilyAdminStatus({ userId: user.id, isAdmin: false });
+          toastiva.error("Failed to load family admin status");
+        }
+      }
+    }
+
+    void loadFamilyAdminStatus();
+
+    return () => {
+      isActive = false;
+    };
+  }, [user?.id]);
 
   const handleEditProfilePress = () => {
     router.push({
@@ -80,11 +119,13 @@ export default function Settings() {
             titleHeading={"Edit Your Profile"}
             onPress={handleEditProfilePress}
           />
-          <LessonCategoryCard
-            color={theme.accentGrayAlt}
-            titleHeading={"Edit Family Profiles"}
-            onPress={handleEditFamilyPress}
-          />
+          {isFamilyAdmin && (
+            <LessonCategoryCard
+              color={theme.accentGrayAlt}
+              titleHeading={"Edit Family Profiles"}
+              onPress={handleEditFamilyPress}
+            />
+          )}
           <ButtonBig
             icon={
               <Feather

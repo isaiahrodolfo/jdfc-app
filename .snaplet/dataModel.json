@@ -1729,6 +1729,82 @@
         }
       ]
     },
+    "families": {
+      "id": "public.families",
+      "schemaName": "public",
+      "tableName": "families",
+      "fields": [
+        {
+          "id": "public.families.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "\"public\".\"families_id_seq\"",
+            "increment": 1,
+            "start": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public.families.created_at",
+          "name": "created_at",
+          "columnName": "created_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.families.family_name",
+          "name": "family_name",
+          "columnName": "family_name",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "profiles",
+          "type": "profiles",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "profilesTofamilies",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "families_pkey",
+          "fields": [
+            "id"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
     "feature_flags": {
       "id": "_realtime.feature_flags",
       "schemaName": "_realtime",
@@ -6080,7 +6156,35 @@
           "name": "is_life_group_admin",
           "columnName": "is_life_group_admin",
           "type": "bool",
-          "isRequired": true,
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.profiles.family_id",
+          "name": "family_id",
+          "columnName": "family_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.profiles.is_family_admin",
+          "name": "is_family_admin",
+          "columnName": "is_family_admin",
+          "type": "bool",
+          "isRequired": false,
           "kind": "scalar",
           "isList": false,
           "isGenerated": false,
@@ -6097,6 +6201,24 @@
           "relationName": "profilesTousers",
           "relationFromFields": [
             "id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "families",
+          "type": "families",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "profilesTofamilies",
+          "relationFromFields": [
+            "family_id"
           ],
           "relationToFields": [
             "id"
@@ -7638,50 +7760,6 @@
           "name": "secrets_name_idx",
           "fields": [
             "name"
-          ],
-          "nullNotDistinct": false
-        }
-      ]
-    },
-    "seed_files": {
-      "id": "supabase_migrations.seed_files",
-      "schemaName": "supabase_migrations",
-      "tableName": "seed_files",
-      "fields": [
-        {
-          "id": "supabase_migrations.seed_files.path",
-          "name": "path",
-          "columnName": "path",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": true,
-          "maxLength": null
-        },
-        {
-          "id": "supabase_migrations.seed_files.hash",
-          "name": "hash",
-          "columnName": "hash",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        }
-      ],
-      "uniqueConstraints": [
-        {
-          "name": "seed_files_pkey",
-          "fields": [
-            "path"
           ],
           "nullNotDistinct": false
         }

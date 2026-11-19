@@ -5,6 +5,7 @@ import { useAuthContext } from "@/hooks/use-auth-context";
 import { router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { toastiva } from "toastiva";
 import { Database } from "../../../database.types";
 
 // Define explicit TypeScript types extracted from the Supabase Schema
@@ -15,10 +16,41 @@ export default function FamilyMembersList() {
   const { fonts, theme } = useTheme();
 
   const [familyProfiles, setFamilyProfiles] = useState<Profile[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    getFamilyMembers(user.id).then((data) => setFamilyProfiles(data));
-  });
+    let isActive = true;
+
+    async function loadFamilyProfiles() {
+      if (!user?.id) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      setLoadError(false);
+
+      try {
+        const members = await getFamilyMembers(user.id);
+        if (isActive) setFamilyProfiles(members ?? []);
+      } catch (error) {
+        console.error("Error loading family profiles:", error);
+        if (isActive) {
+          setLoadError(true);
+          toastiva.error("Failed to load family profiles");
+        }
+      } finally {
+        if (isActive) setIsLoading(false);
+      }
+    }
+
+    void loadFamilyProfiles();
+
+    return () => {
+      isActive = false;
+    };
+  }, [user?.id]);
 
   const handleFamilyMemberPress = (userId: string) => {
     router.push({
@@ -57,16 +89,38 @@ export default function FamilyMembersList() {
         >
           Edit Family Members
         </Text>
-        {familyProfiles?.map(
-          (profile) =>
-            profile.id !== user.id && (
-              <LessonCategoryCard
-                key={profile.id}
-                color={null}
-                titleHeading={profile.full_name ?? ""}
-                onPress={() => handleFamilyMemberPress(profile.id)}
-              />
-            ),
+        {isLoading ? (
+          <Text
+            style={{
+              color: theme.text,
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h5,
+            }}
+          >
+            Loading family profiles...
+          </Text>
+        ) : loadError ? (
+          <Text
+            style={{
+              color: theme.text,
+              fontFamily: fonts.family,
+              fontSize: fonts.sizes.h5,
+            }}
+          >
+            Unable to load family profiles.
+          </Text>
+        ) : (
+          familyProfiles?.map(
+            (profile) =>
+              profile.id !== user?.id && (
+                <LessonCategoryCard
+                  key={profile.id}
+                  color={null}
+                  titleHeading={profile.full_name ?? ""}
+                  onPress={() => handleFamilyMemberPress(profile.id)}
+                />
+              ),
+          )
         )}
       </View>
     </ScrollView>

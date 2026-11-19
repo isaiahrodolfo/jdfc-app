@@ -287,14 +287,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "avatar_link": string | null,"birthday": string | null,"facebook_link": string | null,"family_id": number | null,"full_name": string | null,"id": string,"instagram_link": string | null,"is_life_group_admin": boolean,"life_group_id": number | null,"life_group_role_id": number | null,"track_id": number | null,"updated_at": string | null
+                    "avatar_link": string | null,"birthday": string | null,"facebook_link": string | null,"family_id": number | null,"full_name": string | null,"id": string,"instagram_link": string | null,"is_family_admin": boolean | null,"is_life_group_admin": boolean,"life_group_id": number | null,"life_group_role_id": number | null,"track_id": number | null,"updated_at": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"family_id"?: number | null,"full_name"?: string | null,"id": string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
+                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"family_id"?: number | null,"full_name"?: string | null,"id": string,"instagram_link"?: string | null,"is_family_admin"?: boolean | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
                   }
                   Update: {
-                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"family_id"?: number | null,"full_name"?: string | null,"id"?: string,"instagram_link"?: string | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
+                    "avatar_link"?: string | null,"birthday"?: string | null,"facebook_link"?: string | null,"family_id"?: number | null,"full_name"?: string | null,"id"?: string,"instagram_link"?: string | null,"is_family_admin"?: boolean | null,"is_life_group_admin"?: boolean,"life_group_id"?: number | null,"life_group_role_id"?: number | null,"track_id"?: number | null,"updated_at"?: string | null
                   }
                   Relationships: [
                     {

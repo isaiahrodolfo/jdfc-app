@@ -93,7 +93,10 @@ export default function EditProfilePage() {
         birthday: birthdayString,
       };
 
-      let { error } = await supabase.from("profiles").upsert(updates);
+      let { error } = await supabase
+        .from("profiles")
+        .update(updates)
+        .eq("id", userId?.toString() ?? "");
 
       if (error) {
         throw error;

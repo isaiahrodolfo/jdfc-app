@@ -17,6 +17,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { toastiva } from "toastiva";
 
 export default function EditProfilePage() {
   const { user } = useAuthContext();
@@ -121,8 +122,11 @@ export default function EditProfilePage() {
       if (error) {
         throw error;
       }
-    } catch (error: any) {
-      Alert.alert(error.message);
+
+      toastiva.success("Profile saved successfully");
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      toastiva.error("Failed to save profile");
     } finally {
       setIsSaveProfileLoading(false);
     }

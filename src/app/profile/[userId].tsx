@@ -17,7 +17,6 @@ export default function ProfilePreviewPage() {
 
   useEffect(() => {
     if (!userId) {
-      setProfile(null);
       return;
     }
 

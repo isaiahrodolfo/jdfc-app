@@ -59,8 +59,9 @@ export default function FamilyMembersList() {
         </Text>
         {familyProfiles?.map(
           (profile) =>
-            profile.id != user.id && (
+            profile.id !== user.id && (
               <LessonCategoryCard
+                key={profile.id}
                 color={null}
                 titleHeading={profile.full_name ?? ""}
                 onPress={() => handleFamilyMemberPress(profile.id)}

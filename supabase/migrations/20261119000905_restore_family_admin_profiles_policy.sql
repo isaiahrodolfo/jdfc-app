@@ -23,6 +23,9 @@ FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.is_family_admin_for(BIGINT)
 TO authenticated;
 
+DROP POLICY IF EXISTS "Family admins can update their family's profiles"
+ON public.profiles;
+
 CREATE POLICY "Family admins can update their family's profiles"
 ON public.profiles
 FOR UPDATE

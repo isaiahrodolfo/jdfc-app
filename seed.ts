@@ -1,10 +1,11 @@
 import { createSeedClient } from "@snaplet/seed";
 import { createDbClient } from "./seed.config";
 
-import { seedInitialData } from "./supabase/seed/initialData";
-import { seedLessonsEventsLinks } from "./supabase/seed/lessonsEventsLinks";
 import { seedConsolidation } from "./supabase/seed/consolidation";
 import { seedDestinyTraining } from "./supabase/seed/destinyTraining";
+import { seedFamilyCamp } from "./supabase/seed/familyCamp";
+import { seedInitialData } from "./supabase/seed/initialData";
+import { seedLessonsEventsLinks } from "./supabase/seed/lessonsEventsLinks";
 import { seedLifeClass } from "./supabase/seed/lifeClass";
 import { seedLifeGroupEvents } from "./supabase/seed/lifeGroupEvents";
 import { seedSermonsEventLessons } from "./supabase/seed/sermonsEventLessons";
@@ -41,6 +42,7 @@ async function main() {
     await seedDestinyTraining(seed, users[0].id);
 
     await seedLifeGroupEvents(seed, client, users[1].id, users[2].id);
+    await seedFamilyCamp(seed);
 
     console.log("Database seeded!");
   } finally {

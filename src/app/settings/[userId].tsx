@@ -33,43 +33,65 @@ export default function EditProfilePage() {
   const [avatarLink, setAvatarLink] = useState("");
 
   useEffect(() => {
-    getProfile();
-  }, [userId]);
+    let isMounted = true;
 
-  async function getProfile() {
-    try {
+    async function getProfile() {
+      if (!userId) {
+        setIsSaveProfileLoading(false);
+        return;
+      }
+
       setIsSaveProfileLoading(true);
 
-      let { data, error, status } = await supabase
-        .from("profiles")
-        .select(
-          `full_name, birthday, facebook_link, instagram_link, avatar_link`,
-        )
-        .eq("id", userId?.toString() ?? "")
-        .single();
-      if (error && status !== 406) {
-        throw error;
-      }
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select(
+            `
+            full_name,
+            birthday,
+            facebook_link,
+            instagram_link,
+            avatar_link
+          `,
+          )
+          .eq("id", userId?.toString() ?? "")
+          .maybeSingle();
 
-      if (data) {
-        setFullName(data.full_name ?? "");
-        setAvatarLink(data.avatar_link ?? "");
-        setFacebookLink(data.facebook_link ?? "");
-        setInstagramLink(data.instagram_link ?? "");
+        if (error) {
+          throw error;
+        }
 
-        if (data.birthday) {
+        if (!isMounted) return;
+
+        setFullName(data?.full_name ?? "");
+        setAvatarLink(data?.avatar_link ?? "");
+        setFacebookLink(data?.facebook_link ?? "");
+        setInstagramLink(data?.instagram_link ?? "");
+
+        if (data?.birthday) {
           const [year, month, day] = data.birthday.split("-").map(Number);
           setBirthday(new Date(year, month - 1, day));
+        } else {
+          setBirthday(new Date());
+        }
+      } catch (error) {
+        if (isMounted && error instanceof Error) {
+          Alert.alert(error.message);
+        }
+      } finally {
+        if (isMounted) {
+          setIsSaveProfileLoading(false);
         }
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setIsSaveProfileLoading(false);
     }
-  }
+
+    getProfile();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId]);
 
   async function updateProfile() {
     try {

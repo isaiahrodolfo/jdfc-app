@@ -5,7 +5,6 @@ import { useAuthContext } from "@/hooks/use-auth-context";
 import { supabase } from "@/lib/supabase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import Feather from "@react-native-vector-icons/feather";
 import FontAwesome from "@react-native-vector-icons/fontawesome";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -18,7 +17,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { toastiva } from "toastiva";
 
 export default function EditProfilePage() {
   const { user } = useAuthContext();
@@ -127,14 +125,6 @@ export default function EditProfilePage() {
       Alert.alert(error.message);
     } finally {
       setIsSaveProfileLoading(false);
-    }
-  }
-
-  async function logOut() {
-    const { error } = await supabase.auth.signOut({ scope: "local" });
-
-    if (error) {
-      toastiva.error("Failed to log out");
     }
   }
 
@@ -292,21 +282,6 @@ export default function EditProfilePage() {
             }
             onButtonPress={updateProfile}
           />
-          {user.id === userId && (
-            <ButtonBig
-              icon={
-                <Feather
-                  name="log-out"
-                  color={theme.iconSecondary}
-                  size={fonts.sizes.h4}
-                />
-              }
-              text={"Log Out"}
-              textColor={theme.iconSecondary}
-              backgroundColor={theme.secondary}
-              onButtonPress={logOut}
-            />
-          )}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

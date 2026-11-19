@@ -1,6 +1,9 @@
+import ButtonBig from "@/components/buttons/ButtonBig";
 import LessonCategoryCard from "@/components/miscellaneous/LessonCategoryCard";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuthContext } from "@/hooks/use-auth-context";
+import { supabase } from "@/lib/supabase";
+import Feather from "@react-native-vector-icons/feather";
 import { router, Stack } from "expo-router";
 import {
   KeyboardAvoidingView,
@@ -10,6 +13,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { toastiva } from "toastiva";
 
 export default function Settings() {
   const { user } = useAuthContext();
@@ -29,6 +33,14 @@ export default function Settings() {
       pathname: "/settings/familyMembersList",
     });
   };
+
+  async function logOut() {
+    const { error } = await supabase.auth.signOut({ scope: "local" });
+
+    if (error) {
+      toastiva.error("Failed to log out");
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -72,6 +84,19 @@ export default function Settings() {
             color={theme.accentGrayAlt}
             titleHeading={"Edit Family Profiles"}
             onPress={handleEditFamilyPress}
+          />
+          <ButtonBig
+            icon={
+              <Feather
+                name="log-out"
+                color={theme.iconSecondary}
+                size={fonts.sizes.h4}
+              />
+            }
+            text={"Log Out"}
+            textColor={theme.iconSecondary}
+            backgroundColor={theme.secondary}
+            onButtonPress={logOut}
           />
         </View>
       </ScrollView>
